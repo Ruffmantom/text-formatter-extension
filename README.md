@@ -59,7 +59,7 @@ Room for improvement:
 
 
 ## Acknowledgements
-- This project was inspired by my Job
+- This project was inspired by my Job and by my CodePen project [@Underscore It](https://codepen.io/ruffmantom/pen/ExpNZEx)
 
 
 ## Contact
