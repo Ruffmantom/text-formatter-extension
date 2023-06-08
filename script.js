@@ -47,7 +47,6 @@ $(function () {
     let outputCase = globalValues.outputCase || "Lower Case";
     // Load data into the DOM
     const loadDataIntoElements = () => {
-
         $(textInput).val(globalValues.textVal || textVal);
         $(suffixText).val(globalValues.suffix || suffix);
         $(prefixText).val(globalValues.prefix || prefix);
@@ -302,6 +301,12 @@ $(function () {
 
     // clear output on click
     const clearValues = () => {
+        // clear variables
+        textVal = "";
+        prefix = "";
+        suffix = "";
+        passLength = 10;
+        separator = "_";
         // clear inputs
         $(textOutput).val("");
         $(prefixText).val("");
@@ -309,12 +314,8 @@ $(function () {
         $(textInput).val("");
         $(passwordLength).val("10");
         $(conversionField).val("");
-        // clear variables
-        textVal = "";
-        prefix = "";
-        suffix = "";
-        passLength = 10;
-        separator = "_";
+        // reset selections
+        
         // clear local state
         resetLocalStorage()
     };
