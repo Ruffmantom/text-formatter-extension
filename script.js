@@ -21,7 +21,7 @@ const makePassword = (len) => {
     for (var i = 0; i < len; i++) {
         pass += chars[Math.floor(Math.random() * chars.length)];
     }
-    console.log(pass);
+    // console.log(pass);
     return pass;
 };
 
@@ -118,6 +118,14 @@ $(function () {
                 // add class to clicked id
                 $(tab).data('tab') !== tabId ? $(tab).removeClass('tab_active') : $(tab).addClass('tab_active')
             })
+            // set output val to corresponding tab
+            if (tabId === 'one') {
+                $(textOutput).val(globalValues.outputValueText || "");
+            } else if (tabId === "two") {
+                $(textOutput).val(globalValues.outputValuePassword || "");
+            } else {
+                $(textOutput).val(globalValues.outputValueConversion || "");
+            }
         })
     })
     // conversion setup
@@ -176,7 +184,7 @@ $(function () {
         var result = performConversion(fromOption, toOption, inputValue);
 
         // Update the result on the page or do something with it
-        console.log(result);
+        // console.log(result);
         $(textOutput).val("");
         // // return value
         result.toString() === "NaN" ? $(textOutput).val('') : $(textOutput).val(result);
@@ -302,20 +310,23 @@ $(function () {
     // clear output on click
     const clearValues = () => {
         // clear variables
-        textVal = "";
-        prefix = "";
-        suffix = "";
-        passLength = 10;
-        separator = "_";
+        textVal = defaultValues.textVal;
+        prefix = defaultValues.prefix;
+        suffix = defaultValues.suffix;
+        passLength = defaultValues.passLength;
+        separator = defaultValues.separator;
         // clear inputs
-        $(textOutput).val("");
-        $(prefixText).val("");
-        $(suffixText).val("");
-        $(textInput).val("");
-        $(passwordLength).val("10");
-        $(conversionField).val("");
+        $(textOutput).val(defaultValues.outputValueText); //sets to empty string
+        $(prefixText).val(defaultValues.prefix);
+        $(suffixText).val(defaultValues.suffix);
+        $(textInput).val(defaultValues.textVal);
+        $(passwordLength).val(defaultValues.passLength);
+        $(conversionField).val(defaultValues.conversionInputValue);
         // reset selections
-        
+        $(separatorSelector).val(defaultValues.separator).change();
+        $(caseSelector).val(defaultValues.outputCase).change();
+        $(fromField).val(defaultValues.conversionFrom).change();
+        $(toField).val(defaultValues.conversionTo).change();
         // clear local state
         resetLocalStorage()
     };
