@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Formatter</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./jquery.js"></script>
+</head>
+
+<body class="text_formatter">
+    <div class="notification">
+        Copied!
+    </div>
+
+    <h2>Text Formatter</h2>
+    <p class="desc">Use this tool to create codes, passwords, or get the correct unit for a template.
+
+    <div class="input_cont">
+        <div class="tab_navigation">
+            <p class="tab_nav_button nav_tab_active" data-tab="one">Text formatter</p>
+            <p class="tab_nav_button" data-tab="two">Password Generator</p>
+            <p class="tab_nav_button" data-tab="three">Conversions</p>
+        </div>
+        <div class="tab tab_active" data-tab="one">
+
+            <div class="tf_control_group input_group_top">
+
+                <div class="form_item">
+                    <span>Case:</span>
+
+                    <select name="textformat" id="case_selector" class="tf_input selector">
+                        <option value="Lower Case">Lower Case</option>
+                        <option value="Upper Case">Upper Case</option>
+                        <option value="No Format">No Format</option>
+                    </select>
+                </div>
+
+                <div class="form_item">
+                    <span>Separator:</span>
+
+                    <select name="separator" id="separator_selector" class="tf_input selector">
+                        <option value="_">_</option>
+                        <option value="-">-</option>
+                    </select>
+                </div>
+            </div>
+            <div class="tf_control_group input_group_mid">
+                <div class="form_item">
+                    <input class="tf_input top-inputs" name="input" type="text" id="prefix_input" placeholder='Prefix'>
+                </div>
+
+                <div class="form_item">
+                    <input class="tf_input top-inputs" name="input" type="text" id="suffix_input" placeholder='Suffix'>
+                </div>
+
+
+            </div>
+            <div class="tf_control_group">
+                <input class="tf_input" name="input" type="text" id="text_input" placeholder='Place Text Here'>
+
+            </div>
+        </div>
+
+        <div class="tab" data-tab="two">
+            <div class="tf_control_group bottom_input_group">
+
+                <button id="generate_password" class="btn main-btn">Generate Password</button>
+                <span>Length:</span>
+                <input class="tf_input" name="input" min="10" max="20" type="number" value="10" id="char-num"
+                    placeholder='Length'>
+
+            </div>
+
+        </div>
+        <div class="tab" data-tab="three">
+            <div class="tf_control_group bottom_input_group">
+                <span>Convert</span>
+                <select name="separator" id="from_selector" class="tf_input selector">
+                    <option>Millimeters</option>
+                    <option>Centimeters</option>
+                    <option>Inches</option>
+                    <option>Feet</option>
+                    <option>Points</option>
+                </select>
+                <span>to:</span>
+                <select name="separator" id="to_selector" class="tf_input selector">
+                    <option>Millimeters</option>
+                    <option selected>Centimeters</option>
+                    <option>Inches</option>
+                    <option>Feet</option>
+                    <option>Points</option>
+                </select>
+            </div>
+
+            <div class="tf_control_group bottom_input_group">
+                <input class="tf_input" name="input" type="number" id="conversion_input" placeholder='Convert...'>
+
+            </div>
+        </div>
+
+        <div class="tf_control_group out_put_cont">
+            <div class="textarea_cont">
+                <div class="helper">Click To Copy</div>
+                <textarea class="tf_input" name="output" id="text_output" readonly cols="30" rows="10"></textarea>
+            </div>
+            <button id="clear_output" class="btn main-btn">Clear All</button>
+        </div>
+    </div>
+    <script type="text/javascript" src="./app.js"></script>
+    <script type="text/javascript" src="./script.js"></script>
+</body>
+
+</html>

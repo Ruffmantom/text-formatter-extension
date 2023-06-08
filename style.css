@@ -1,0 +1,257 @@
+:root {
+    --primary: #0088cc;
+    --secondary: #027ab6;
+    --input-bkg: #f7f7f7;
+    --shadow: 0 6px 13px #f5f5f5;
+}
+
+.text_formatter>* {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+    font-family: "arial";
+    color: black;
+}
+
+.popup-container {
+    border-radius: 10px;
+}
+
+.tf_input {
+    border-radius: 5px;
+    padding: 10px;
+    border: none;
+    background-color: #f7f7f7;
+    outline: none;
+    border: 1px solid #FFFFFF;
+}
+
+.tf_input:focus {
+    border: 1px solid var(--primary);
+}
+
+.text_formatter>h2 {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.text_formatter>p {
+    text-align: center;
+    margin-top: 15px;
+    font-style: italic;
+    color: gray;
+}
+
+.desc {
+    max-width: 450px;
+    margin: 15px auto 10px auto;
+}
+
+.input_cont {
+    margin: 25px auto;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 7px;
+    box-shadow: 0 6px 13px #f5f5f5;
+    width: fit-content;
+}
+
+.tf_control_group {
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    width: 450px;
+}
+
+.tf_control_group>input {
+    width: 100%;
+    padding: 10px;
+}
+
+.btn {
+    padding: 5px 7px;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 3px;
+    margin-left: 10px;
+}
+
+.main-btn {
+    margin: 0;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.main-btn:hover {
+    background-color: var(--secondary);
+}
+
+.out_put_cont {
+    position: relative;
+    width: 100%;
+    display: flex;
+}
+
+#text_output {
+    max-width: 435px;
+    min-width: 435px;
+    width: 100%;
+    min-height: 200px;
+    max-height: 400px;
+    padding: 5px 7px;
+    cursor: pointer;
+}
+
+.textarea_cont {
+    position: relative;
+    width: 100%;
+}
+
+.helper {
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+}
+
+.helper,
+.notification {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    background-color: var(--primary);
+    padding: 5px;
+    font-size: 12px;
+    color: white;
+    border-radius: 0 0 5px 5px;
+}
+
+.textarea_cont:hover>.helper {
+    opacity: 1;
+}
+
+.notification {
+    display: none;
+    font-size: 18px;
+    padding: 10px 15px;
+    left: 50%;
+    transform: translate(-50%);
+    width: fit-content;
+    cursor: default;
+}
+
+.input_group_top {
+    display: flex;
+    align-items: center;
+}
+
+.form_item {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form_item>input {
+    width: 100%;
+}
+.form_item:first-child{
+    margin-right: 15px;
+}
+
+.input_group_top>span {
+    margin-right: 10px;
+}
+
+.top-inputs {
+    width: 50%;
+}
+
+#char-num {
+    width: 35%;
+}
+
+.input_group_mid:first-child {
+    margin-right: 10px;
+}
+
+.bottom_input_group {
+    align-items: center;
+}
+
+#clear_output {
+    position: absolute;
+    left: 7px;
+    bottom: 10px;
+    z-index: 999;
+}
+
+.tab_navigation {
+    display: flex;
+
+}
+
+.tab_nav_button {
+    font-size: 14px;
+    padding: 7px 10px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+
+}
+
+.tab_nav_button {
+    font-weight: 500;
+    transition: all 130ms ease-out;
+}
+
+.tab_nav_button::after,
+.nav_tab_active::after {
+    content: '';
+    width: 60%;
+    background-color: var(--primary);
+    height: 3px;
+    position: absolute;
+    /* left: 0; */
+    bottom: -3px;
+    z-index: 9;
+    border-radius: 3px;
+}
+
+.tab_nav_button::after {
+    opacity: 0;
+    transition: all 130ms ease-out;
+}
+
+.tab_nav_button:hover::after {
+    width: 90%;
+    opacity: 1;
+    transition: all 130ms ease-in;
+}
+
+.nav_tab_active {
+    font-weight: bold;
+    transition: all 130ms ease-in;
+}
+
+.nav_tab_active::after {
+    opacity: 1;
+}
+
+.tab {
+    opacity: 0;
+    height: 0;
+    transition: all 130ms ease-out;
+    position: relative;
+}
+
+.tab_active {
+    opacity: 1;
+    height: fit-content;
+    transition: all 130ms ease-in;
+    z-index: 9;
+}
