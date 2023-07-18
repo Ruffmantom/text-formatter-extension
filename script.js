@@ -243,8 +243,9 @@ $(function () {
         // then join the array back into a string with the line breaks
         let a = text.split("\n");
         let b = a.map((item) => {
-            let i = item.replace(/[^\w\s]/gi, " ").replace(/\s+/g, separator).trim();
-            let o = `${prefix ? prefix + separator : ""}${i ? i : ""}${suffix ? separator + suffix : ""}`
+            let i = item.replace(/[^\w\s]/gi, " ").replace(/\s+/g, " ").trim(" ");
+            let ii = i.split(" ").join(separator);
+            let o = `${prefix ? prefix + separator : ""}${ii ? ii : ""}${suffix ? separator + suffix : ""}`
             return o
         });
         let output = b.join("\n");
