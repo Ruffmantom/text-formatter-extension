@@ -236,11 +236,21 @@ $(function () {
     // ---------------------
     // format text function
     const formatText = (text) => {
-        let b = text
-            .replace(/[^\w\s]/gi, " ")
-            .replace(/\s+/g, " ")
-            .trim();
-        let output = b.split(" ").join(separator)
+        // text could come in with line breaks
+        // split the text into an array
+        // then loop through array and remove special characters
+        // add the separators
+        // then join the array back into a string with the line breaks
+        let a = text.split("\n");
+        console.log(a);
+        let b = a.map((item) => {
+            return item
+                .replace(/[^\w\s]/gi, " ")
+                .replace(/\s+/g, " ")
+                .trim();
+
+        });
+        let output = b.join("\n");
         return output;
     }
     // set separator

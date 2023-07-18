@@ -25,7 +25,10 @@
     outline: none;
     border: 1px solid #FFFFFF;
 }
-
+#text_input{
+    width: 100%;
+    min-height: 50px;
+}
 .tf_input:focus {
     border: 1px solid var(--primary);
 }
