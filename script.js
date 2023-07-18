@@ -242,13 +242,10 @@ $(function () {
         // add the separators
         // then join the array back into a string with the line breaks
         let a = text.split("\n");
-        console.log(a);
         let b = a.map((item) => {
-            return item
-                .replace(/[^\w\s]/gi, " ")
-                .replace(/\s+/g, " ")
-                .trim();
-
+            let i = item.replace(/[^\w\s]/gi, " ").replace(/\s+/g, separator).trim();
+            let o = `${prefix ? prefix + separator : ""}${i ? i : ""}${suffix ? separator + suffix : ""}`
+            return o
         });
         let output = b.join("\n");
         return output;
@@ -348,7 +345,7 @@ $(function () {
     const generateTextOutput = () => {
         // first clear input
         $(textOutput).val("");
-        let outputVal = formatText(`${prefix ? prefix + separator : ""}${textVal ? textVal : ""}${suffix ? separator + suffix : ""}`)
+        let outputVal = formatText(textVal ? textVal : "")
         // case type output and save to local storage
         if (outputCase === "Lower Case") {
             $(textOutput).val(outputVal.toLowerCase())
