@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Text Formatter",
-    "version": "3.0.4",
+    "version": "3.0.5",
     "description": "This extension provides an easy way to make codes for SKUs, URL keys, create passwords, and do measurement conversions.",
     "action": {
       "default_title": "Text Formatter",

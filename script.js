@@ -243,7 +243,9 @@ $(function () {
         // then join the array back into a string with the line breaks
         let a = text.split("\n");
         let b = a.map((item) => {
-            let i = item.replace(/[^\w\s]/gi, " ").replace(/\s+/g, " ").trim(" ");
+            let removeFractions = divideNumbersInString(item)
+            let c = removeFractions.replace(".", "p")
+            let i = c.replace(/[^\w\s]/gi, " ").replace(/\s+/g, " ").trim(" ");
             let ii = i.split(" ").join(separator);
             let o = `${prefix ? prefix + separator : ""}${ii ? ii : ""}${suffix ? separator + suffix : ""}`
             return o
@@ -251,43 +253,82 @@ $(function () {
         let output = b.join("\n");
         return output;
     }
+    // format prefix and suffix function
+    const formatPrefixSuffix = (text) => {
+        let a = text.split(" ");
+        let b = a.map((item) => {
+            let removeFractions = divideNumbersInString(item)
+            let c = removeFractions.replace(".", "p")
+            let i = c.replace(/[^\w\s]/gi, " ").replace(/\s+/g, " ").trim(" ");
+            let ii = i.split(" ").join(separator);
+            return ii
+        });
+        let output = b.join(separator);
+        return output;
+    }
+    // function will take in a string from example: "Wood 3/4" 
+    // -- finds any forward slashes then takes the numbers in 
+    // -- front and after the forward slash, divides the numbers 
+    // -- and returns the result back into the string
+    function divideNumbersInString(inputString) {
+        const regex = /(\d+)\/(\d+)/; // Regular expression to match numbers separated by a forward slash
+        const match = inputString.match(regex);
+      
+        if (!match) {
+          return inputString;
+        }
+      
+        const numerator = parseInt(match[1], 10);
+        const denominator = parseInt(match[2], 10);
+      
+        if (denominator === 0) {
+          return "Division by zero is not allowed.";
+        }
+      
+        const result = numerator / denominator;
+        const resultString = inputString.replace(regex, result);
+      
+        return resultString;
+      }
+      
+
     // set separator
     separatorSelector.on('change', (e) => {
         separator = e.target.value;
-        // generate output
-        generateTextOutput();
         // save to local storage to access later
         globalValues.separator = e.target.value
         saveToLocalStorage(globalValues)
+        // generate output
+        generateTextOutput();
     });
     // set output case
     caseSelector.on('change', (e) => {
         outputCase = e.target.value;
-        // generate output
-        generateTextOutput();
         // save to local storage to access later
         globalValues.outputCase = e.target.value
         saveToLocalStorage(globalValues)
+        // generate output
+        generateTextOutput();
     });
     // prefix setup
     prefixText.on("keyup change", (e) => {
         let a = e.target.value;
         prefix = a
-        // generate output
-        generateTextOutput();
         // save to local storage to access later
         globalValues.prefix = a
         saveToLocalStorage(globalValues)
+        // generate output
+        generateTextOutput();
     });
     // prefix setup
     suffixText.on("keyup change", (e) => {
         let a = e.target.value;
         suffix = a
-        // generate output
-        generateTextOutput();
         // save to local storage to access later
         globalValues.suffix = a
         saveToLocalStorage(globalValues)
+        // generate output
+        generateTextOutput();
     });
 
     // main input setup
@@ -296,11 +337,11 @@ $(function () {
         // to update when changing the separator
         let a = e.target.value;
         textVal = a
-        // generate output
-        generateTextOutput();
         // save to local storage to access later
         globalValues.textVal = a
         saveToLocalStorage(globalValues)
+        // generate output
+        generateTextOutput();
     });
     // password length input
     passwordLength.on("keyup change", (e) => {
@@ -344,6 +385,9 @@ $(function () {
     });
     // generate text formatter function
     const generateTextOutput = () => {
+        // format the prefix and suffix
+        prefix = formatPrefixSuffix(prefix)
+        suffix = formatPrefixSuffix(suffix)
         // first clear input
         $(textOutput).val("");
         let outputVal = formatText(textVal ? textVal : "")
@@ -368,7 +412,7 @@ $(function () {
     };
     // generate password function
     const generatePasswordOutput = () => {
-        
+
         let currPass = makePassword(passLength)
         $(textOutput).val(currPass);
         // save to local storage to access later
