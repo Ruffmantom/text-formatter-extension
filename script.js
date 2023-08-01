@@ -244,7 +244,8 @@ $(function () {
         let a = text.split("\n");
         let b = a.map((item) => {
             let removeFractions = divideNumbersInString(item)
-            let c = removeFractions.replace(".", "p")
+            let removeCustom = removeFractions.replace('custom', 'cust')
+            let c = removeCustom.replace(".", "p")
             let i = c.replace(/[^\w\s]/gi, " ").replace(/\s+/g, " ").trim(" ");
             let ii = i.split(" ").join(separator);
             let o = `${prefix ? prefix + separator : ""}${ii ? ii : ""}${suffix ? separator + suffix : ""}`
@@ -257,7 +258,8 @@ $(function () {
     const formatPrefixSuffix = (text) => {
         let a = text.split(" ");
         let b = a.map((item) => {
-            let removeFractions = divideNumbersInString(item)
+            let removeCustom = item.replace('custom', 'cust')
+            let removeFractions = divideNumbersInString(removeCustom)
             let c = removeFractions.replace(".", "p")
             let i = c.replace(/[^\w\s]/gi, " ").replace(/\s+/g, " ").trim(" ");
             let ii = i.split(" ").join(separator);
