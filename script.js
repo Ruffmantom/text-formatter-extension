@@ -549,6 +549,5 @@ $(function () {
         copyFunction(e, "#color_copy_cmyk", "#cmyk-output")
     })
 
-
     // end of Doc Ready
 });
