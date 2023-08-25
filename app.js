@@ -14,6 +14,9 @@ let defaultValues = {
     outputValueText:'',
     outputValuePassword:'',
     outputValueConversion:'',
+    hexInputVal:'',
+    rgbOutput:'',
+    cmykOutput:'',
 }
 // Save values to local storage
 const saveToLocalStorage = (values) => {

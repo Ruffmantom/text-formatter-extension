@@ -12,7 +12,10 @@ const tabNavBtnElm = $(".tab_nav_button")
 const fromField = $("#from_selector")
 const toField = $("#to_selector")
 const conversionField = $("#conversion_input")
-
+const hexInputElm = $("#hex-input")
+const rgbInputElm = $("#rgb-ouput")
+const cmykInputElm = $("#cmyk-output")
+const copyUpperTextBtn = $("#copy_upper_txt_btn")
 
 var chars =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!#$)(-_";
@@ -24,6 +27,47 @@ const makePassword = (len) => {
     // console.log(pass);
     return pass;
 };
+
+
+// Converts an RGB color to CMYK color representation.
+function rgbToCmyk(red, green, blue) {
+    if (red === 0 && green === 0 && blue === 0)
+        return [0, 0, 0, 1];
+
+    const normalizedRed = 1 - red / 255;
+    const normalizedGreen = 1 - green / 255;
+    const normalizedBlue = 1 - blue / 255;
+
+    const minChannel = Math.min(normalizedRed, Math.min(normalizedGreen, normalizedBlue));
+    const cyan = (normalizedRed - minChannel) / (1 - minChannel);
+    const magenta = (normalizedGreen - minChannel) / (1 - minChannel);
+    const yellow = (normalizedBlue - minChannel) / (1 - minChannel);
+    const black = minChannel;
+
+    return [cyan.toFixed(4), magenta.toFixed(4), yellow.toFixed(4), black.toFixed(4)];
+}
+
+// Converts a hex color code to an RGB color string.
+function hexToRgb(hex, decimal) {
+    hex = hex.replace("#", "").trim();
+    const red = parseInt(hex.substring(0, 2), 16);
+    const green = parseInt(hex.substring(2, 4), 16);
+    const blue = parseInt(hex.substring(4, 6), 16);
+    let decimalOutput = `${(red / 255).toPrecision(4)} ${(green / 255).toPrecision(4)} ${(blue / 255).toPrecision(4)}`
+    if (decimal) {
+        return decimalOutput;
+    } else {
+        return `${red},${green},${blue}`;
+    }
+}
+
+// Calculates and prints the CMYK color representation of a given hex color.
+const getCMYK = (hex) => {
+    const rgb = hexToRgb(hex, false);
+    const cmykValues = rgbToCmyk(...rgb.split(","));
+    return cmykValues.join(' ')
+};
+
 
 
 $(function () {
@@ -42,6 +86,9 @@ $(function () {
     let textVal = globalValues.textVal || "";
     let suffix = globalValues.suffix || "";
     let prefix = globalValues.prefix || "";
+    let hex = globalValues.hexInputVal || "";
+    let rgb = globalValues.rgbOutput || "";
+    let cmyk = globalValues.cmykOutput || "";
     let passLength = globalValues.passLength || 10;
     let separator = globalValues.separator || "_";
     let outputCase = globalValues.outputCase || "Lower Case";
@@ -52,6 +99,9 @@ $(function () {
         $(prefixText).val(globalValues.prefix || prefix);
         $(separatorSelector).val(globalValues.separator || separator).change();
         $(caseSelector).val(globalValues.outputCase || outputCase).change();
+        $(hexInputElm).val(hex)
+        $(rgbInputElm).val(rgb)
+        $(cmykInputElm).val(cmyk)
         // Check current tab to display the value in the output box
         if (globalValues.currentTab === 'one') {
             $(textOutput).val(globalValues.outputValueText || "");
@@ -91,6 +141,11 @@ $(function () {
         tabBtnArr.forEach((btn) => {
             $(btn).data('tab') === globalValues.currentTab ? $(btn).addClass('nav_tab_active') : ''
         })
+        if (globalValues.currentTab === "two") {
+            $("#lower_copy_textarea_cont").hide()
+        } else {
+            $("#lower_copy_textarea_cont").show()
+        }
         // loop through the tab elements and display
         // the one that matches local data
         tabElmArr.forEach(tab => {
@@ -112,6 +167,12 @@ $(function () {
             removeClass(tabBtnArr, 'nav_tab_active')
             // add active from nav Btn
             $(e.target).addClass('nav_tab_active')
+            // hide large copy box if tab is on 2
+            if (tabId === "two") {
+                $("#lower_copy_textarea_cont").hide()
+            } else {
+                $("#lower_copy_textarea_cont").show()
+            }
 
             tabElmArr.forEach(tab => {
                 // remove active from tab
@@ -197,31 +258,43 @@ $(function () {
                 'Centimeters': 1 / 10,
                 'Inches': 1 / 25.4,
                 'Feet': 1 / 304.8,
-                'Points': 2.835
+                'Points': 2.835,
+                'Yards': 1 / 914.4  // Millimeters to Yards
             },
             'Centimeters': {
                 'Millimeters': 10,
                 'Inches': 1 / 2.54,
                 'Feet': 1 / 30.48,
-                'Points': 28.346
+                'Points': 28.346,
+                'Yards': 1 / 91.44   // Centimeters to Yards
             },
             'Inches': {
                 'Centimeters': 2.54,
                 'Millimeters': 25.4,
                 'Feet': 1 / 12,
-                'Points': 72
+                'Points': 72,
+                'Yards': 1 / 36      // Inches to Yards
             },
             'Feet': {
                 'Centimeters': 30.48,
                 'Millimeters': 304.8,
                 'Inches': 12,
-                'Points': 864
+                'Points': 864,
+                'Yards': 1 / 3       // Feet to Yards
             },
             'Points': {
                 'Centimeters': 1 / 28.346,
                 'Millimeters': 1 / 2.835,
                 'Inches': 1 / 72,
-                'Feet': 1 / 864
+                'Feet': 1 / 864,
+                'Yards': 1 / 1296    // Points to Yards
+            },
+            'Yards': {
+                'Millimeters': 914.4, // Yards to Millimeters
+                'Centimeters': 91.44, // Yards to Centimeters
+                'Inches': 36,         // Yards to Inches
+                'Feet': 3,            // Yards to Feet
+                'Points': 1296        // Yards to Points
             }
         };
 
@@ -244,7 +317,7 @@ $(function () {
         let a = text.split("\n");
         let b = a.map((item) => {
             let removeFractions = divideNumbersInString(item)
-            let removeCustom = removeFractions.replace('custom', 'cust')
+            let removeCustom = removeFractions.replace(/custom/gi, 'cust');
             let c = removeCustom.replace(".", "p")
             let i = c.replace(/[^\w\s]/gi, " ").replace(/\s+/g, " ").trim(" ");
             let ii = i.split(" ").join(separator);
@@ -258,7 +331,7 @@ $(function () {
     const formatPrefixSuffix = (text) => {
         let a = text.split(" ");
         let b = a.map((item) => {
-            let removeCustom = item.replace('custom', 'cust')
+            let removeCustom = item.replace(/custom/gi, 'cust');
             let removeFractions = divideNumbersInString(removeCustom)
             let c = removeFractions.replace(".", "p")
             let i = c.replace(/[^\w\s]/gi, " ").replace(/\s+/g, " ").trim(" ");
@@ -275,25 +348,31 @@ $(function () {
     function divideNumbersInString(inputString) {
         const regex = /(\d+)\/(\d+)/; // Regular expression to match numbers separated by a forward slash
         const match = inputString.match(regex);
-      
+
         if (!match) {
-          return inputString;
+            return inputString;
         }
-      
+
         const numerator = parseInt(match[1], 10);
         const denominator = parseInt(match[2], 10);
-      
+
         if (denominator === 0) {
-          return "Division by zero is not allowed.";
+            return "Division by zero is not allowed.";
         }
-      
+
         const result = numerator / denominator;
         const resultString = inputString.replace(regex, result);
-      
-        return resultString;
-      }
-      
 
+        return resultString; 
+    }
+    // copy button for upper text box.
+    $(copyUpperTextBtn).on('click', (e) => {
+        copyFunction(e, "copy_upper_txt_btn", "#text_input")
+    })
+    // when click on or when text_input is active select all
+    $(textInput).on('click',()=>{
+        $(textInput).select();
+    })
     // set separator
     separatorSelector.on('change', (e) => {
         separator = e.target.value;
@@ -357,7 +436,19 @@ $(function () {
     generatePassBtn.on("click", (e) => {
         generatePasswordOutput();
     });
-
+    // copy function
+    const copyFunction = (e, element, copyElm) => {
+        console.log("Clicked " + element + " and about to copy: " + copyElm)
+        if (e && $(copyElm).val() !== "") {
+            $(copyElm).select();
+            document.execCommand("copy");
+            $(".notification").slideDown();
+            timer = setTimeout(() => {
+                $(".notification").slideUp();
+                clearTimeout(timer)
+            }, 5000);
+        }
+    }
     // clear output on click
     const clearValues = () => {
         // clear variables
@@ -373,6 +464,9 @@ $(function () {
         $(textInput).val(defaultValues.textVal);
         $(passwordLength).val(defaultValues.passLength);
         $(conversionField).val(defaultValues.conversionInputValue);
+        $(hexInputElm).val(defaultValues.hexInputVal)
+        $(rgbInputElm).val(defaultValues.rgbOutput)
+        $(cmykInputElm).val(defaultValues.cmykOutput)
         // reset selections
         $(separatorSelector).val(defaultValues.separator).change();
         $(caseSelector).val(defaultValues.outputCase).change();
@@ -424,14 +518,37 @@ $(function () {
     // copy function
     let timer;
     $(".textarea_cont").on("click", (e) => {
-        if (e && $("#text_output").val() !== "") {
-            $(textOutput).select();
-            document.execCommand("copy");
-            $(".notification").slideDown();
-            timer = setTimeout(() => {
-                $(".notification").slideUp();
-                clearTimeout(timer)
-            }, 5000);
-        }
+        copyFunction(e, ".textarea_cont", "#text_output")
     });
+
+    // ----------------
+    // Color Creator
+    // listener for color hex input
+    $("#hex-input").on('input', function () {
+        let hexCode = hexInputElm.val()
+        if (!hexCode || hexCode === "") {
+            hexInputElm.val('')
+            return
+        }
+        let rgb = hexToRgb(hexCode, true)
+        let cmyk = getCMYK(hexCode)
+        $(rgbInputElm).val(rgb)
+        $(cmykInputElm).val(cmyk)
+        // local Storage saving
+        globalValues.hexInputVal = hexCode
+        globalValues.rgbOutput = rgb
+        globalValues.cmykOutput = cmyk
+        saveToLocalStorage(globalValues)
+    })
+    // output listener for on clicks
+    $(rgbInputElm).on('click', (e) => {
+        copyFunction(e, "#color_copy_rgb", "#rgb-ouput")
+    })
+
+    $(cmykInputElm).on('click', (e) => {
+        copyFunction(e, "#color_copy_cmyk", "#cmyk-output")
+    })
+
+
+    // end of Doc Ready
 });

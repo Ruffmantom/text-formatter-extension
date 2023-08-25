@@ -17,8 +17,9 @@
 
     <div class="input_cont">
         <div class="tab_navigation">
-            <p class="tab_nav_button nav_tab_active" data-tab="one">Text formatter</p>
-            <p class="tab_nav_button" data-tab="two">Password Generator</p>
+            <p class="tab_nav_button nav_tab_active" data-tab="one">Name formatter</p>
+            <p class="tab_nav_button" data-tab="two">Color</p>
+            <!-- <p class="tab_nav_button" data-tab="two">Password Generator</p> -->
             <p class="tab_nav_button" data-tab="three">Conversions</p>
         </div>
         <div class="tab tab_active" data-tab="one">
@@ -55,13 +56,31 @@
 
 
             </div>
-            <div class="tf_control_group">
-               
-                <textarea class="tf_input" name="input" id="text_input" cols="30" rows="10" placeholder='Place Text Here (Allows for line breaks)'></textarea>
+            <div class="upper_format_text_input_cont tf_control_group">
+                <img id="copy_upper_txt_btn" class="tf_btn copy_upper_txt_btn" src="./images/copy-icon_1.svg" alt="">
+                <textarea class="tf_input" name="input" id="text_input" cols="30" rows="10"
+                    placeholder='Place Text Here (Allows for line breaks)'></textarea>
             </div>
         </div>
 
         <div class="tab" data-tab="two">
+            <div class="tf_control_group bottom_input_group">
+                <input class="tf_input" name="input" type="text" id="hex-input" placeholder='Paste HEX Code here'>
+            </div>
+            <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
+                <div class="helper">Click To Copy</div>
+                <input class="tf_input color_input" readonly name="input" type="text" id="rgb-ouput"
+                    placeholder='RGB Output'>
+            </div>
+
+            <div id="color_copy_cmyk" class="textarea_cont tf_control_group bottom_input_group">
+                <div class="helper">Click To Copy</div>
+                <input class="tf_input color_input" readonly name="input" type="text" id="cmyk-output"
+                    placeholder='CMYK Output'>
+            </div>
+
+        </div>
+        <!-- <div class="tab" data-tab="two">
             <div class="tf_control_group bottom_input_group">
 
                 <button id="generate_password" class="tf_btn main-btn">Generate Password</button>
@@ -71,7 +90,7 @@
 
             </div>
 
-        </div>
+        </div> -->
         <div class="tab" data-tab="three">
             <div class="tf_control_group bottom_input_group">
                 <span>Convert</span>
@@ -80,6 +99,7 @@
                     <option>Centimeters</option>
                     <option>Inches</option>
                     <option>Feet</option>
+                    <option>Yards</option>
                     <option>Points</option>
                 </select>
                 <span>to:</span>
@@ -88,6 +108,7 @@
                     <option selected>Centimeters</option>
                     <option>Inches</option>
                     <option>Feet</option>
+                    <option>Yards</option>
                     <option>Points</option>
                 </select>
             </div>
@@ -98,7 +119,7 @@
             </div>
         </div>
 
-        <div class="tf_control_group out_put_cont">
+        <div id="lower_copy_textarea_cont" class="tf_control_group out_put_cont">
             <div class="textarea_cont">
                 <div class="helper">Click To Copy</div>
                 <textarea class="tf_input" name="output" id="text_output" readonly cols="30" rows="10"></textarea>

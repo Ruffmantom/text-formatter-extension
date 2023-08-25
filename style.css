@@ -25,11 +25,13 @@
     outline: none;
     border: 1px solid #FFFFFF;
 }
-#text_input{
+
+#text_input {
     width: 100%;
     min-height: 50px;
     max-height: 50px;
 }
+
 .tf_input:focus {
     border: 1px solid var(--primary);
 }
@@ -71,6 +73,10 @@
     padding: 10px;
 }
 
+.color_input {
+    cursor: pointer;
+}
+
 .tf_btn {
     padding: 5px 7px;
     background-color: var(--primary);
@@ -105,6 +111,30 @@
     max-height: 400px;
     padding: 5px 7px;
     cursor: pointer;
+}
+
+.upper_format_text_input_cont {
+    position: relative;
+}
+
+.copy_upper_txt_btn {
+    position: absolute;
+    bottom: 7px;
+    left: 7px;
+    max-height: 18px;
+    max-width: 18px;
+    fill: white;
+    color: white;
+    margin: 0;
+    z-index: -1;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.upper_format_text_input_cont:hover .copy_upper_txt_btn {
+    z-index: 99;
+    opacity: 1;
+    transition: all 150ms ease-in-out;
 }
 
 .textarea_cont {
@@ -159,7 +189,8 @@
 .form_item>input {
     width: 100%;
 }
-.form_item:first-child{
+
+.form_item:first-child {
     margin-right: 15px;
 }
 
