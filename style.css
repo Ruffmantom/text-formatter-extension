@@ -280,6 +280,7 @@
     height: 0;
     transition: all 130ms ease-out;
     position: relative;
+    display: none;
 }
 
 .tab_active {
@@ -287,4 +288,5 @@
     height: fit-content;
     transition: all 130ms ease-in;
     z-index: 9;
+    display: block;
 }
