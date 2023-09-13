@@ -308,39 +308,8 @@ $(function () {
     }
     // ---------------------
     // format text function
-    const formatText = (text) => {
-        // text could come in with line breaks
-        // split the text into an array
-        // then loop through array and remove special characters
-        // add the separators
-        // then join the array back into a string with the line breaks
-        let a = text.split("\n");
-        let b = a.map((item) => {
-            let removeFractions = divideNumbersInString(item)
-            let removeCustom = removeFractions.replace(/custom/gi, 'cust');
-            let c = removeCustom.replace(".", "p")
-            let i = c.replace(/[^\w\s]/gi, " ").replace(/\s+/g, " ").trim(" ");
-            let ii = i.split(" ").join(separator);
-            let o = `${prefix ? prefix + separator : ""}${ii ? ii : ""}${suffix ? separator + suffix : ""}`
-            return o
-        });
-        let output = b.join("\n");
-        return output;
-    }
-    // format prefix and suffix function
-    const formatPrefixSuffix = (text) => {
-        let a = text.split(" ");
-        let b = a.map((item) => {
-            let removeCustom = item.replace(/custom/gi, 'cust');
-            let removeFractions = divideNumbersInString(removeCustom)
-            let c = removeFractions.replace(".", "p")
-            let i = c.replace(/[^\w\s]/gi, " ").replace(/\s+/g, " ").trim(" ");
-            let ii = i.split(" ").join(separator);
-            return ii
-        });
-        let output = b.join(separator);
-        return output;
-    }
+
+    // ***** helper functions *****
     // function will take in a string from example: "Wood 3/4" 
     // -- finds any forward slashes then takes the numbers in 
     // -- front and after the forward slash, divides the numbers 
@@ -363,14 +332,54 @@ $(function () {
         const result = numerator / denominator;
         const resultString = inputString.replace(regex, result);
 
-        return resultString; 
+        return resultString;
     }
+
+
+
+    // format prefix and suffix function
+    const formatPrefixSuffix = (text, sep) => {
+        let a = text.split(" ");
+        let b = a.map((item) => {
+            let removeCustom = item.replace(/custom/gi, 'cust');
+            let removeFractions = divideNumbersInString(removeCustom)
+            let c = removeFractions.replace(".", "p")
+            let i = c.replace(/[^\w\s]/gi, " ").replace(/\s+/g, " ").trim(" ");
+            let ii = i.split(" ").join(sep);
+            return ii
+        });
+        let output = b.join(sep);
+        return output;
+    }
+
+    const formatText = (text, sep) => {
+        // text could come in with line breaks
+        // split the text into an array
+        // then loop through array and remove special characters
+        // add the separators
+        // then join the array back into a string with the line breaks
+        let a = text.split("\n");
+        let b = a.map((item) => {
+            let removeFractions = divideNumbersInString(item)
+            let removeCustom = removeFractions.replace(/custom/gi, 'cust');
+            let c = removeCustom.replace(".", "p")
+            let i = c.replace(/[^\w\s]/gi, " ").replace(/\s+/g, " ").trim(" ");
+            let ii = i.split(" ").join(sep);
+            let o = `${formatPrefixSuffix(prefix, sep) ? formatPrefixSuffix(prefix, sep) + sep : ""}${ii ? ii : ""}${formatPrefixSuffix(suffix, sep) ? sep + formatPrefixSuffix(suffix, sep) : ""}`
+            return o
+        });
+        let output = b.join("\n");
+        return output;
+    }
+
+
+    // **** Actions ****
     // copy button for upper text box.
     $(copyUpperTextBtn).on('click', (e) => {
         copyFunction(e, "copy_upper_txt_btn", "#text_input")
     })
     // when click on or when text_input is active select all
-    $(textInput).on('click',()=>{
+    $(textInput).on('click', () => {
         $(textInput).select();
     })
     // set separator
@@ -481,12 +490,9 @@ $(function () {
     });
     // generate text formatter function
     const generateTextOutput = () => {
-        // format the prefix and suffix
-        prefix = formatPrefixSuffix(prefix)
-        suffix = formatPrefixSuffix(suffix)
         // first clear input
         $(textOutput).val("");
-        let outputVal = formatText(textVal ? textVal : "")
+        let outputVal = formatText(textVal ? textVal : "", separator)
         // case type output and save to local storage
         if (outputCase === "Lower Case") {
             $(textOutput).val(outputVal.toLowerCase())
