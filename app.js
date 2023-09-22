@@ -63,3 +63,20 @@ const resetLocalStorage = () => {
     // reset global values
     globalValues = defaultValues
 };
+
+//clear suffix
+const clearStoragePrefix = ()=>{
+    // get current values
+    let currentValues = JSON.parse(localStorage.getItem('ID_TF_DATA'))
+    currentValues.prefix = ''
+    // save to local
+    saveToLocalStorage(currentValues)
+}
+//clear suffix
+const clearStorageSuffix = ()=>{
+    // get current values
+    let currentValues = JSON.parse(localStorage.getItem('ID_TF_DATA'))
+    currentValues.suffix = ''
+    // save to local
+    saveToLocalStorage(currentValues)
+}

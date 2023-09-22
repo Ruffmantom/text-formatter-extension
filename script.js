@@ -16,6 +16,11 @@ const hexInputElm = $("#hex-input")
 const rgbInputElm = $("#rgb-ouput")
 const cmykInputElm = $("#cmyk-output")
 const copyUpperTextBtn = $("#copy_upper_txt_btn")
+const prefixClearBtn = $("#prefix_clear")
+const suffixClearBtn = $("#suffix_clear")
+const settingsBtn = $("#settings_button")
+const closeBtn = $('#close_settings_btn')
+const settingsModalCont = $('.main_modal_container')
 
 var chars =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!#$)(-_";
@@ -554,6 +559,40 @@ $(function () {
     $(cmykInputElm).on('click', (e) => {
         copyFunction(e, "#color_copy_cmyk", "#cmyk-output")
     })
+
+
+    // Suffix and prefix clears
+    $(prefixClearBtn).on('click', () => {
+        $(prefixText).val(defaultValues.prefix);
+        prefix = ''
+        clearStoragePrefix()
+        // recreate output
+        generateTextOutput()
+    })
+    
+    $(suffixClearBtn).on('click', () => {
+        $(suffixText).val(defaultValues.suffix);
+        suffix = ''
+        clearStorageSuffix()
+        // recreate output
+        generateTextOutput()
+    })
+
+
+    // setting button actions
+    $(settingsBtn).on('click', () => {
+        if ($(settingsModalCont).hasClass("modal_active")) {
+            $(settingsModalCont).removeClass('modal_active')
+        } else {
+            $(settingsModalCont).addClass('modal_active')
+        }
+    })
+    $(closeBtn).on('click', () => {
+        if ($(settingsModalCont).hasClass("modal_active")) {
+            $(settingsModalCont).removeClass('modal_active')
+        }
+    })
+
 
     // end of Doc Ready
 });

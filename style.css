@@ -1,6 +1,7 @@
 :root {
     --primary: #0088cc;
     --secondary: #027ab6;
+    --blur: blur(5px);
 }
 
 /* When the light is checked */
@@ -8,18 +9,22 @@
     --shadow: 0 6px 13px #f5f5f5;
     --bg-color: #dadada;
     --secondary-bg-color: #bdbdbd;
+    --modal-bg-color: #bdbdbd4f;
     --hover-secondary-bg-color: #a5a5a5;
     --text-color: #303030;
     --input-bkg: #f7f7f7;
+    --form-block-bkg: #d4d4d4;
 }
 
 :root:has(#dark_mode:checked) {
     --shadow: 0 6px 13px #333333;
     --bg-color: #1e1e1e;
     --secondary-bg-color: #3b3b3b;
+    --modal-bg-color: #3b3b3b94;
     --hover-secondary-bg-color: #494949;
     --text-color: #e4e4e4;
     --input-bkg: #444444;
+    --form-block-bkg: #272727;
 }
 
 body {
@@ -37,6 +42,10 @@ input,
 textarea,
 select {
     background-color: var(--input-bkg);
+}
+
+.text_formatter {
+    position: relative;
 }
 
 .text_formatter>* {
@@ -86,13 +95,14 @@ select {
     font-style: italic;
     color: gray;
 }
-.theme_settings{
+
+.settings_cont {
     width: 100%;
     display: flex;
     justify-content: end;
 }
 
-.theme_button {
+.setting_btn {
     /* padding: 10px; */
     border-radius: 5px;
     height: 35px;
@@ -103,21 +113,27 @@ select {
     align-items: center;
     background-color: var(--secondary-bg-color);
     cursor: pointer;
+    margin-left: 10px;
 }
 
 
-.theme_button:hover {
+.setting_btn:hover {
     background-color: var(--hover-secondary-bg-color);
     transition: all 150ms ease-in-out;
 }
 
-.theme_icon {
+.btn_icon {
     position: absolute;
-    opacity: 0;
     color: var(--text-color);
     fill: var(--text-color);
 }
-.theme_icon.theme_set{
+
+.theme_icon {
+    opacity: 0;
+
+}
+
+.btn_icon.theme_set {
     opacity: 1;
 }
 
@@ -257,6 +273,7 @@ select {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 
 .form_item>input {
@@ -362,4 +379,112 @@ select {
     transition: all 130ms ease-in;
     z-index: 9;
     display: block;
+}
+
+/* SETTINGS */
+.main_modal_container {
+    position: absolute;
+    height: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--modal-bg-color);
+    backdrop-filter: var(--blur);
+    overflow: hidden;
+    opacity: 0;
+    z-index: -1;
+}
+.main_modal_container {
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    z-index: -1;
+    transition: all 150ms ease-in-out;
+}
+.modal_active{
+    z-index: 99999;
+    height: 100%;
+    opacity: 1;
+    overflow: inherit;
+    transition: all 150ms ease-in-out;
+}
+
+.settings_modal {
+    background-color: var(--bg-color);
+    padding: 10px;
+    border-radius: 10px;
+    position: relative;
+    width: 90%;
+}
+
+.settings_modal>h4 {
+    margin-top: 0;
+}
+
+.close_btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.setting_form_row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.setting_form_col {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+}
+
+.input_block {
+    display: flex;
+    margin-top: 10px;
+    font-size: 12px;
+    padding: 7px;
+    border-radius: 7px;
+    background-color: var(--form-block-bkg);
+}
+
+.input_block>p {
+    margin: 0;
+    margin-top: 6px;
+}
+
+.checkbox_input {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+}
+.settings_form>p{
+    margin: 0 0 5px 0;
+}
+/* CLEAR BUTTONS FOR SUFFIX AND PREFIX */
+.x_clear_btn{
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    padding: 5px 7px;
+    border-radius: 3px;
+    background-color: var(--primary);
+    color: var(--text-color);
+    fill: var(--text-color);
+    cursor: pointer;
+}
+.x_clear_btn{
+    opacity: 0;
+    z-index: -1;
+    transition: all 150ms ease;
+}
+.x_clear_btn:hover{
+    
+    background-color: var(--secondary);
+}
+.fix_input_group:hover>.x_clear_btn{
+    opacity: 1;
+    z-index: 9;
+    transition: all 150ms ease;
+
 }
