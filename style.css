@@ -469,8 +469,8 @@ select {
     padding: 5px 7px;
     border-radius: 3px;
     background-color: var(--primary);
-    color: var(--text-color);
-    fill: var(--text-color);
+    color: white;
+    fill: white;
     cursor: pointer;
 }
 .x_clear_btn{

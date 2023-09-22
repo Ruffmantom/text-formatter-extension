@@ -1,34 +1,36 @@
 // Define global variable
 let globalValues;
 let defaultValues = {
-    conversionFrom:'Millimeters',
-    conversionTo:'Centimeters',
-    conversionInputValue:'',
-    separator:'_',
-    outputCase:'Lower Case',
-    prefix:'',
-    suffix:'',
-    textVal:'',
-    passLength:10,
-    currentTab:'one',
-    outputValueText:'',
-    outputValuePassword:'',
-    outputValueConversion:'',
-    hexInputVal:'',
-    rgbOutput:'',
-    cmykOutput:'',
+    conversionFrom: 'Millimeters',
+    conversionTo: 'Centimeters',
+    conversionInputValue: '',
+    separator: '_',
+    outputCase: 'Lower Case',
+    prefix: '',
+    suffix: '',
+    textVal: '',
+    passLength: 10,
+    currentTab: 'one',
+    outputValueText: '',
+    outputValuePassword: '',
+    outputValueConversion: '',
+    hexInputVal: '',
+    rgbOutput: '',
+    cmykOutput: '',
 }
+const DATA_NAME = 'TF_DATA';
+const TF_SETTINGS = 'TF_SETTINGS'
 // Save values to local storage
-const saveToLocalStorage = (values) => {
+const saveToLocalStorage = (name, values) => {
     // console.log(values);
-    localStorage.setItem('ID_TF_DATA', JSON.stringify(values));
+    localStorage.setItem(name, JSON.stringify(values));
 };
 
 // Load values from local storage
 const loadFromLocalStorage = () => {
     // console.log("Loaded!");
 
-    let localObj = localStorage.getItem('ID_TF_DATA');
+    let localObj = localStorage.getItem(DATA_NAME);
 
     if (localObj) {
         // console.log("Object found in local storage!");
@@ -45,7 +47,7 @@ const loadFromLocalStorage = () => {
         /* Create your new values here */;
 
         // Save the new values to local storage
-        saveToLocalStorage(defaultValues);
+        saveToLocalStorage(DATA_NAME, defaultValues);
 
         // console.log("New DEFAULT values created and saved to local storage:", defaultValues);
 
@@ -59,24 +61,24 @@ const loadFromLocalStorage = () => {
 const resetLocalStorage = () => {
     // console.log("Cleared Data!");
     // Save the default values to local storage
-    saveToLocalStorage(defaultValues);
+    saveToLocalStorage(DATA_NAME, defaultValues);
     // reset global values
     globalValues = defaultValues
 };
 
 //clear suffix
-const clearStoragePrefix = ()=>{
+const clearStoragePrefix = () => {
     // get current values
-    let currentValues = JSON.parse(localStorage.getItem('ID_TF_DATA'))
+    let currentValues = JSON.parse(localStorage.getItem(DATA_NAME))
     currentValues.prefix = ''
     // save to local
-    saveToLocalStorage(currentValues)
+    saveToLocalStorage(DATA_NAME, currentValues)
 }
 //clear suffix
-const clearStorageSuffix = ()=>{
+const clearStorageSuffix = () => {
     // get current values
-    let currentValues = JSON.parse(localStorage.getItem('ID_TF_DATA'))
+    let currentValues = JSON.parse(localStorage.getItem(DATA_NAME))
     currentValues.suffix = ''
     // save to local
-    saveToLocalStorage(currentValues)
+    saveToLocalStorage(DATA_NAME, currentValues)
 }

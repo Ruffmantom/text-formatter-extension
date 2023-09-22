@@ -167,7 +167,7 @@ $(function () {
             let tabId = $(e.target).data('tab')
             // save current tab to local storage
             globalValues.currentTab = tabId
-            saveToLocalStorage(globalValues)
+            saveToLocalStorage(DATA_NAME, globalValues)
             // remove class from all btns
             removeClass(tabBtnArr, 'nav_tab_active')
             // add active from nav Btn
@@ -244,7 +244,7 @@ $(function () {
         globalValues.conversionFrom = fromOption
         globalValues.conversionTo = toOption
         globalValues.conversionInputValue = inputValue
-        saveToLocalStorage(globalValues)
+        saveToLocalStorage(DATA_NAME, globalValues)
 
         // Perform the conversion calculation based on the selected options and input value
         var result = performConversion(fromOption, toOption, inputValue);
@@ -307,7 +307,7 @@ $(function () {
         var result = value * conversionRate;
         // save result to the Local Storage
         globalValues.outputValueConversion = result
-        saveToLocalStorage(globalValues)
+        saveToLocalStorage(DATA_NAME, globalValues)
         // return result
         return result;
     }
@@ -392,7 +392,7 @@ $(function () {
         separator = e.target.value;
         // save to local storage to access later
         globalValues.separator = e.target.value
-        saveToLocalStorage(globalValues)
+        saveToLocalStorage(DATA_NAME, globalValues)
         // generate output
         generateTextOutput();
     });
@@ -401,7 +401,7 @@ $(function () {
         outputCase = e.target.value;
         // save to local storage to access later
         globalValues.outputCase = e.target.value
-        saveToLocalStorage(globalValues)
+        saveToLocalStorage(DATA_NAME, globalValues)
         // generate output
         generateTextOutput();
     });
@@ -411,7 +411,7 @@ $(function () {
         prefix = a
         // save to local storage to access later
         globalValues.prefix = a
-        saveToLocalStorage(globalValues)
+        saveToLocalStorage(DATA_NAME, globalValues)
         // generate output
         generateTextOutput();
     });
@@ -421,7 +421,7 @@ $(function () {
         suffix = a
         // save to local storage to access later
         globalValues.suffix = a
-        saveToLocalStorage(globalValues)
+        saveToLocalStorage(DATA_NAME, globalValues)
         // generate output
         generateTextOutput();
     });
@@ -434,7 +434,7 @@ $(function () {
         textVal = a
         // save to local storage to access later
         globalValues.textVal = a
-        saveToLocalStorage(globalValues)
+        saveToLocalStorage(DATA_NAME, globalValues)
         // generate output
         generateTextOutput();
     });
@@ -444,7 +444,7 @@ $(function () {
         passLength = a;
         // save to local storage to access later
         globalValues.passLength = a
-        saveToLocalStorage(globalValues)
+        saveToLocalStorage(DATA_NAME, globalValues)
     });
     // generate on click
     generatePassBtn.on("click", (e) => {
@@ -503,18 +503,18 @@ $(function () {
             $(textOutput).val(outputVal.toLowerCase())
             // save to local storage
             globalValues.outputValueText = outputVal.toLowerCase()
-            saveToLocalStorage(globalValues)
+            saveToLocalStorage(DATA_NAME, globalValues)
         } else if (outputCase === 'Upper Case') {
             $(textOutput).val(outputVal.toUpperCase())
             // save to local storage
             globalValues.outputValueText = outputVal.toUpperCase()
-            saveToLocalStorage(globalValues)
+            saveToLocalStorage(DATA_NAME, globalValues)
         } else {
             // else if selected no format then output text normal
             $(textOutput).val(outputVal)
             // save to local storage
             globalValues.outputValueText = outputVal
-            saveToLocalStorage(globalValues)
+            saveToLocalStorage(DATA_NAME, globalValues)
         }
     };
     // generate password function
@@ -524,7 +524,7 @@ $(function () {
         $(textOutput).val(currPass);
         // save to local storage to access later
         globalValues.outputValuePassword = currPass
-        saveToLocalStorage(globalValues)
+        saveToLocalStorage(DATA_NAME, globalValues)
     };
     // copy function
     let timer;
@@ -549,7 +549,7 @@ $(function () {
         globalValues.hexInputVal = hexCode
         globalValues.rgbOutput = rgb
         globalValues.cmykOutput = cmyk
-        saveToLocalStorage(globalValues)
+        saveToLocalStorage(DATA_NAME, globalValues)
     })
     // output listener for on clicks
     $(rgbInputElm).on('click', (e) => {
@@ -569,7 +569,7 @@ $(function () {
         // recreate output
         generateTextOutput()
     })
-    
+
     $(suffixClearBtn).on('click', () => {
         $(suffixText).val(defaultValues.suffix);
         suffix = ''
