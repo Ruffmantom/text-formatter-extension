@@ -31,36 +31,36 @@ $(() => {
         // set checkboxes
         if (loadedSettings.fractionToDecimal) {
             $(settingsFractionToDec).prop("checked", true)
-            
-        }else{
+
+        } else {
             $(settingsFractionToDec).prop("checked", false)
 
         }
         if (loadedSettings.decimalToLetter) {
             $(settingsDecimalCheck).prop("checked", true)
-            
-        }else{
+
+        } else {
             $(settingsDecimalCheck).prop("checked", false)
 
         }
         if (loadedSettings.dubQuotesToIn) {
             $(settingsDoubleQuotesCheck).prop("checked", true)
-            
-        }else{
+
+        } else {
             $(settingsDoubleQuotesCheck).prop("checked", false)
 
         }
         if (loadedSettings.sQuoteToFt) {
             $(settingsSingleQuotesCheck).prop("checked", true)
-            
-        }else{
+
+        } else {
             $(settingsSingleQuotesCheck).prop("checked", false)
 
         }
         if (loadedSettings.customToCust) {
             $(settingsCustomCheck).prop("checked", true)
-            
-        }else{
+
+        } else {
             $(settingsCustomCheck).prop("checked", false)
 
         }
