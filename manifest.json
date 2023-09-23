@@ -21,6 +21,7 @@
         "js": [
           "./jquery.js",
           "./app.js",
+          "./settings.js",
           "./script.js",
           "./theme.js"
         ]
