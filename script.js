@@ -29,7 +29,7 @@ const makePassword = (len) => {
     for (var i = 0; i < len; i++) {
         pass += chars[Math.floor(Math.random() * chars.length)];
     }
-    // console.log(pass);
+    // // console.log(pass);
     return pass;
 };
 
@@ -83,7 +83,7 @@ $(function () {
             await loadFromLocalStorage()
             isSuccess = true
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
     }
     startApp()
@@ -250,7 +250,7 @@ $(function () {
         var result = performConversion(fromOption, toOption, inputValue);
 
         // Update the result on the page or do something with it
-        // console.log(result);
+        // // console.log(result);
         $(textOutput).val("");
         // // return value
         result.toString() === "NaN" ? $(textOutput).val('') : $(textOutput).val(result);
@@ -320,62 +320,187 @@ $(function () {
     // -- front and after the forward slash, divides the numbers 
     // -- and returns the result back into the string
     function divideNumbersInString(inputString) {
-        const regex = /(\d+)\/(\d+)/; // Regular expression to match numbers separated by a forward slash
-        const match = inputString.match(regex);
+        const regex = /(\d+)\/(\d+)/g; // Regular expression with the global flag to match all fractions
+        const matches = inputString.match(regex);
 
-        if (!match) {
+        if (!matches) {
             return inputString;
         }
 
-        const numerator = parseInt(match[1], 10);
-        const denominator = parseInt(match[2], 10);
+        let resultString = inputString;
 
-        if (denominator === 0) {
-            return "Division by zero is not allowed.";
+        for (const match of matches) {
+            const [numerator, denominator] = match.split('/').map(Number);
+
+            if (denominator === 0) {
+                return "Division by zero is not allowed.";
+            }
+
+            const result = numerator / denominator;
+            resultString = resultString.replace(match, result);
         }
-
-        const result = numerator / denominator;
-        const resultString = inputString.replace(regex, result);
 
         return resultString;
     }
 
 
-
-    // format prefix and suffix function
-    const formatPrefixSuffix = (text, sep) => {
-        let a = text.split(" ");
-        let b = a.map((item) => {
-            let removeCustom = item.replace(/custom/gi, 'cust');
-            let removeFractions = divideNumbersInString(removeCustom)
-            let c = removeFractions.replace(".", "p")
-            let i = c.replace(/[^\w\s]/gi, " ").replace(/\s+/g, " ").trim(" ");
-            let ii = i.split(" ").join(sep);
-            return ii
-        });
-        let output = b.join(sep);
-        return output;
+    const returnInch = (t) => {
+        return t.replace(/"/g, 'in')
     }
 
-    const formatText = (text, sep) => {
-        // text could come in with line breaks
-        // split the text into an array
-        // then loop through array and remove special characters
-        // add the separators
-        // then join the array back into a string with the line breaks
-        let a = text.split("\n");
-        let b = a.map((item) => {
-            let removeFractions = divideNumbersInString(item)
-            let removeCustom = removeFractions.replace(/custom/gi, 'cust');
-            let c = removeCustom.replace(".", "p")
-            let i = c.replace(/[^\w\s]/gi, " ").replace(/\s+/g, " ").trim(" ");
-            let ii = i.split(" ").join(sep);
-            let o = `${formatPrefixSuffix(prefix, sep) ? formatPrefixSuffix(prefix, sep) + sep : ""}${ii ? ii : ""}${formatPrefixSuffix(suffix, sep) ? sep + formatPrefixSuffix(suffix, sep) : ""}`
-            return o
-        });
-        let output = b.join("\n");
-        return output;
+    const returnFoot = (t) => {
+        return t.replace(/'/g, 'ft')
     }
+
+    const returnCust = (t) => {
+        return t.replace(/custom/gi, 'cust')
+    }
+    const returnLetterP = (t) => {
+        return t.replace(/\./g, "p")
+    }
+
+    const checkSettings = (text) => {
+        let output = text;
+
+
+        if (settings.customToCust) {
+            // console.log(settings.customToCust)
+            let a = returnCust(output)
+            output = a
+            // console.log("settings.customToCust: " + output)
+        }
+
+        if (settings.fractionToDecimal) {
+            let a = divideNumbersInString(output)
+            output = a
+            // console.log("settings.fractionToDecimal: " + output)
+        }
+
+        if (settings.dubQuotesToIn) {
+            let a = returnInch(output)
+            output = a
+            // console.log("settings.dubQuotesToIn: " + output)
+        }
+
+        if (settings.sQuoteToFt) {
+            let a = returnFoot(output)
+            output = a
+            // console.log("settings.sQuoteToFt: " + output)
+        }
+
+        if (settings.decimalToLetter) {
+            let a = returnLetterP(output)
+            output = a
+            // console.log("settings.decimalToLetter: " + output)
+        }
+
+        return output
+    }
+
+    // format text function
+
+    const formatText = (text, sep, preSuf) => {
+        if (preSuf === true) {
+            // text coming in from prefix or suffix
+            let textA = text.split(" ");
+
+            let textB = textA.map(item => {
+                let textC = checkSettings(item);
+
+                textC = textC.replace(/[^\w\s]/gi, " ").replace(/\s+/g, " ").trim(" ");
+                textC = textC.split(" ").join(sep);
+
+                return textC
+            });
+
+            return textB.join(sep);
+        } else {
+            // This is if text is coming in from textbox
+            let textA = text.split("\n");
+
+            let textB = textA.map(item => {
+                let textC = checkSettings(item);
+
+                textC = textC.replace(/[^\w\s]/gi, " ").replace(/\s+/g, " ").trim(" ");
+                textC = textC.split(" ").join(sep);
+                textC = `${formatText(prefix, sep, true) ? formatText(prefix, sep, true) + sep : ""}${textC ? textC : ""}${formatText(suffix, sep, true) ? sep + formatText(suffix, sep, true) : ""}`
+
+                return textC
+            });
+
+            return textB.join("\n");
+        }
+    }
+
+
+
+    // clear output on click
+    const clearValues = () => {
+        // clear variables
+        textVal = defaultValues.textVal;
+        prefix = defaultValues.prefix;
+        suffix = defaultValues.suffix;
+        passLength = defaultValues.passLength;
+        separator = defaultValues.separator;
+        // clear inputs
+        $(textOutput).val(defaultValues.outputValueText); //sets to empty string
+        $(prefixText).val(defaultValues.prefix);
+        $(suffixText).val(defaultValues.suffix);
+        $(textInput).val(defaultValues.textVal);
+        $(passwordLength).val(defaultValues.passLength);
+        $(conversionField).val(defaultValues.conversionInputValue);
+        $(hexInputElm).val(defaultValues.hexInputVal)
+        $(rgbInputElm).val(defaultValues.rgbOutput)
+        $(cmykInputElm).val(defaultValues.cmykOutput)
+        // reset selections
+        $(separatorSelector).val(defaultValues.separator).change();
+        $(caseSelector).val(defaultValues.outputCase).change();
+        $(fromField).val(defaultValues.conversionFrom).change();
+        $(toField).val(defaultValues.conversionTo).change();
+        // clear local state
+        resetLocalStorage()
+    };
+
+
+    // generate text formatter function
+    const generateTextOutput = () => {
+        // first clear input
+        $(textOutput).val("");
+        let outputVal = formatText(textVal ? textVal : "", separator, false)
+        // console.log("generateTextOutput: " + outputVal)
+        // case type output and save to local storage
+        if (outputCase === "Lower Case") {
+            $(textOutput).val(outputVal.toLowerCase())
+            // save to local storage
+            globalValues.outputValueText = outputVal.toLowerCase()
+            saveToLocalStorage(DATA_NAME, globalValues)
+        } else if (outputCase === 'Upper Case') {
+            $(textOutput).val(outputVal.toUpperCase())
+            // save to local storage
+            globalValues.outputValueText = outputVal.toUpperCase()
+            saveToLocalStorage(DATA_NAME, globalValues)
+        } else {
+            // else if selected no format then output text normal
+            $(textOutput).val(outputVal)
+            // save to local storage
+            globalValues.outputValueText = outputVal
+            saveToLocalStorage(DATA_NAME, globalValues)
+        }
+    };
+    // generate password function
+    const generatePasswordOutput = () => {
+
+        let currPass = makePassword(passLength)
+        $(textOutput).val(currPass);
+        // save to local storage to access later
+        globalValues.outputValuePassword = currPass
+        saveToLocalStorage(DATA_NAME, globalValues)
+    };
+    // copy function
+    let timer;
+    $(".textarea_cont").on("click", (e) => {
+        copyFunction(e, ".textarea_cont", "#text_output")
+    });
 
 
     // **** Actions ****
@@ -452,7 +577,7 @@ $(function () {
     });
     // copy function
     const copyFunction = (e, element, copyElm) => {
-        console.log("Clicked " + element + " and about to copy: " + copyElm)
+        // console.log("Clicked " + element + " and about to copy: " + copyElm)
         if (e && $(copyElm).val() !== "") {
             $(copyElm).select();
             document.execCommand("copy");
@@ -463,74 +588,6 @@ $(function () {
             }, 5000);
         }
     }
-    // clear output on click
-    const clearValues = () => {
-        // clear variables
-        textVal = defaultValues.textVal;
-        prefix = defaultValues.prefix;
-        suffix = defaultValues.suffix;
-        passLength = defaultValues.passLength;
-        separator = defaultValues.separator;
-        // clear inputs
-        $(textOutput).val(defaultValues.outputValueText); //sets to empty string
-        $(prefixText).val(defaultValues.prefix);
-        $(suffixText).val(defaultValues.suffix);
-        $(textInput).val(defaultValues.textVal);
-        $(passwordLength).val(defaultValues.passLength);
-        $(conversionField).val(defaultValues.conversionInputValue);
-        $(hexInputElm).val(defaultValues.hexInputVal)
-        $(rgbInputElm).val(defaultValues.rgbOutput)
-        $(cmykInputElm).val(defaultValues.cmykOutput)
-        // reset selections
-        $(separatorSelector).val(defaultValues.separator).change();
-        $(caseSelector).val(defaultValues.outputCase).change();
-        $(fromField).val(defaultValues.conversionFrom).change();
-        $(toField).val(defaultValues.conversionTo).change();
-        // clear local state
-        resetLocalStorage()
-    };
-
-    clearOutPutBtn.on("click", (e) => {
-        clearValues()
-    });
-    // generate text formatter function
-    const generateTextOutput = () => {
-        // first clear input
-        $(textOutput).val("");
-        let outputVal = formatText(textVal ? textVal : "", separator)
-        // case type output and save to local storage
-        if (outputCase === "Lower Case") {
-            $(textOutput).val(outputVal.toLowerCase())
-            // save to local storage
-            globalValues.outputValueText = outputVal.toLowerCase()
-            saveToLocalStorage(DATA_NAME, globalValues)
-        } else if (outputCase === 'Upper Case') {
-            $(textOutput).val(outputVal.toUpperCase())
-            // save to local storage
-            globalValues.outputValueText = outputVal.toUpperCase()
-            saveToLocalStorage(DATA_NAME, globalValues)
-        } else {
-            // else if selected no format then output text normal
-            $(textOutput).val(outputVal)
-            // save to local storage
-            globalValues.outputValueText = outputVal
-            saveToLocalStorage(DATA_NAME, globalValues)
-        }
-    };
-    // generate password function
-    const generatePasswordOutput = () => {
-
-        let currPass = makePassword(passLength)
-        $(textOutput).val(currPass);
-        // save to local storage to access later
-        globalValues.outputValuePassword = currPass
-        saveToLocalStorage(DATA_NAME, globalValues)
-    };
-    // copy function
-    let timer;
-    $(".textarea_cont").on("click", (e) => {
-        copyFunction(e, ".textarea_cont", "#text_output")
-    });
 
     // ----------------
     // Color Creator
@@ -560,10 +617,9 @@ $(function () {
         copyFunction(e, "#color_copy_cmyk", "#cmyk-output")
     })
 
-
     // Suffix and prefix clears
     $(prefixClearBtn).on('click', () => {
-        $(prefixText).val(defaultValues.prefix);
+        $(prefixText).val('');
         prefix = ''
         clearStoragePrefix()
         // recreate output
@@ -571,13 +627,12 @@ $(function () {
     })
 
     $(suffixClearBtn).on('click', () => {
-        $(suffixText).val(defaultValues.suffix);
+        $(suffixText).val('');
         suffix = ''
         clearStorageSuffix()
         // recreate output
         generateTextOutput()
     })
-
 
     // setting button actions
     $(settingsBtn).on('click', () => {
@@ -590,8 +645,64 @@ $(function () {
     $(closeBtn).on('click', () => {
         if ($(settingsModalCont).hasClass("modal_active")) {
             $(settingsModalCont).removeClass('modal_active')
+
         }
     })
+
+    
+
+    // custom to cust
+    $(settingsCustomCheck).on('change', (e) => {
+        settings.customToCust = $(e.target).is(':checked')
+        // recreate output
+        generateTextOutput()
+        // save to local
+        saveToLocalStorage(TF_SETTINGS, settings)
+    })
+
+    // double quotes to inches
+    $(settingsDoubleQuotesCheck).on('change', (e) => {
+        settings.dubQuotesToIn = $(e.target).is(':checked')
+        // recreate output
+        generateTextOutput()
+        // save to local
+        saveToLocalStorage(TF_SETTINGS, settings)
+    })
+
+    // single quotes to inches
+    $(settingsSingleQuotesCheck).on('change', (e) => {
+        settings.sQuoteToFt = $(e.target).is(':checked')
+        // recreate output
+        generateTextOutput()
+        // save to local
+        saveToLocalStorage(TF_SETTINGS, settings)
+    })
+
+    // decimal to letter "P"
+    $(settingsDecimalCheck).on('change', (e) => {
+        settings.decimalToLetter = $(e.target).is(':checked')
+        // recreate output
+        generateTextOutput()
+        // save to local
+        saveToLocalStorage(TF_SETTINGS, settings)
+    })
+
+    // fractions to decimals
+    $(settingsFractionToDec).on('change', (e) => {
+        settings.fractionToDecimal = $(e.target).is(':checked')
+        // recreate output
+        generateTextOutput()
+        // save to local
+        saveToLocalStorage(TF_SETTINGS, settings)
+    })
+
+
+    // clear data
+    clearOutPutBtn.on("click", (e) => {
+        e.preventDefault()
+        // console.log('CLEARING VALUES')
+        clearValues()
+    });
 
 
     // end of Doc Ready
