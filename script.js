@@ -617,19 +617,21 @@ $(function () {
         copyFunction(e, "#color_copy_cmyk", "#cmyk-output")
     })
 
+
+
     // Suffix and prefix clears
     $(prefixClearBtn).on('click', () => {
-        $(prefixText).val('');
-        prefix = ''
-        clearStoragePrefix()
+        prefix = defaultValues.prefix;
+        $(prefixText).val(defaultValues.prefix);
+        clearStoragePrefix(globalValues)
         // recreate output
         generateTextOutput()
     })
 
     $(suffixClearBtn).on('click', () => {
-        $(suffixText).val('');
-        suffix = ''
-        clearStorageSuffix()
+        suffix = defaultValues.suffix;
+        $(suffixText).val(defaultValues.suffix);
+        clearStorageSuffix(globalValues)
         // recreate output
         generateTextOutput()
     })
@@ -649,7 +651,7 @@ $(function () {
         }
     })
 
-    
+
 
     // custom to cust
     $(settingsCustomCheck).on('change', (e) => {

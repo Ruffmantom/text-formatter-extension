@@ -67,17 +67,14 @@ const resetLocalStorage = () => {
 };
 
 //clear suffix
-const clearStoragePrefix = () => {
-    // get current values
-    let currentValues = JSON.parse(localStorage.getItem(DATA_NAME))
+const clearStoragePrefix = (currentValues) => {
     currentValues.prefix = ''
     // save to local
     saveToLocalStorage(DATA_NAME, currentValues)
 }
 //clear suffix
-const clearStorageSuffix = () => {
+const clearStorageSuffix = (currentValues) => {
     // get current values
-    let currentValues = JSON.parse(localStorage.getItem(DATA_NAME))
     currentValues.suffix = ''
     // save to local
     saveToLocalStorage(DATA_NAME, currentValues)
