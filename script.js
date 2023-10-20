@@ -146,7 +146,7 @@ $(function () {
         tabBtnArr.forEach((btn) => {
             $(btn).data('tab') === globalValues.currentTab ? $(btn).addClass('nav_tab_active') : ''
         })
-        if (globalValues.currentTab === "two") {
+        if (globalValues.currentTab === "two" || globalValues.currentTab === "four" || globalValues.currentTab === "five") {
             $("#lower_copy_textarea_cont").hide()
         } else {
             $("#lower_copy_textarea_cont").show()
@@ -173,7 +173,7 @@ $(function () {
             // add active from nav Btn
             $(e.target).addClass('nav_tab_active')
             // hide large copy box if tab is on 2
-            if (tabId === "two") {
+            if (tabId === "two"||tabId === "four"||tabId === "five") {
                 $("#lower_copy_textarea_cont").hide()
             } else {
                 $("#lower_copy_textarea_cont").show()
