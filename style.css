@@ -6,7 +6,7 @@
 
 /* When the light is checked */
 :root:has(#light_mode:checked) {
-    --shadow: 0 6px 13px #f5f5f5;
+    --shadow: 0 6px 13px #1f1f1f2c;
     --bg-color: #dadada;
     --secondary-bg-color: #bdbdbd;
     --modal-bg-color: #bdbdbd4f;
@@ -17,7 +17,7 @@
 }
 
 :root:has(#dark_mode:checked) {
-    --shadow: 0 6px 13px #333333;
+    --shadow: 0 6px 13px #4444443f;
     --bg-color: #1e1e1e;
     --secondary-bg-color: #3b3b3b;
     --modal-bg-color: #3b3b3b94;
@@ -38,6 +38,11 @@ div {
     color: var(--text-color);
 }
 
+svg {
+
+    fill: var(--text-color);
+}
+
 input,
 textarea,
 select {
@@ -46,6 +51,8 @@ select {
 
 .text_formatter {
     position: relative;
+    max-height: 750px;
+    height: 100%;
 }
 
 .text_formatter>* {
@@ -99,7 +106,7 @@ select {
 .settings_cont {
     width: 100%;
     display: flex;
-    justify-content: end;
+    /* justify-content: end; */
 }
 
 .setting_btn {
@@ -113,7 +120,11 @@ select {
     align-items: center;
     background-color: var(--secondary-bg-color);
     cursor: pointer;
-    margin-left: 10px;
+    /* margin-right: 10px; */
+}
+
+.setting_btn:not(:last-child) {
+    margin-bottom: 10px;
 }
 
 
@@ -147,6 +158,8 @@ select {
     padding: 10px;
     border-radius: 7px;
     width: fit-content;
+    position: relative;
+    min-height: 480px;
 }
 
 .tf_control_group {
@@ -395,6 +408,7 @@ select {
     opacity: 0;
     z-index: -1;
 }
+
 .main_modal_container {
     height: 0;
     overflow: hidden;
@@ -402,7 +416,8 @@ select {
     z-index: -1;
     transition: all 150ms ease-in-out;
 }
-.modal_active{
+
+.modal_active {
     z-index: 99999;
     height: 100%;
     opacity: 1;
@@ -461,11 +476,13 @@ select {
     width: 20px;
     margin-right: 10px;
 }
-.settings_form>p{
+
+.settings_form>p {
     margin: 0 0 5px 0;
 }
+
 /* CLEAR BUTTONS FOR SUFFIX AND PREFIX */
-.x_clear_btn{
+.x_clear_btn {
     position: absolute;
     right: 6px;
     top: 6px;
@@ -476,18 +493,54 @@ select {
     fill: white;
     cursor: pointer;
 }
-.x_clear_btn{
+
+.x_clear_btn {
     opacity: 0;
     z-index: -1;
     transition: all 150ms ease;
 }
-.x_clear_btn:hover{
-    
+
+.x_clear_btn:hover {
+
     background-color: var(--secondary);
 }
-.fix_input_group:hover>.x_clear_btn{
+
+.fix_input_group:hover>.x_clear_btn {
     opacity: 1;
     z-index: 9;
     transition: all 150ms ease;
+
+}
+
+/* new sidebar */
+.menu_sidebar {
+    padding: 7px;
+    border-radius: 7px;
+    height: 100%;
+    position: absolute;
+    top: 10px;
+    left: 55px;
+    z-index: 999999;
+    background-color: var(--bg-color);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.setting_btn{
+    position: relative;
+}
+
+.hover_helper{
+    position: absolute;
+    right: -10px;
+    padding: 5px;
+    border-radius: 5px;
+    height: max-content;
+background-color: var(--input-bkg);
+}
+
+.setting_btn:hover>.hover_helper{
 
 }
