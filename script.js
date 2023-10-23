@@ -21,6 +21,9 @@ const suffixClearBtn = $("#suffix_clear")
 const settingsBtn = $("#settings_button")
 const closeBtn = $('#close_settings_btn')
 const settingsModalCont = $('.main_modal_container')
+const menuBtnElm = $('.menu_btn')
+let menuIsOpen = false;
+
 
 var chars =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!#$)(-_";
@@ -173,11 +176,14 @@ $(function () {
             // add active from nav Btn
             $(e.target).addClass('nav_tab_active')
             // hide large copy box if tab is on 2
-            if (tabId === "two"||tabId === "four"||tabId === "five") {
+            if (tabId === "two" || tabId === "four" || tabId === "five") {
                 $("#lower_copy_textarea_cont").hide()
             } else {
                 $("#lower_copy_textarea_cont").show()
             }
+
+            // handle menu if open
+            closeMenu()
 
             tabElmArr.forEach(tab => {
                 // remove active from tab
@@ -642,6 +648,8 @@ $(function () {
             $(settingsModalCont).removeClass('modal_active')
         } else {
             $(settingsModalCont).addClass('modal_active')
+            // handle menu
+            closeMenu()
         }
     })
     $(closeBtn).on('click', () => {
@@ -706,6 +714,28 @@ $(function () {
         clearValues()
     });
 
+    // Menu Actions
+    menuBtnElm.on('click', () => {
+        if (menuIsOpen) {
+            // close menu
+            $(".menu_sidebar").removeClass("menu_open")
+            // remove class to menu button
+            $(menuBtnElm).parent().removeClass('menu_btn_active')
+            menuIsOpen = false
+        } else {
+            // open menu
+            $(".menu_sidebar").addClass("menu_open")
+            // add class to menu button
+            $(menuBtnElm).parent().addClass('menu_btn_active')
+            menuIsOpen = true
+        }
+    })
+    const closeMenu = ()=>{
+        if (menuIsOpen) {
+            $(".menu_sidebar").removeClass("menu_open")
+            menuIsOpen = false
+        }
+    }
 
     // end of Doc Ready
 });

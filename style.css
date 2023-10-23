@@ -329,15 +329,15 @@ select {
 
 }
 
-.tab_nav_button {
-    font-size: 14px;
-    padding: 7px 10px;
-    position: relative;
+.tab_nav_button,
+.menu_btn {
+    position: absolute;
     cursor: pointer;
     display: flex;
-    /* align-items: center; */
     justify-content: center;
-
+    z-index: 10;
+    width: 100%;
+    height: 100%;
 }
 
 .tab_nav_button {
@@ -352,7 +352,6 @@ select {
     background-color: var(--primary);
     height: 3px;
     position: absolute;
-    /* left: 0; */
     bottom: -3px;
     z-index: 9;
     border-radius: 3px;
@@ -513,8 +512,6 @@ select {
     height: 100%;
     position: absolute;
     top: 10px;
-    left: 55px;
-    z-index: 999999;
     background-color: var(--bg-color);
     box-shadow: var(--shadow);
     display: flex;
@@ -522,10 +519,54 @@ select {
     justify-content: space-between;
 }
 
+.menu_sidebar {
+    opacity: 0;
+    left: 0px;
+    width: 0;
+    z-index: -1;
+    transition: all 150ms ease;
+}
+
+.menu_open {
+    opacity: 1;
+    left: 55px;
+    width: max-content;
+    z-index: 999999;
+    transition: all 150ms ease;
+}
+
 .setting_btn {
     position: relative;
     z-index: 6;
 }
+
+.menu_lines_cont{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: 40%;
+    justify-content: space-between;
+}
+.menu_line{
+    height: 2px;
+    border-radius: 10px;
+    width: 100%;
+    background-color: var(--text-color);
+}
+
+.menu_btn_active>.menu_lines_cont>.menu_line.two{
+    display: none;
+}
+.menu_btn_active>.menu_lines_cont>.menu_line.one{
+    position: absolute;
+    transform: rotate(45deg);
+}
+.menu_btn_active>.menu_lines_cont>.menu_line.three{
+    position: absolute;
+    transform: rotate(-45deg);
+}
+
+
 .close_btn {
     position: absolute;
     right: 10px;
@@ -545,8 +586,8 @@ select {
     height: max-content;
     background-color: var(--input-bkg);
     box-shadow: var(--shadow);
-    
 }
+
 .hover_helper {
     left: 0%;
     opacity: 0;
@@ -557,6 +598,6 @@ select {
 .setting_btn:hover>.hover_helper {
     left: 120%;
     opacity: 1;
-     z-index: 5;
-     transition: all 150ms ease-in;
+    z-index: 5;
+    transition: all 150ms ease-in;
 }
