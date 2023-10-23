@@ -438,13 +438,7 @@ select {
     margin-top: 0;
 }
 
-.close_btn {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    color: var(--text-color);
-    fill: var(--text-color);
-}
+
 
 .setting_form_row {
     display: flex;
@@ -528,19 +522,41 @@ select {
     justify-content: space-between;
 }
 
-.setting_btn{
+.setting_btn {
     position: relative;
+    z-index: 6;
+}
+.close_btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: var(--text-color);
+    fill: var(--text-color);
 }
 
-.hover_helper{
+.hover_helper {
     position: absolute;
-    right: -10px;
+    display: block;
+    width: max-content;
+    height: max-content;
     padding: 5px;
+    margin: 0;
     border-radius: 5px;
     height: max-content;
-background-color: var(--input-bkg);
+    background-color: var(--input-bkg);
+    box-shadow: var(--shadow);
+    
+}
+.hover_helper {
+    left: 0%;
+    opacity: 0;
+    z-index: -1;
+    transition: all 150ms ease-out;
 }
 
-.setting_btn:hover>.hover_helper{
-
+.setting_btn:hover>.hover_helper {
+    left: 120%;
+    opacity: 1;
+     z-index: 5;
+     transition: all 150ms ease-in;
 }
