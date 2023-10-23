@@ -718,10 +718,7 @@ $(function () {
     menuBtnElm.on('click', () => {
         if (menuIsOpen) {
             // close menu
-            $(".menu_sidebar").removeClass("menu_open")
-            // remove class to menu button
-            $(menuBtnElm).parent().removeClass('menu_btn_active')
-            menuIsOpen = false
+            closeMenu()
         } else {
             // open menu
             $(".menu_sidebar").addClass("menu_open")
@@ -733,6 +730,8 @@ $(function () {
     const closeMenu = ()=>{
         if (menuIsOpen) {
             $(".menu_sidebar").removeClass("menu_open")
+            // remove class to menu button
+            $(menuBtnElm).parent().removeClass('menu_btn_active')
             menuIsOpen = false
         }
     }

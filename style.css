@@ -122,7 +122,9 @@ select {
     cursor: pointer;
     /* margin-right: 10px; */
 }
-
+.menu_item_cont{
+    background-color: #ffffff00;
+}
 .setting_btn:not(:last-child) {
     margin-bottom: 10px;
 }
@@ -131,6 +133,9 @@ select {
 .setting_btn:hover {
     background-color: var(--hover-secondary-bg-color);
     transition: all 150ms ease-in-out;
+}
+.menu_item_cont:hover{
+    background-color: var(--secondary-bg-color);
 }
 
 .btn_icon {
@@ -540,30 +545,48 @@ select {
     z-index: 6;
 }
 
-.menu_lines_cont{
+.menu_lines_cont {
     display: flex;
     flex-direction: column;
     width: 40%;
     height: 40%;
     justify-content: space-between;
 }
-.menu_line{
+
+.menu_line {
     height: 2px;
     border-radius: 10px;
     width: 100%;
     background-color: var(--text-color);
 }
 
-.menu_btn_active>.menu_lines_cont>.menu_line.two{
-    display: none;
+.menu_line.two {
+    opacity: 1;
+    width: 70%;
+    transition: all 100ms ease-in
 }
-.menu_btn_active>.menu_lines_cont>.menu_line.one{
+
+.menu_btn_active>.menu_lines_cont>.menu_line.two {
+    opacity: 0;
+    width: 0;
+    transition: all 100ms ease-out;
+}
+
+.menu_btn_active>.menu_lines_cont {
+    align-items: center;
+    justify-content: center;
+}
+
+.menu_btn_active>.menu_lines_cont>.menu_line.one {
     position: absolute;
     transform: rotate(45deg);
+    width: 50%;
 }
-.menu_btn_active>.menu_lines_cont>.menu_line.three{
+
+.menu_btn_active>.menu_lines_cont>.menu_line.three {
     position: absolute;
     transform: rotate(-45deg);
+    width: 50%;
 }
 
 
