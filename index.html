@@ -14,6 +14,13 @@
     <div class="notification">
         Copied!
     </div>
+    <div class="loader_container ">
+        <div class="new_loader_cont">
+            <div class="new_loader_dot">
+                
+            </div>
+        </div>
+    </div>
 
     <div class="main_modal_container ">
         <div class="settings_modal">
@@ -69,7 +76,7 @@
         <!-- new navigation sidebar -->
         <div class="menu_sidebar">
             <div class="upper_menu">
-                <div class="setting_btn menu_item_cont " >
+                <div class="setting_btn menu_item_cont ">
                     <svg id="Layer_2" width="12" height="12" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 11.07 6.51">
                         <defs></defs>
@@ -92,7 +99,7 @@
                     </div>
                 </div>
 
-                <div class="setting_btn menu_item_cont " >
+                <div class="setting_btn menu_item_cont ">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12"
                         height="12" viewBox="0 0 12 12">
                         <defs>
@@ -113,7 +120,7 @@
                     </div>
                 </div>
 
-                <div class="setting_btn menu_item_cont " >
+                <div class="setting_btn menu_item_cont ">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12.058"
                         height="12" viewBox="0 0 12.058 12">
                         <defs>
@@ -134,7 +141,7 @@
                     </div>
                 </div>
 
-                <div class="setting_btn menu_item_cont" >
+                <div class="setting_btn menu_item_cont">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12"
                         height="12" viewBox="0 0 12 12">
                         <defs>
@@ -155,7 +162,7 @@
                     </div>
                 </div>
 
-                <div class="setting_btn menu_item_cont" >
+                <div class="setting_btn menu_item_cont">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="11.133"
                         height="12" viewBox="0 0 11.133 12">
                         <defs>
@@ -317,17 +324,6 @@
             </div>
 
         </div>
-        <!-- <div class="tab" data-tab="two">
-            <div class="tf_control_group bottom_input_group">
-
-                <button id="generate_password" class="tf_btn main-btn">Generate Password</button>
-                <span>Length:</span>
-                <input class="tf_input" name="input" min="10" max="20" type="number" value="10" id="char-num"
-                    placeholder='Length'>
-
-            </div>
-
-        </div> -->
         <!-- Tab: Three -->
         <div class="tab" data-tab="three">
             <div class="tf_control_group bottom_input_group">
@@ -367,8 +363,16 @@
         <!-- Tab: Five -->
         <div class="tab" data-tab="five">
             <div class="tf_control_group bottom_input_group">
-                <p>Post-it: This is a notes tab. store any notes that you want to keep for the day or for however long
-                    as you would like.</p>
+                <div class="note_upper_form">
+                    <div class="tf_control_group bottom_input_group">
+                        <textarea class="tf_input textarea_cont" name="input" cols="30" rows="5" id="AddNote"
+                            placeholder='Add Note Text...'></textarea>
+                    </div>
+                    <button type="button" class="tf_btn main-btn" id="add_note_btn">Add note</button>
+                    <div class="note_ontainer">
+
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -383,6 +387,8 @@
     </div>
     <script type="text/javascript" src="./app.js"></script>
     <script type="text/javascript" src="./settings.js"></script>
+    <script type="text/javascript" src="./notes.js"></script>
+    <script type="text/javascript" src="./todos.js"></script>
     <script type="text/javascript" src="./script.js"></script>
     <script type="text/javascript" src="./theme.js"></script>
 </body>

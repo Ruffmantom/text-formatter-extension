@@ -122,9 +122,11 @@ select {
     cursor: pointer;
     /* margin-right: 10px; */
 }
-.menu_item_cont{
+
+.menu_item_cont {
     background-color: #ffffff00;
 }
+
 .setting_btn:not(:last-child) {
     margin-bottom: 10px;
 }
@@ -134,7 +136,8 @@ select {
     background-color: var(--hover-secondary-bg-color);
     transition: all 150ms ease-in-out;
 }
-.menu_item_cont:hover{
+
+.menu_item_cont:hover {
     background-color: var(--secondary-bg-color);
 }
 
@@ -624,3 +627,70 @@ select {
     z-index: 5;
     transition: all 150ms ease-in;
 }
+
+/* Loader */
+.loader_container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--modal-bg-color);
+    backdrop-filter: var(--blur);
+}
+
+.loader_container {
+    opacity: 0;
+    z-index: -1;
+    transition: all 150ms ease-out;
+}
+
+.loader_active {
+    opacity: 1;
+    z-index: 99999;
+    transition: all 150ms ease-in;
+}
+
+.new_loader_cont {
+    width: 50px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    border-radius: 7px;
+    background-color: var(--input-bkg);
+    overflow: hidden;
+    position: relative;
+}
+
+.new_loader_dot {
+    height: 80%;
+    width: 50%;
+    background-color: var(--primary);
+    border-radius: 5px;
+    /* Apply the animation to the dot */
+    position: absolute;
+    /* Position the dot absolutely within the container */
+}
+.loader_active>.new_loader_cont>.new_loader_dot{
+    animation: loaderAnimation 450ms infinite linear;
+}
+
+/* Define the animation */
+@keyframes loaderAnimation {
+
+    0%,
+    100% {
+        left: 4px;
+        /* Starting position */
+    }
+
+    50% {
+        left: calc(100% - 40%);
+        /* Middle position */
+    }
+}
+
+/* END Loader */

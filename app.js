@@ -1,5 +1,7 @@
 // Define global variable
 let globalValues;
+let usersNotes;
+let usersTodos;
 let defaultValues = {
     conversionFrom: 'Millimeters',
     conversionTo: 'Centimeters',
@@ -19,7 +21,9 @@ let defaultValues = {
     cmykOutput: '',
 }
 const DATA_NAME = 'TF_DATA';
-const TF_SETTINGS = 'TF_SETTINGS'
+const TF_SETTINGS = 'TF_SETTINGS';
+const TF_NOTES = 'TF_NOTES';
+const TF_TODOS = 'TF_TODOS';
 // Save values to local storage
 const saveToLocalStorage = (name, values) => {
     // console.log(values);
@@ -56,6 +60,34 @@ const loadFromLocalStorage = () => {
     }
 
 };
+
+
+let isLoading = false;
+const loader = $(".loader_container");
+
+const loadNotesFromLocalStorage = async () => {
+    isLoading = true;
+    $(loader).addClass('loader_active'); // Show the loader
+
+    try {
+        let localObj = await localStorage.getItem(TF_NOTES);
+
+        if (localObj) {
+            let values = JSON.parse(localObj);
+            usersNotes = values;
+        } else {
+            usersNotes = [];
+        }
+    } catch (error) {
+        // Handle errors, e.g., by showing an error message
+        console.error('Error loading data:', error);
+    } finally {
+        // Regardless of success or failure, hide the loader
+        isLoading = false;
+        $(loader).removeClass('loader_active');
+    }
+};
+
 
 // Clear data from local storage
 const resetLocalStorage = () => {

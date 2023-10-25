@@ -118,6 +118,10 @@ $(function () {
         } else {
             $(textOutput).val(globalValues.outputValueConversion || "");
         }
+        // handle loading notes
+        if (globalValues.currentTab === "five") {
+            loadNotesFromLocalStorage()
+        }
 
         // Password tab
         $(passwordLength).val(globalValues.passLength || "");
@@ -727,7 +731,7 @@ $(function () {
             menuIsOpen = true
         }
     })
-    const closeMenu = ()=>{
+    const closeMenu = () => {
         if (menuIsOpen) {
             $(".menu_sidebar").removeClass("menu_open")
             // remove class to menu button
