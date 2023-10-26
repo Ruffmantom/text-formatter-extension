@@ -694,3 +694,44 @@ select {
 }
 
 /* END Loader */
+.delete_btn{
+    border: none;
+
+}
+/* notes */
+.note_container{
+    padding: 10px 0 0 0;
+    max-height: 250px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+    border-radius: 7px;
+}
+.user_note{
+    padding: 7px;
+    border-radius: 7px;
+    position: relative;
+    background-color: var(--input-bkg);
+    color:var(--text-color);
+}
+.user_note:not(:first-child){
+    margin-top: 10px;
+}
+.note_text{
+    font-size: 14px;
+    width: 90%;
+    margin: 0;
+}
+.note_date{
+    margin: 0;
+    padding-top: 10px;
+    font-size: 12px;
+    font-style: italic;
+    opacity: 0.7;
+}
+.deleted_note{
+    opacity: 0;
+    padding: 0;
+    height: 0;
+    transition: all 150ms ease-out; 
+}
+/* END notes */

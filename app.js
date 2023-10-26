@@ -1,7 +1,7 @@
 // Define global variable
 let globalValues;
-let usersNotes;
-let usersTodos;
+let usersNotes = [];
+let usersTodos = [];
 let defaultValues = {
     conversionFrom: 'Millimeters',
     conversionTo: 'Centimeters',
@@ -20,10 +20,39 @@ let defaultValues = {
     rgbOutput: '',
     cmykOutput: '',
 }
+let globalStaging;
+let stagingDefault = {
+    editing: false,
+    text: ''
+}
 const DATA_NAME = 'TF_DATA';
 const TF_SETTINGS = 'TF_SETTINGS';
 const TF_NOTES = 'TF_NOTES';
+const TF_N_S = 'TF_N_S';
 const TF_TODOS = 'TF_TODOS';
+// loading function for notes
+let isLoading = false;
+
+// create ID
+
+var idChars = "3QKXV0F8IYCA7S5T4ZGJDWB9L1N26UHOMRPVE";
+
+const createId = () => {
+    let newId = "";
+    for (var i = 0; i < 6; i++) {
+        newId += idChars[Math.floor(Math.random() * idChars.length)];
+    }
+    newId += "-"
+    for (var i = 0; i < 6; i++) {
+        newId += idChars[Math.floor(Math.random() * idChars.length)];
+    }
+    newId += "-"
+    for (var i = 0; i < 6; i++) {
+        newId += idChars[Math.floor(Math.random() * idChars.length)];
+    }
+    return newId;
+};
+
 // Save values to local storage
 const saveToLocalStorage = (name, values) => {
     // console.log(values);
@@ -61,22 +90,26 @@ const loadFromLocalStorage = () => {
 
 };
 
-
-let isLoading = false;
 const loader = $(".loader_container");
 
 const loadNotesFromLocalStorage = async () => {
     isLoading = true;
     $(loader).addClass('loader_active'); // Show the loader
-
+    console.log('about to load from local storage')
     try {
+        let localStaging =  await localStorage.getItem(TF_N_S);
         let localObj = await localStorage.getItem(TF_NOTES);
+        console.log('notes? ', JSON.parse(localObj))
 
         if (localObj) {
-            let values = JSON.parse(localObj);
-            usersNotes = values;
+            usersNotes = JSON.parse(localObj);
         } else {
             usersNotes = [];
+        }
+        if (localStaging) {
+            globalStaging = JSON.parse(localStaging);
+        } else {
+            globalStaging = {};
         }
     } catch (error) {
         // Handle errors, e.g., by showing an error message

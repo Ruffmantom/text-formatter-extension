@@ -19,7 +19,6 @@ $(() => {
     // settings are established when the user changes them
     // need to load in settings on load.
     if (localStorage.getItem(TF_SETTINGS)) {
-        console.log('settings are present')
         // if present then load
         let loadedSettings = JSON.parse(localStorage.getItem(TF_SETTINGS))
         // set current settings

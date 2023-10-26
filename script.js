@@ -84,6 +84,8 @@ $(function () {
     const startApp = async () => {
         try {
             await loadFromLocalStorage()
+            await loadNotesFromLocalStorage()
+       
             isSuccess = true
         } catch (error) {
             // console.log(error)
@@ -118,10 +120,7 @@ $(function () {
         } else {
             $(textOutput).val(globalValues.outputValueConversion || "");
         }
-        // handle loading notes
-        if (globalValues.currentTab === "five") {
-            loadNotesFromLocalStorage()
-        }
+        
 
         // Password tab
         $(passwordLength).val(globalValues.passLength || "");
