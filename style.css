@@ -337,6 +337,7 @@ select {
 
 }
 
+.todo_list_nav_button,
 .tab_nav_button,
 .menu_btn {
     position: absolute;
@@ -482,6 +483,10 @@ select {
     margin: 0 0 5px 0;
 }
 
+#settings_clear_all_data {
+    margin-top: 10px;
+}
+
 /* CLEAR BUTTONS FOR SUFFIX AND PREFIX */
 .x_clear_btn {
     position: absolute;
@@ -625,6 +630,7 @@ select {
     left: 120%;
     opacity: 1;
     z-index: 5;
+    overflow: visible;
     transition: all 150ms ease-in;
 }
 
@@ -674,7 +680,8 @@ select {
     position: absolute;
     /* Position the dot absolutely within the container */
 }
-.loader_active>.new_loader_cont>.new_loader_dot{
+
+.loader_active>.new_loader_cont>.new_loader_dot {
     animation: loaderAnimation 450ms infinite linear;
 }
 
@@ -694,44 +701,167 @@ select {
 }
 
 /* END Loader */
-.delete_btn{
+.delete_btn {
     border: none;
 
 }
+
 /* notes */
-.note_container{
+.note_container {
     padding: 10px 0 0 0;
     max-height: 250px;
     overflow-y: scroll;
     margin-bottom: 10px;
     border-radius: 7px;
 }
-.user_note{
+
+.user_note {
     padding: 7px;
     border-radius: 7px;
     position: relative;
     background-color: var(--input-bkg);
-    color:var(--text-color);
+    color: var(--text-color);
 }
-.user_note:not(:first-child){
+
+.user_note:not(:first-child) {
     margin-top: 10px;
 }
-.note_text{
+
+.note_text {
     font-size: 14px;
     width: 90%;
     margin: 0;
 }
-.note_date{
+
+.note_date {
     margin: 0;
     padding-top: 10px;
     font-size: 12px;
     font-style: italic;
     opacity: 0.7;
 }
-.deleted_note{
+
+.deleted_note {
     opacity: 0;
     padding: 0;
     height: 0;
-    transition: all 150ms ease-out; 
+    transition: all 150ms ease-out;
 }
+
+.note_text_link {
+    background-color: var(--primary);
+    color: white;
+    padding: 2px 7px;
+    border-radius: 2px;
+    font-style: italic;
+    text-decoration: none;
+}
+
+.note_text_link:hover {
+    background-color: var(--secondary);
+    box-shadow: var(--shadow);
+}
+
 /* END notes */
+
+/* todo list */
+.tf_todo_tab_cont {
+    width: 450px;
+}
+
+.todo_start_cont,.todo_list_menu_add_cont {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+#add_new_list{
+    padding-top: 10px;
+}
+#add_note_btn {
+    width: max-content;
+    margin-top: 10px;
+}
+
+.todo_col {
+    position: relative;
+}
+
+/* menu */
+.todo_menu_title {
+    margin: 0;
+    padding-bottom: 10px;
+    font-size: 20px;
+}
+
+.todo_row {
+    display: flex;
+
+}
+
+.todo_list_menu {
+    position: absolute;
+    left: 45px;
+    top: 0;
+    background-color: var(--modal-bg-color);
+    backdrop-filter: var(--blur);
+    padding: 10px;
+    border-radius: 10px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    width: 1000%;
+}
+.todo_list_item_cont{
+    max-height: 150px;
+    overflow-y: scroll;
+
+}
+
+.todo_list_item {
+    display: flex;
+    background-color: var(--input-bkg);
+    border-radius: 7px;
+    padding: 5px;
+    justify-content: space-between;
+    align-items: start;
+    position: relative;
+    cursor: pointer;
+}
+.todo_list_item.active_todo_list::before{
+    position: absolute;
+    left: 1.5%;
+    top: 50%;
+    transform: translate(-0%,-50%);
+    height: 50%;
+    width: 5px;
+    background-color: var(--primary);
+    border-radius: 10px;
+    content: '';
+}
+.todo_list_item:not(:first-child) {
+    margin-top: 12px;
+}
+.todo_list_item.active_todo_list>.todo_list_info{
+    padding-left: 10px;
+
+}
+.todo_list_info {
+    width: 90%;
+    padding-left: 5px;
+
+}
+
+.todo_list_item_name,
+.todo_list_item_completion {
+    margin: 0;
+}
+
+.todo_list_item_completion {
+    font-size: 10px;
+    font-style: italic;
+    opacity: 0.7;
+    padding-top: 5px;
+}
+
+/* END todo list */
