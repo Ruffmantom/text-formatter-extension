@@ -12,9 +12,9 @@
 </head>
 
 <body class="text_formatter">
-    <div class="notification">
-        Copied!
-    </div>
+    <span class="notification">
+        
+    </span>
     <div class="loader_container">
         <div class="new_loader_cont">
             <div class="new_loader_dot">
@@ -70,7 +70,7 @@
                 </div>
                 <div class="setting_form_row">
                     <div class="setting_form_col">
-                        <button id="settings_clear_all_data" class="tf_btn main-btn">Clear All Data</button>
+                        <button id="settings_clear_all_data" class="tf_btn main_btn">Clear All Data</button>
                     </div>
                     <div class="setting_form_col">
 
@@ -310,6 +310,7 @@
                     placeholder='Place Text Here (Allows for line breaks)'></textarea>
             </div>
         </div>
+
         <!-- Tab: Two -->
         <div class="tab" data-tab="two">
             <div class="tf_control_group bottom_input_group">
@@ -328,6 +329,7 @@
             </div>
 
         </div>
+
         <!-- Tab: Three -->
         <div class="tab" data-tab="three">
             <div class="tf_control_group bottom_input_group">
@@ -363,10 +365,10 @@
         <div class="tab" data-tab="four">
             <div class="tf_todo_tab_cont">
                 <!-- this is the start when a user has no list -->
-                <!-- <div class="todo_start_cont">
+                <div class="todo_start_cont">
                     <input class="tf_input" name="input" id="add_first_list_input" placeholder='List Name...'>
-                    <button type="button" class="tf_btn main-btn" id="add_note_btn">Add List</button>
-                </div> -->
+                    <button type="button" class="tf_btn main_btn" id="add_first_list_btn">Add List</button>
+                </div>
 
 
 
@@ -399,47 +401,64 @@
                                 </div>
                             </div>
 
-                            <div class="todo_list_menu todo_list_menu_active">
+                            <div class="todo_list_menu ">
                                 <p class="todo_menu_title">My Lists</p>
                                 <div class="todo_list_item_cont">
-                                    <!-- list item -->
-                                    <div class="todo_list_item active_todo_list">
-                                        <div class="todo_list_info">
-                                            <p class="todo_list_item_name">List One</p>
-                                            <p class="todo_list_item_completion">0% Complete</p>
-                                        </div>
-                                        <div class="setting_btn menu_item_cont">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="10.213" height="12"
-                                                viewBox="0 0 10.213 12">
-                                                <defs>
-                                                    <clipPath id="a">
-                                                        <rect width="10.213" height="12" />
-                                                    </clipPath>
-                                                </defs>
-                                                <g clip-path="url(#a)">
-                                                    <path
-                                                        d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
-                                                        fill-rule="evenodd" />
-                                                </g>
-                                            </svg>
-                                            <div class="todo_list_nav_button">
-
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <!-- list items go here -->
                                     
 
-                                    
                                 </div>
                                 <div class="todo_list_menu_add_cont">
-                                    <input class="tf_input" name="input" id="add_new_list" hidden placeholder='List Name...'>
-                                    <button type="button" class="tf_btn main-btn" id="add_note_btn">Add</button>
+                                    <input class="tf_input" name="input" id="add_new_list" placeholder='List Name...'>
+                                    <button type="button" class="tf_btn main_btn"
+                                        id="show_add_todo_list_btn">Add</button>
+                                    <button type="button" class="tf_btn main_btn"
+                                        id="add_todo_list_btn">Create List</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="todo_col">
+
+                        <div class="todo_col todos_side">
                             <!-- this side holds the todo's -->
+                            <div class="todo_side_list_info">
+                                <div class="todo_side_list_info_top">
+                                    <p class="todo_menu_title" data-listid="asdf">New List</p>
+                                    <!-- <input type="text" name="listname" data-listid="asdf" id="change_list_name_input" value="New List" class="tf_input"> -->
+                                    <button type="button" class="tf_btn main_btn" id="hide_complete_todos">Hide
+                                        Completed</button>
+                                </div>
+                                <div class="todo_completion_cont">
+                                    <div class="todo_progress_bar_cont">
+                                        <div class="todo_progress_bar"></div>
+                                    </div>
+                                    <p class="todo_completion_percentage">0% complete</p>
+                                </div>
+                            </div>
+
+                            <div class="add_new_todo_cont">
+                                <button type="button" class="main_icon_button" id="add_new_todo_btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="12" height="12" viewBox="0 0 12 12">
+                                        <defs>
+                                            <clipPath id="a">
+                                                <rect width="12" height="12" />
+                                            </clipPath>
+                                        </defs>
+                                        <g clip-path="url(#a)">
+                                            <path
+                                                d="M7.5,10.95V7.5h3.45A1.051,1.051,0,0,0,12,6.45v-.9A1.051,1.051,0,0,0,10.95,4.5H7.5V1.05A1.051,1.051,0,0,0,6.45,0h-.9A1.051,1.051,0,0,0,4.5,1.05V4.5H1.05A1.051,1.051,0,0,0,0,5.55v.9A1.051,1.051,0,0,0,1.05,7.5H4.5v3.45A1.051,1.051,0,0,0,5.55,12h.9A1.051,1.051,0,0,0,7.5,10.95"
+                                                fill-rule="evenodd" />
+                                        </g>
+                                    </svg>
+                                </button>
+                                <input class="tf_input" name="input" id="add_new_todo_item_input"
+                                    placeholder='To Do...'>
+                            </div>
+
+                            <div class="todo_list_cont">
+                                <!-- todo's will go here -->
+                                
+                            </div>
                         </div>
                     </div>
 
@@ -461,7 +480,7 @@
                         <textarea class="tf_input textarea_cont" name="input" cols="30" rows="5" id="add_note_textarea"
                             placeholder='Add Note Text...'></textarea>
                     </div>
-                    <button type="button" class="tf_btn main-btn" id="add_note_btn">Add note</button>
+                    <button type="button" class="tf_btn main_btn" id="add_note_btn">Add note</button>
 
                 </div>
             </div>
@@ -474,7 +493,7 @@
                 <div class="helper">Click To Copy</div>
                 <textarea class="tf_input" name="output" id="text_output" readonly cols="30" rows="10"></textarea>
             </div>
-            <button id="clear_output" class="tf_btn main-btn">Reset</button>
+            <button id="clear_output" class="tf_btn main_btn">Reset</button>
         </div>
     </div>
     <script type="text/javascript" src="./app.js"></script>

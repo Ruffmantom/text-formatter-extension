@@ -35,7 +35,23 @@ const makePassword = (len) => {
     // // console.log(pass);
     return pass;
 };
+function findAndReplaceLinks(text) {
+    // Regular expression to find URLs
+    const urlRegex = /https?:\/\/[^\s/$.?#].[^\s]*\b/g;
+    
+    // Replace URLs with anchor tags
+    const textWithLinks = text.replace(urlRegex, (url) => {
+        let a = url.split("//")[1]
+        let name = a.split('/')[0]
 
+        return `<a class="note_text_link" href="${url}" target="_blank">
+        ${name} 
+        
+        </a>`;
+    });
+
+    return textWithLinks;
+}
 
 // Converts an RGB color to CMYK color representation.
 function rgbToCmyk(red, green, blue) {
@@ -506,7 +522,6 @@ $(function () {
         saveToLocalStorage(DATA_NAME, globalValues)
     };
     // copy function
-    let timer;
     $(".textarea_cont").on("click", (e) => {
         copyFunction(e, ".textarea_cont", "#text_output")
     });
@@ -590,11 +605,7 @@ $(function () {
         if (e && $(copyElm).val() !== "") {
             $(copyElm).select();
             document.execCommand("copy");
-            $(".notification").slideDown();
-            timer = setTimeout(() => {
-                $(".notification").slideUp();
-                clearTimeout(timer)
-            }, 5000);
+            sendNotification('', 5000 ,'Copied!')
         }
     }
 

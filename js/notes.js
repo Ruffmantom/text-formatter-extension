@@ -28,24 +28,6 @@ const createNote = (noteData) => {
     `;
 }
 
-function findAndReplaceLinks(text) {
-    // Regular expression to find URLs
-    const urlRegex = /https?:\/\/[^\s/$.?#].[^\s]*\b/g;
-    
-    // Replace URLs with anchor tags
-    const textWithLinks = text.replace(urlRegex, (url) => {
-        let a = url.split("//")[1]
-        let name = a.split('/')[0]
-
-        return `<a class="note_text_link" href="${url}" target="_blank">
-        ${name} 
-        
-        </a>`;
-    });
-
-    return textWithLinks;
-}
-
 
 const addNoteToDom = (noteData) => {
     noteListContainer.prepend(createNote(noteData));
