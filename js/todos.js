@@ -168,8 +168,8 @@ const createTodo = (todoInfo) => {
                     <div class="todo_item_col todo_item_left">
                         <input type="checkbox" name="doublequotes" class="checkbox_input complete_todo" ${todoInfo.checked ? "checked" : ''}>
                         <div class="todo_text_cont">
-                            <p class="todo_item_text ${todoInfo.checked ? "todo_checked" : ''}">${todoInfo.todo}</p>
-                            <div class="change_todo_form">
+                            <p class="todo_item_text ${todoInfo.checked ? "todo_checked" : ''}" data-todoid=${todoInfo.id}>${todoInfo.todo}</p>
+                            <form class="change_todo_form" type="submit">
                                 <textarea type="text" name="todo" data-todoid=${todoInfo.id} class="todo_change_text_input">${todoInfo.todo}</textarea>
                                 <button type="button" class="cancel_change_todo_btn" data-todoid=${todoInfo.id}>
                                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -187,7 +187,7 @@ const createTodo = (todoInfo) => {
                                         </g>
                                     </svg>
                                 </button>
-                            </div>
+                            </form>
                         </div>
                     </div>
                     
@@ -312,34 +312,44 @@ $(function () {
     })
 
 
-
+    let clickedTodoTextId = ''
     // edit todo
     // Use event delegation to handle clicks on dynamically created elements
-  $(".todo_cont").on("click", ".todo_item_text", function () {
-    // Find the parent container of the clicked element
-    var todoItem = $(this).closest(".todo_item");
+    $(".todo_cont").on("click", ".todo_item_text", function () {
+        // Find the parent container of the clicked element
+        var todoItem = $(this).closest(".todo_item");
 
-    // Get the value of the data-todoid attribute
-    var todoid = todoItem.data("todoid");
+        // Get the value of the data-todoid attribute
+        clickedTodoTextId = todoItem.data("todoid");
 
-    // Now, you have the todo item's unique identifier, and you can do whatever you need with it.
-    console.log("Clicked todo item with todoid: " + todoid);
+        // Now, you have the todo item's unique identifier, and you can do whatever you need with it.
+        console.log("Clicked todo item with todoid: " + clickedTodoTextId);
 
-    // Hide the <p> tag and show the <textarea> input field
-    todoItem.find(".todo_item_text").hide();
-    todoItem.find(".change_todo_form").css("display", "block");
-});
+        // Hide the <p> tag and show the <textarea> input field
+        todoItem.find(".todo_item_text").hide();
+        todoItem.find(".change_todo_form").css("display", "block");
+    });
 
-// cancel changing the todo text
-$(".todo_cont").on("click", ".cancel_change_todo_btn", function () {
-    var todoItem = $(this).closest(".todo_item");
-    
-    todoItem.find(".change_todo_form").hide();
-    todoItem.find(".todo_item_text").show();
-  });
+    const getNewTodoValue = () => {
+        let nameChangeInput = $('.todo_change_text_input')
+        let nameChangeInputArr = Array.from(nameChangeInput)
+        console.log(clickedTodoTextId)
+        // nameChangeInputArr.forEach(input=>{
+
+        // })
+    }
+
+   
+
+    // cancel changing the todo text
+    $(".todo_cont").on("click", ".cancel_change_todo_btn", function () {
+        var todoItem = $(this).closest(".todo_item");
+
+        todoItem.find(".change_todo_form").hide();
+        todoItem.find(".todo_item_text").show();
+    });
 
 })
-
 
 
 
