@@ -53,6 +53,11 @@ const createId = () => {
     return newId;
 };
 
+// create date helper
+const createDate = ()=>{
+    return new Date().toLocaleDateString()
+}
+
 //notification
 const sendNotification = (slideSpeed,time,text) => {
     // console.log("Clicked " + element + " and about to copy: " + copyElm)
@@ -96,11 +101,11 @@ const loader = $(".loader_container");
 const loadNotesFromLocalStorage = async () => {
     isLoading = true;
     $(loader).addClass('loader_active'); // Show the loader
-    console.log('about to load from local storage')
+    // console.log('about to load from local storage')
     try {
         let localStaging =  await localStorage.getItem(TF_N_S);
         let localObj = await localStorage.getItem(TF_NOTES);
-        console.log('notes? ', JSON.parse(localObj))
+        // console.log('notes? ', JSON.parse(localObj))
 
         if (localObj) {
             usersNotes = JSON.parse(localObj);

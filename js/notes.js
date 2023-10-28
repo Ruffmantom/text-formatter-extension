@@ -23,7 +23,7 @@ const createNote = (noteData) => {
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10.213" height="12" viewBox="0 0 10.213 12"><defs><clipPath id="a"><rect width="10.213" height="12"/></clipPath></defs><g clip-path="url(#a)"><path d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z" fill-rule="evenodd"/></g></svg>
         </button>
        <p class="note_text">${noteWithLinks}</p>
-       <p class="note_date">Created: ${noteData.dateCreated}</p>
+       <p class="note_date">Noted: ${noteData.dateCreated}</p>
     </div>
     `;
 }
@@ -39,7 +39,7 @@ function createNewNote() {
     noteDataObj.id = createId()
     noteDataObj.note = globalStaging.text
     noteDataObj.label = ""
-    noteDataObj.dateCreated = new Date().toLocaleDateString()
+    noteDataObj.dateCreated = createDate()
     usersNotes.unshift(noteDataObj)
     // clear values
     globalStaging.text = ''
@@ -107,7 +107,7 @@ $(function () {
     // add note action
     $(addNoteBtn).on('click', (e) => {
         e.preventDefault()
-        console.log('clicked create new note!')
+        // console.log('clicked create new note!')
         createNewNote()
 
     })
