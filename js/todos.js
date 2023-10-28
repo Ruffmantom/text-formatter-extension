@@ -122,9 +122,9 @@ const hideCompletedTodos = () => {
     // will need to update when a new todo gets clicked
 }
 // update the todoData global value
-const updateGlobalTodoData = (updatedList)=>{
-    console.log("Current todoData",todoData)
-    console.log("New Updated List",updatedList)
+const updateGlobalTodoData = (updatedList) => {
+    console.log("Current todoData", todoData)
+    console.log("New Updated List", updatedList)
 }
 
 
@@ -161,19 +161,17 @@ const createTodo = (todoInfo) => {
     return `
             <div class="todo_item" data-todoid=${todoInfo.id}>
                 <!-- if there is a due date -->
-                ${todoInfo.dueDate ? `<p class="todo_due_date">Due: 10/15/23</p>`:''}
+                ${todoInfo.dueDate ? `<p class="todo_due_date">Due: 10/15/23</p>` : ''}
 
                 <div class="todo_item_cont">
                     
                     <div class="todo_item_col todo_item_left">
-                        <input type="checkbox" name="doublequotes"
-                            class="checkbox_input complete_todo">
+                        <input type="checkbox" name="doublequotes" class="checkbox_input complete_todo" ${todoInfo.checked ? "checked" : ''}>
                         <div class="todo_text_cont">
-                            <p class="todo_item_text">${todoInfo.todo}</p>
+                            <p class="todo_item_text ${todoInfo.checked ? "todo_checked" : ''}">${todoInfo.todo}</p>
                             <div class="change_todo_form">
-                                <textarea type="text" name="todo" data-todoid=${todoInfo.id}
-                                    class="todo_item_text todo_change_text_input">${todoInfo.todo}</textarea>
-                                <button type="button" class="cancel_change_todo_btn">
+                                <textarea type="text" name="todo" data-todoid=${todoInfo.id} class="todo_change_text_input">${todoInfo.todo}</textarea>
+                                <button type="button" class="cancel_change_todo_btn" data-todoid=${todoInfo.id}>
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink" width="12"
                                         height="12" viewBox="0 0 12 12">
@@ -289,11 +287,11 @@ $(function () {
     })
 
     // add todo
-    addNewTodoBtn.on("click",(e)=>{
+    addNewTodoBtn.on("click", (e) => {
         e.preventDefault()
         // create todo
         let todoVal = $(addTodoInputElm).val()
-        if(todoVal !== ""){
+        if (todoVal !== "") {
             // create todo
             let todo = {}
             todo.todo = todoVal
@@ -308,10 +306,37 @@ $(function () {
             // update todoData
             updateGlobalTodoData(updateList)
             $(todosContainer).prepend(createTodo(todo))
-        }else {
+        } else {
             sendNotification('fast', 3000, 'Please enter a todo')
         }
     })
+
+
+
+    // edit todo
+    // Use event delegation to handle clicks on dynamically created elements
+  $(".todo_cont").on("click", ".todo_item_text", function () {
+    // Find the parent container of the clicked element
+    var todoItem = $(this).closest(".todo_item");
+
+    // Get the value of the data-todoid attribute
+    var todoid = todoItem.data("todoid");
+
+    // Now, you have the todo item's unique identifier, and you can do whatever you need with it.
+    console.log("Clicked todo item with todoid: " + todoid);
+
+    // Hide the <p> tag and show the <textarea> input field
+    todoItem.find(".todo_item_text").hide();
+    todoItem.find(".change_todo_form").css("display", "block");
+});
+
+// cancel changing the todo text
+$(".todo_cont").on("click", ".cancel_change_todo_btn", function () {
+    var todoItem = $(this).closest(".todo_item");
+    
+    todoItem.find(".change_todo_form").hide();
+    todoItem.find(".todo_item_text").show();
+  });
 
 })
 
@@ -321,28 +346,10 @@ $(function () {
 
 
 /*
+list info for reference
 {
     "id": "R3RQSM-35G3D1-X6FMNC",
-    "name": "tom",
-    "todos": [
-        {
-            "id": "OWVK3F-SOESY4-QFIK1P",
-            "createdDate": "10/28/2023",
-            "dueDate": "",
-            "checked": false,
-            "hidden": false
-        }
-    ],
-    "active": true
-}
-
-
-
-updated:
-
-{
-    "id": "R3RQSM-35G3D1-X6FMNC",
-    "name": "tom",
+    "name": "New List one",
     "todos": [
         {
             "id": "OWVK3F-SOESY4-QFIK1P",
