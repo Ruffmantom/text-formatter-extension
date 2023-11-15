@@ -169,7 +169,7 @@ const createTodo = (todoInfo) => {
                 <div class="todo_item_cont">
                     
                     <div class="todo_item_col todo_item_left">
-                        <input type="checkbox" name="doublequotes" class="checkbox_input complete_todo" ${todoInfo.checked ? "checked" : ''}>
+                        <input type="checkbox" data-todoid=${todoInfo.id} name="doublequotes" class="checkbox_input complete_todo" ${todoInfo.checked ? "checked" : ''}>
                         <div class="todo_text_cont">
                             <p class="todo_item_text ${todoInfo.checked ? "todo_checked" : ''}" data-todoid=${todoInfo.id}>${todoInfo.todo}</p>
                             <form class="change_todo_form" type="submit">
@@ -238,20 +238,24 @@ const createTodo = (todoInfo) => {
 }
 
 
-const createTodoListAction = (first,listName) => {
+const createTodoListAction = (first, listName) => {
     let list = {}
     list.id = createId()
     list.name = listName
     list.todos = []
     list.active = false
 
-    if(first){
+    if (first) {
         list.active = true
     }
     // push new list into todoData
     todoData.unshift(list)
     // add list to list menu
     $(todoListContElm).prepend(createTodoList(list))
+    // clear first input
+    $(addFirstListInputElm).val("")
+    // Clear menu input
+    $(addNewListInputElm).val("")
 }
 
 const showOrHideAddNewTodoListForm = (show) => {
@@ -263,18 +267,26 @@ const showOrHideAddNewTodoListForm = (show) => {
         $(showAddNewTodoListFormBtn).show()
     }
 }
-const setActiveStylesToList=()=>{
+const setActiveStylesToList = () => {
     let listItem = $('.todo_list_item')
     let listItemArr = Array.from(listItem)
-    listItemArr.forEach(i=>{
+    listItemArr.forEach(i => {
         let c = returnCurrentList()
         console.log('List item id: ', $(i).data("listid"))
         console.log('Current List Item: ', c)
-        if(c !== $(i).data("listid")){
+        if (c !== $(i).data("listid")) {
             // remove active class
             $(i).removeClass('active_todo_list')
         }
     })
+}
+const markComplete = (id) => {
+    // filter through usersTodos
+    // find todo that matches ID
+    // change necessary keys
+    console.log("All Todo Data: ", todoData)
+    console.log("Current List: ", returnCurrentList())
+    console.log("Clicked todo ID: " + id)
 }
 
 $(function () {
@@ -283,7 +295,7 @@ $(function () {
         e.preventDefault()
         if ($(addFirstListInputElm).val() !== "") {
             let listValue = $(addFirstListInputElm).val()
-            createTodoListAction(true,listValue)
+            createTodoListAction(true, listValue)
             // eventually add a load function that hides this if theres already a list item
             $(startTodoListCont).css('display', 'none')
             // show todo area
@@ -337,7 +349,7 @@ $(function () {
             updateGlobalTodoData(updateList)
             $(todosContainer).prepend(createTodo(todo))
             // reset
-            $(todoVal).val('')
+            $(addTodoInputElm).val("")
 
         } else {
             sendNotification('fast', 3000, 'Please enter a todo')
@@ -362,7 +374,7 @@ $(function () {
         let newListVal = $(addNewListInputElm).val()
         if (newListVal !== "") {
             // make new list and set current id
-            createTodoListAction(false,newListVal)
+            createTodoListAction(false, newListVal)
             // reset
             $(addNewListInputElm).val('')
             showOrHideAddNewTodoListForm(false)
@@ -401,7 +413,14 @@ $(function () {
         todoItem.find(".todo_item_text").show();
     });
 
-
+    $(".todo_cont").on('click', (e) => {
+        if ($(e.target).hasClass("complete_todo")) {
+            let todoId = $(e.target).data("todoid")
+            markComplete(todoId)
+        } else {
+            return null
+        }
+    })
 
     // end of doc ready
 })
