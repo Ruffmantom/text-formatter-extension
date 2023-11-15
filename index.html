@@ -13,7 +13,7 @@
 
 <body class="text_formatter">
     <span class="notification">
-        
+
     </span>
     <div class="loader_container">
         <div class="new_loader_cont">
@@ -405,15 +405,38 @@
                                 <p class="todo_menu_title">My Lists</p>
                                 <div class="todo_list_item_cont">
                                     <!-- list items go here -->
-                                    
+
 
                                 </div>
                                 <div class="todo_list_menu_add_cont">
-                                    <input class="tf_input" name="input" id="add_new_list" placeholder='List Name...'>
+                                    <div class="create_new_todo_list_form">
+                                        <input class="tf_input" name="input" id="add_new_list"
+                                            placeholder='List Name...'>
+                                        <div class="form_btn_group">
+
+                                            <button type="button" class="tf_btn main_btn" id="add_todo_list_btn">Create
+                                                List</button>
+                                            <div class="setting_btn" id="cancel_add_new_todo_list">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12"
+                                                    viewBox="0 0 12 12">
+                                                    <defs>
+                                                        <clipPath id="a">
+                                                            <rect width="12" height="12" />
+                                                        </clipPath>
+                                                    </defs>
+                                                    <g clip-path="url(#a)">
+                                                        <path
+                                                            d="M11.693,9.572,8.121,6l3.572-3.572a1.051,1.051,0,0,0,0-1.485L11.057.307a1.052,1.052,0,0,0-1.485,0L6,3.879,2.429.307a1.052,1.052,0,0,0-1.485,0L.307.943a1.051,1.051,0,0,0,0,1.485L3.879,6,.307,9.572a1.051,1.051,0,0,0,0,1.485l.636.636a1.051,1.051,0,0,0,1.485,0L6,8.121l3.572,3.571a1.051,1.051,0,0,0,1.485,0l.636-.636a1.051,1.051,0,0,0,0-1.485"
+                                                            transform="translate(0 0)" fill-rule="evenodd" />
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <button type="button" class="tf_btn main_btn"
                                         id="show_add_todo_list_btn">Add</button>
-                                    <button type="button" class="tf_btn main_btn"
-                                        id="add_todo_list_btn">Create List</button>
                                 </div>
                             </div>
                         </div>
@@ -422,8 +445,9 @@
                             <!-- this side holds the todo's -->
                             <div class="todo_side_list_info">
                                 <div class="todo_side_list_info_top">
-                                    <p id="todo_menu_title" >New List</p>
-                                    <input type="text" name="listname" hidden id="change_list_name_input" value="New List" class="tf_input">
+                                    <p id="todo_menu_title">New List</p>
+                                    <input type="text" name="listname" hidden id="change_list_name_input"
+                                        value="New List" class="tf_input">
                                     <button type="button" class="tf_btn main_btn" id="hide_complete_todos">Hide
                                         Completed</button>
                                 </div>
@@ -434,7 +458,10 @@
                                     <p class="todo_completion_percentage">0% complete</p>
                                 </div>
                             </div>
+                            <div class="todo_cont">
+                                <!-- todo's will go here -->
 
+                            </div>
                             <div class="add_new_todo_cont">
                                 <button type="button" class="main_icon_button" id="add_new_todo_btn">
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -455,10 +482,7 @@
                                     placeholder='To Do...'>
                             </div>
 
-                            <div class="todo_cont">
-                                <!-- todo's will go here -->
-                                
-                            </div>
+
                         </div>
                     </div>
 

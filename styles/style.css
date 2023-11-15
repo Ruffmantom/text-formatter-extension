@@ -801,10 +801,19 @@ select {
     padding-top: 10px;
 }
 
-#add_new_list {
+.create_new_todo_list_form{
     display: none;
+    flex-direction: column;
 }
-
+.form_btn_group{
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+}
+#cancel_add_new_todo_list{
+    margin: 0;
+    margin-left: 10px;
+}
 #add_new_list {
     padding-top: 10px;
 }
@@ -816,15 +825,11 @@ select {
     width: max-content;
     margin-top: 10px;
 }
-#add_note_btn,
-#add_todo_list_btn {
+#add_note_btn {
     width: max-content;
     margin-top: 10px;
 }
 
-#add_todo_list_btn {
-    display: none;
-}
 
 #show_add_todo_list_btn {
     width: max-content;

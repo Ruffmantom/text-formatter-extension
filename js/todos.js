@@ -41,7 +41,6 @@ let list = {
 // elements
 const todoMenu = $(".todo_list_menu");
 const addTodoInputElm = $("#add_new_todo_item_input")
-const addNewListInputElm = $("#add_new_list")
 const todoListContElm = $(".todo_list_item_cont")
 const addFirstListInputElm = $("#add_first_list_input")
 const startTodoListCont = $(".todo_start_cont")
@@ -51,6 +50,9 @@ const changeListTitleInput = $('#change_list_name_input')
 const todoListCompletionText = $(".todo_completion_percentage")
 const progressBarElm = $('.todo_progress_bar')
 const todosContainer = $('.todo_cont')
+const addNewListInputElm = $("#add_new_list")
+const addNewTodoListForm = $(".create_new_todo_list_form")
+
 // btns
 const todoListMenuBtn = $(".todo_list_nav_button")
 const addNewTodoBtn = $("#add_new_todo_btn")
@@ -58,6 +60,8 @@ const hideCompleteTodosBtn = $("#hide_complete_todos")
 const addNewTodoListBtn = $("#add_todo_list_btn")
 const deleteTodoListBtn = $(".todo_list_delete_btn")
 const addFirstListBtn = $("#add_first_list_btn")
+const showAddNewTodoListFormBtn = $("#show_add_todo_list_btn")
+const cancelAddNewTodoListBtn = $("#cancel_add_new_todo_list")
 
 // global values
 let todoMenuIsOpen = false;
@@ -91,7 +95,6 @@ const getCompletionPercentage = (currentList) => {
         let numberOfCompleteTodos = completeTodos.length
         return `${Math.floor((numberOfCompleteTodos / numberOfTodos) * 100)}%`
     } else {
-
         return '0%'
     }
 }
@@ -234,27 +237,53 @@ const createTodo = (todoInfo) => {
     `
 }
 
+
+const createTodoListAction = (first,listName) => {
+    let list = {}
+    list.id = createId()
+    list.name = listName
+    list.todos = []
+    list.active = false
+
+    if(first){
+        list.active = true
+    }
+    // push new list into todoData
+    todoData.unshift(list)
+    // add list to list menu
+    $(todoListContElm).prepend(createTodoList(list))
+}
+
+const showOrHideAddNewTodoListForm = (show) => {
+    if (show) {
+        $(addNewTodoListForm).css("display", "flex")
+        $(showAddNewTodoListFormBtn).hide()
+    } else {
+        $(addNewTodoListForm).css("display", "none")
+        $(showAddNewTodoListFormBtn).show()
+    }
+}
+const setActiveStylesToList=()=>{
+    let listItem = $('.todo_list_item')
+    let listItemArr = Array.from(listItem)
+    listItemArr.forEach(i=>{
+        let c = returnCurrentList()
+        console.log('List item id: ', $(i).data("listid"))
+        console.log('Current List Item: ', c)
+        if(c !== $(i).data("listid")){
+            // remove active class
+            $(i).removeClass('active_todo_list')
+        }
+    })
+}
+
 $(function () {
-    // TF_TODOS is the local storage name
-    // create todo list
-    // addFirstListInputElm
     // first time creating todo list
     addFirstListBtn.on("click", (e) => {
         e.preventDefault()
-        let list = {}
         if ($(addFirstListInputElm).val() !== "") {
             let listValue = $(addFirstListInputElm).val()
-            // console.log(listValue)
-            // create list object
-            list.id = createId()
-            list.name = listValue
-            list.todos = []
-            list.active = true
-            // push new list into todoData
-            todoData.unshift(list)
-            // now that list has been created
-            // render list view
-            $(todoListContElm).prepend(createTodoList(list))
+            createTodoListAction(true,listValue)
             // eventually add a load function that hides this if theres already a list item
             $(startTodoListCont).css('display', 'none')
             // show todo area
@@ -291,6 +320,7 @@ $(function () {
         e.preventDefault()
         // create todo
         let todoVal = $(addTodoInputElm).val()
+
         if (todoVal !== "") {
             // create todo
             let todo = {}
@@ -306,11 +336,43 @@ $(function () {
             // update todoData
             updateGlobalTodoData(updateList)
             $(todosContainer).prepend(createTodo(todo))
+            // reset
+            $(todoVal).val('')
+
         } else {
             sendNotification('fast', 3000, 'Please enter a todo')
         }
     })
 
+    // add new list
+    // show form for new todo list
+    $(showAddNewTodoListFormBtn).on("click", (e) => {
+        e.preventDefault()
+        showOrHideAddNewTodoListForm(true)
+    })
+    // hide from for new todo list
+    $(cancelAddNewTodoListBtn).on("click", () => {
+        showOrHideAddNewTodoListForm(false)
+    })
+
+    // create new list
+    $(addNewTodoListBtn).on("click", (e) => {
+        e.preventDefault()
+
+        let newListVal = $(addNewListInputElm).val()
+        if (newListVal !== "") {
+            // make new list and set current id
+            createTodoListAction(false,newListVal)
+            // reset
+            $(addNewListInputElm).val('')
+            showOrHideAddNewTodoListForm(false)
+            // setActiveStylesToList()
+            console.log(todoData)
+        } else {
+            sendNotification('fast', 3000, 'Please enter a list name')
+        }
+
+    })
 
     let clickedTodoTextId = ''
     // edit todo
@@ -330,16 +392,6 @@ $(function () {
         todoItem.find(".change_todo_form").css("display", "block");
     });
 
-    const getNewTodoValue = () => {
-        let nameChangeInput = $('.todo_change_text_input')
-        let nameChangeInputArr = Array.from(nameChangeInput)
-        console.log(clickedTodoTextId)
-        // nameChangeInputArr.forEach(input=>{
-
-        // })
-    }
-
-   
 
     // cancel changing the todo text
     $(".todo_cont").on("click", ".cancel_change_todo_btn", function () {
@@ -349,6 +401,9 @@ $(function () {
         todoItem.find(".todo_item_text").show();
     });
 
+
+
+    // end of doc ready
 })
 
 
