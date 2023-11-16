@@ -81,6 +81,7 @@ select {
     outline: none;
     border: 1px solid var(--bg-color);
     color: var(--text-color);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .tf_input::placeholder {
@@ -549,8 +550,12 @@ select {
     height: 100%;
     position: absolute;
     top: 10px;
-    background-color: var(--bg-color);
+    /* background-color: var(--bg-color); */
     box-shadow: var(--shadow);
+
+    background-color: var(--modal-bg-color);
+    backdrop-filter: var(--blur);
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -739,6 +744,10 @@ select {
     border-radius: 7px;
 }
 
+.note_container::-webkit-scrollbar {
+    display: none;
+}
+
 .user_note {
     padding: 7px;
     border-radius: 7px;
@@ -801,19 +810,22 @@ select {
     padding-top: 10px;
 }
 
-.create_new_todo_list_form{
+.create_new_todo_list_form {
     display: none;
     flex-direction: column;
 }
-.form_btn_group{
+
+.form_btn_group {
     padding-top: 10px;
     display: flex;
     align-items: center;
 }
-#cancel_add_new_todo_list{
+
+#cancel_add_new_todo_list {
     margin: 0;
     margin-left: 10px;
 }
+
 #add_new_list {
     padding-top: 10px;
 }
@@ -821,10 +833,12 @@ select {
 .main_todo_cont {
     display: none;
 }
-#add_first_list_btn{
+
+#add_first_list_btn {
     width: max-content;
     margin-top: 10px;
 }
+
 #add_note_btn {
     width: max-content;
     margin-top: 10px;
@@ -840,10 +854,12 @@ select {
 }
 
 /* menu */
+.todo_menu_title,
 #todo_menu_title {
     margin: 0;
     padding-bottom: 10px;
     font-size: 20px;
+    width: 60%;
 }
 
 .todo_row {
@@ -882,6 +898,10 @@ select {
     max-height: 150px;
     overflow-y: scroll;
 
+}
+
+.todo_list_item_cont::-webkit-scrollbar {
+    display: none;
 }
 
 .todo_list_item {
@@ -949,9 +969,7 @@ select {
     width: 100%;
 }
 
-#todo_menu_title {
-    width: 65%;
-}
+
 
 #change_list_name_input {
     width: 58%;
@@ -976,11 +994,25 @@ select {
     background-color: var(--primary);
 }
 
+.todo_progress_bar_complete {
+    background-color: var(--complete);
+
+}
+
 /* .todo_progress_bar {
     width: 50%;
 } */
+.list_info_lower {
+    display: flex;
+    padding-bottom: 5px;
+}
 
-.todo_completion_percentage {
+.list_info_lower>*:not(:last-child) {
+    margin-right: 10px;
+}
+
+.todo_completion_percentage,
+.todo_list_number {
     font-size: 12px;
     margin: 0;
     padding-top: 10px;
@@ -990,12 +1022,26 @@ select {
     padding-top: 10px;
     max-height: 250px;
     overflow-y: scroll;
+    border-radius: 10px;
+}
+
+.todo_cont::-webkit-scrollbar {
+    display: none;
 }
 
 .todo_item {
     background-color: var(--input-bkg);
     border-radius: 10px;
     padding: 5px;
+}
+
+.deleted_todo {
+    opacity: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    transition: all 350ms ease-out;
 }
 
 .todo_item:not(:last-child) {
@@ -1104,6 +1150,8 @@ select {
     max-width: 90%;
     max-height: 150px;
     min-height: 20px;
+    color: var(--text-color);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .todo_due_date.overdue {
@@ -1133,7 +1181,7 @@ select {
     border: none;
     border-radius: 5px;
     position: absolute;
-    right: 10px;
+    right: 12px;
     top: 8px;
     background-color: var(--primary);
 }
@@ -1145,6 +1193,10 @@ select {
 
 .danger_btn:hover>svg {
     fill: white;
+}
+
+#show_complete_todos {
+    display: none;
 }
 
 /* END todo list */

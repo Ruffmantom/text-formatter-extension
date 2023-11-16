@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <div class="main_modal_container ">
+    <div class="main_modal_container">
         <div class="settings_modal">
             <div class="setting_btn close_btn" id="close_settings_btn">
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em"
@@ -445,17 +445,23 @@
                             <!-- this side holds the todo's -->
                             <div class="todo_side_list_info">
                                 <div class="todo_side_list_info_top">
-                                    <p id="todo_menu_title">New List</p>
+                                    <p id="todo_menu_title"></p>
                                     <input type="text" name="listname" hidden id="change_list_name_input"
                                         value="New List" class="tf_input">
                                     <button type="button" class="tf_btn main_btn" id="hide_complete_todos">Hide
+                                        Completed</button>
+                                    <button type="button" class="tf_btn main_btn" id="show_complete_todos">Show
                                         Completed</button>
                                 </div>
                                 <div class="todo_completion_cont">
                                     <div class="todo_progress_bar_cont">
                                         <div class="todo_progress_bar"></div>
                                     </div>
-                                    <p class="todo_completion_percentage">0% complete</p>
+                                    <div class="list_info_lower">
+
+                                        <p class="todo_list_number"></p>
+                                        <p class="todo_completion_percentage">0% complete</p>
+                                    </div>
                                 </div>
                             </div>
                             <div class="todo_cont">

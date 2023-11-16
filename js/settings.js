@@ -5,6 +5,7 @@ const settingsSingleQuotesCheck = $("#settings_single_quotes")
 const settingsCustomCheck = $("#settings_custom")
 const settingsDecimalCheck = $("#settings_decimal")
 const settingsFractionToDec = $("#settings_frac_to_dec")
+const clearAllSettingsBtn = $("#settings_clear_all_data")
 
 let settings = {
     fractionToDecimal: true,
@@ -64,6 +65,17 @@ $(() => {
 
         }
     }
+
+    $(clearAllSettingsBtn).on('click', (e) => {
+        e.preventDefault()
+        localStorage.removeItem("DATA_NAME")
+        localStorage.removeItem("TF_SETTINGS")
+        localStorage.removeItem("TF_NOTES")
+        localStorage.removeItem("TF_N_S")
+        localStorage.removeItem("TF_TODOS")
+        localStorage.removeItem("TF_DATA")
+        location.reload();
+    })
 
 })
 

@@ -52,11 +52,14 @@ const progressBarElm = $('.todo_progress_bar')
 const todosContainer = $('.todo_cont')
 const addNewListInputElm = $("#add_new_list")
 const addNewTodoListForm = $(".create_new_todo_list_form")
+const todoListItemCompletionTextElm = $(".todo_list_item_completion")
+const todoListNumberTextElm = $(".todo_list_number")
 
 // btns
 const todoListMenuBtn = $(".todo_list_nav_button")
 const addNewTodoBtn = $("#add_new_todo_btn")
 const hideCompleteTodosBtn = $("#hide_complete_todos")
+const showCompleteTodosBtn = $("#show_complete_todos")
 const addNewTodoListBtn = $("#add_todo_list_btn")
 const deleteTodoListBtn = $(".todo_list_delete_btn")
 const addFirstListBtn = $("#add_first_list_btn")
@@ -65,7 +68,7 @@ const cancelAddNewTodoListBtn = $("#cancel_add_new_todo_list")
 
 // global values
 let todoMenuIsOpen = false;
-let todoData = []
+// let usersTodos = []
 
 // close menu
 const closeTodoMenu = () => {
@@ -77,27 +80,29 @@ const closeTodoMenu = () => {
 
 // returns the current list
 const returnCurrentList = () => {
-    return todoData.find(l => l.active === true)
+    return usersTodos.find(l => l.active === true)
 
 }
 // on load function
 const setTodoListData = () => {
     let currentList = returnCurrentList()
     updateListData(currentList)
+    // update local storage with usersTodos
+    saveToLocalStorage(TF_TODOS, usersTodos)
 }
 
 // get the completion percentage
 const getCompletionPercentage = (currentList) => {
-    // return the percentage of complete todos
     if (currentList.todos.length >= 1) {
-        let numberOfTodos = currentList.todos.length
-        let completeTodos = currentList.todos.find(t => t.checked)
-        let numberOfCompleteTodos = completeTodos.length
-        return `${Math.floor((numberOfCompleteTodos / numberOfTodos) * 100)}%`
+        let numberOfTodos = currentList.todos.length;
+        let completeTodos = currentList.todos.filter(t => t.checked);
+        let numberOfCompleteTodos = completeTodos.length;
+        return `${Math.floor((numberOfCompleteTodos / numberOfTodos) * 100)}%`;
     } else {
-        return '0%'
+        return '0%';
     }
-}
+};
+
 
 
 const updateListData = (currentList) => {
@@ -118,26 +123,23 @@ const updateListData = (currentList) => {
     }
 }
 
-// hide completed todos
-const hideCompletedTodos = () => {
-    // look at the active list and filter the completed todos
-    // render the ones that are not completed
-    // will need to update when a new todo gets clicked
-}
-// update the todoData global value
-const updateGlobalTodoData = (updatedList) => {
-    console.log("Current todoData", todoData)
-    console.log("New Updated List", updatedList)
+
+// update the usersTodos global value
+const updateGlobalusersTodos = (updatedList) => {
+    const index = usersTodos.findIndex(item => item.id === updatedList.id);
+    // Update the corresponding item in usersTodos
+    usersTodos[index] = updatedList;
+
+    saveToLocalStorage(TF_TODOS, usersTodos)
 }
 
 
 const createTodoList = (listInfo) => {
-    // console.log(listInfo)
     return `
-    <div class="todo_list_item active_todo_list" data-listid=${listInfo.id}>
+    <div class="todo_list_item ${listInfo.active ? "active_todo_list" : ""}" data-listid=${listInfo.id}>
         <div class="todo_list_info">
             <p class="todo_list_item_name">${listInfo.name}</p>
-            <p class="todo_list_item_completion">${getCompletionPercentage(listInfo)} Complete</p>
+            <p class="todo_list_item_completion" data-listid=${listInfo.id}>${getCompletionPercentage(listInfo)} Complete</p>
         </div>
         <button data-todolistid=${listInfo.id} type="button" class="setting_btn delete_btn todo_list_delete_btn">
             <svg xmlns="http://www.w3.org/2000/svg"
@@ -162,18 +164,17 @@ const createTodoList = (listInfo) => {
 
 const createTodo = (todoInfo) => {
     return `
-            <div class="todo_item" data-todoid=${todoInfo.id}>
+            <div class="todo_item ${todoInfo.checked ? "todo_checked" : ""}" data-todoid=${todoInfo.id}>
                 <!-- if there is a due date -->
-                ${todoInfo.dueDate ? `<p class="todo_due_date">Due: 10/15/23</p>` : ''}
+                ${todoInfo.dueDate ? `<p class="todo_due_date">Due: ${todoInfo.dueDate}</p>` : ''}
 
                 <div class="todo_item_cont">
-                    
                     <div class="todo_item_col todo_item_left">
                         <input type="checkbox" data-todoid=${todoInfo.id} name="doublequotes" class="checkbox_input complete_todo" ${todoInfo.checked ? "checked" : ''}>
                         <div class="todo_text_cont">
-                            <p class="todo_item_text ${todoInfo.checked ? "todo_checked" : ''}" data-todoid=${todoInfo.id}>${todoInfo.todo}</p>
-                            <form class="change_todo_form" type="submit">
-                                <textarea type="text" name="todo" data-todoid=${todoInfo.id} class="todo_change_text_input">${todoInfo.todo}</textarea>
+                            <p class="todo_item_text" data-todoid=${todoInfo.id}>${todoInfo.todo}</p>
+                            <div class="change_todo_form" type="submit">
+                                <textarea type="text" name="todo" spellcheck="true" data-todoid=${todoInfo.id} class="todo_change_text_input">${todoInfo.todo}</textarea>
                                 <button type="button" class="cancel_change_todo_btn" data-todoid=${todoInfo.id}>
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink" width="12"
@@ -190,7 +191,7 @@ const createTodo = (todoInfo) => {
                                         </g>
                                     </svg>
                                 </button>
-                            </form>
+                            </div>
                         </div>
                     </div>
                     
@@ -244,18 +245,21 @@ const createTodoListAction = (first, listName) => {
     list.name = listName
     list.todos = []
     list.active = false
+    list.hideComplete = false
 
     if (first) {
         list.active = true
     }
-    // push new list into todoData
-    todoData.unshift(list)
+    // push new list into usersTodos
+    usersTodos.unshift(list)
     // add list to list menu
     $(todoListContElm).prepend(createTodoList(list))
     // clear first input
     $(addFirstListInputElm).val("")
     // Clear menu input
     $(addNewListInputElm).val("")
+    // re render the UI
+    updateFullTodoUi()
 }
 
 const showOrHideAddNewTodoListForm = (show) => {
@@ -267,29 +271,224 @@ const showOrHideAddNewTodoListForm = (show) => {
         $(showAddNewTodoListFormBtn).show()
     }
 }
+
+
 const setActiveStylesToList = () => {
     let listItem = $('.todo_list_item')
     let listItemArr = Array.from(listItem)
     listItemArr.forEach(i => {
         let c = returnCurrentList()
-        console.log('List item id: ', $(i).data("listid"))
-        console.log('Current List Item: ', c)
+        // console.log('List item id: ', $(i).data("listid"))
+        // console.log('Current List Item: ', c)
         if (c !== $(i).data("listid")) {
             // remove active class
             $(i).removeClass('active_todo_list')
         }
     })
 }
-const markComplete = (id) => {
-    // filter through usersTodos
-    // find todo that matches ID
-    // change necessary keys
-    console.log("All Todo Data: ", todoData)
-    console.log("Current List: ", returnCurrentList())
-    console.log("Clicked todo ID: " + id)
+
+
+const updateUsersTodos = (updatedList) => {
+    const index = usersTodos.findIndex(item => item.id === updatedList.id);
+
+    let updated = false;
+    if (index !== -1) {
+        // Update the corresponding item in usersTodos
+        usersTodos[index] = updatedList;
+        // update local storage with usersTodos
+        saveToLocalStorage(TF_TODOS, usersTodos);
+        updated = true
+    } else {
+        console.error(`Item with id ${updatedList.id} not found in usersTodos.`);
+        updated = false
+    }
+    // console.log("Updated updateUsersTodos: " + updated)
 }
 
+const updateTodoUI = (todoId, checked) => {
+    // console.log('about to update UI');
+    const todoItemArr = Array.from($(".todo_item")); // Re-query todo items
+
+    todoItemArr.forEach(t => {
+        // console.log('Inside foreach');
+        if ($(t).data("todoid") === todoId) {
+            if (checked) {
+                $(t).addClass('todo_checked');
+            } else {
+                $(t).removeClass('todo_checked');
+            }
+        }
+    });
+};
+
+
+// this is more for if the show button gets clicked, not a load
+// handle displaying the completed tasks
+const handleDisplayCompletedTasks = (showHideButtonClicked) => {
+    const todoItemArr = Array.from($(".todo_item"));
+    // hide completed tasks from dom
+    let currentList = returnCurrentList()
+    // toggle the hideComplete
+    if (showHideButtonClicked) {
+        if (currentList.hideComplete) {
+            currentList.hideComplete = false;
+        } else {
+            currentList.hideComplete = true;
+        }
+    }
+
+    if (currentList.hideComplete) {
+        $("#show_complete_todos").show()
+        $("#hide_complete_todos").hide()
+        // render all todos that are complete
+        todoItemArr.forEach(t => {
+            if ($(t).hasClass("todo_checked")) {
+                $(t).hide()
+            }
+        })
+    } else {
+        $("#show_complete_todos").hide()
+        $("#hide_complete_todos").show()
+
+        todoItemArr.forEach(t => {
+            if ($(t).hasClass("todo_checked")) {
+                $(t).show()
+            }
+        })
+    }
+
+    updateUsersTodos(currentList);
+}
+
+// update the list ui with every action
+const updateFullTodoUi = () => {
+    // check and hide todos if needed
+    handleDisplayCompletedTasks(false)
+    // update the list complete status
+    let currentList = returnCurrentList()
+    let completePercentage = getCompletionPercentage(currentList)
+    let listItemsArr = Array.from($(".todo_list_item_completion"))
+    // update the list percentage in menu
+    listItemsArr.forEach(l => {
+        if ($(l).data("listid") === currentList.id) {
+            $(l).text(`${completePercentage} complete`)
+        }
+    })
+
+    // set UI
+    // set list title
+    $(todoListTitle).text(currentList.name)
+    // se the number of todos
+    $(todoListNumberTextElm).text(currentList.todos.length + " Todo's")
+    // set width of progress bar
+    $(progressBarElm).css({
+        "width": completePercentage,
+        "transition": "width 200ms ease"
+    })
+    // update the completion text
+    $(todoListCompletionText).text(`${completePercentage} complete`)
+    // update the progress bar color if 100%
+    if (completePercentage === "100%") {
+
+        $(progressBarElm).addClass('todo_progress_bar_complete')
+    } else {
+        $(progressBarElm).removeClass('todo_progress_bar_complete')
+
+    }
+    // update local storage with usersTodos
+    saveToLocalStorage(TF_TODOS, usersTodos)
+}
+
+// when a todo gets checked or unchecked
+const todoCheckHandler = (todoId) => {
+    let currentList = returnCurrentList();
+    let todoToUpdate = currentList.todos.find(t => t.id === todoId);
+
+    if (todoToUpdate) {
+        // Toggle the checked status
+        todoToUpdate.checked = !todoToUpdate.checked;
+
+        // Update UI
+        updateTodoUI(todoId, todoToUpdate.checked);
+        //update the list as well if the hide complete is active
+        updateFullTodoUi()
+        // Save updated current list to usersTodos
+        updateUsersTodos(currentList);
+    }
+};
+
+// load in the usersTodos
+const loadUsersTodos = () => {
+    if (usersTodos.length >= 1) {
+        // hide the start of todo list if none
+        $(startTodoListCont).css('display', 'none');
+        // show todo area
+        $(todoAreaCont).css('display', "block");
+        $(todoListContElm).empty()
+        // Render todo lists in the menu
+        usersTodos.forEach(l => {
+            $(todoListContElm).prepend(createTodoList(l));
+        });
+
+        // Load the current list todos and sort them
+        let currentList = returnCurrentList();
+        let sortedList = currentList.todos.sort((a, b) => {
+            // First, sort by checked state (unchecked first)
+            if (a.checked !== b.checked) {
+                return a.checked ? -1 : 1;
+            }
+
+            // If the checked state is the same, then sort by createdDate
+            return new Date(a.createdDate) - new Date(b.createdDate);
+        });
+
+        // Render sorted todos
+        sortedList.forEach(todo => {
+            $(todosContainer).prepend(createTodo(todo));
+        });
+    }
+};
+
+const deleteTodo = (todoId) => {
+    // delete from usersTodos
+    let currentList = returnCurrentList();
+    let updatedList = currentList.todos.filter(t => t.id !== todoId);
+
+    currentList.todos = updatedList
+    // update data
+    updateUsersTodos(currentList);
+    // console.log(updatedList)
+    // transition out from UI
+    const todoItemToDelete = $(`.todo_item[data-todoid="${todoId}"]`);
+
+    todoItemToDelete.addClass('deleted_todo');
+
+    // After the transition is complete, remove the todo item from the DOM
+    todoItemToDelete.on('transitionend', function () {
+        $(this).remove();
+    });
+    updateFullTodoUi()
+};
+
+const changeList = (listId) => {
+    // usersTodos data change the current active list to false
+    // assign new todo list active to true
+    // usersTodos.
+    // update UI
+    updateFullTodoUi()
+}
+
+
+
+
 $(function () {
+    // load in the todos on load
+    loadUsersTodos()
+    // on load see if current list is hiding or showing completed
+    let currentList = returnCurrentList()
+    if (currentList) {
+        updateFullTodoUi()
+    }
     // first time creating todo list
     addFirstListBtn.on("click", (e) => {
         e.preventDefault()
@@ -341,15 +540,16 @@ $(function () {
             todo.createdDate = createDate()
             todo.dueDate = ''
             todo.checked = false
-            todo.hidden = false
-            // save to todoData
+            // save to usersTodos
             let updateList = returnCurrentList()
             updateList.todos.unshift(todo)
-            // update todoData
-            updateGlobalTodoData(updateList)
+            // update usersTodos
+            updateGlobalusersTodos(updateList)
             $(todosContainer).prepend(createTodo(todo))
             // reset
             $(addTodoInputElm).val("")
+            //update UI
+            updateFullTodoUi()
 
         } else {
             sendNotification('fast', 3000, 'Please enter a todo')
@@ -379,15 +579,14 @@ $(function () {
             $(addNewListInputElm).val('')
             showOrHideAddNewTodoListForm(false)
             // setActiveStylesToList()
-            console.log(todoData)
+            // console.log(usersTodos)
         } else {
             sendNotification('fast', 3000, 'Please enter a list name')
         }
 
     })
 
-    let clickedTodoTextId = ''
-    // edit todo
+    // handle edit todo
     // Use event delegation to handle clicks on dynamically created elements
     $(".todo_cont").on("click", ".todo_item_text", function () {
         // Find the parent container of the clicked element
@@ -396,16 +595,51 @@ $(function () {
         // Get the value of the data-todoid attribute
         clickedTodoTextId = todoItem.data("todoid");
 
-        // Now, you have the todo item's unique identifier, and you can do whatever you need with it.
-        console.log("Clicked todo item with todoid: " + clickedTodoTextId);
+        let todoEditTextInput = $(`.todo_change_text_input[data-todoid="${clickedTodoTextId}"]`);
+
+        todoEditTextInput.keydown(function (event) {
+            var keycode = event.keyCode ? event.keyCode : event.which;
+
+            if (keycode == 13 && !event.shiftKey) {
+                // Prevent default behavior if Enter is pressed without Shift
+                event.preventDefault();
+                console.log($(this).val());
+
+                // Now save the value to the current todo
+                let currentList = returnCurrentList();
+
+                currentList.todos.forEach(t => {
+                    if (t.id === clickedTodoTextId) {
+                        t.todo = $(this).val();
+                    }
+                });
+
+                updateUsersTodos(currentList);
+                loadUsersTodos()
+                // Perform any other action you need with the entered value
+
+                // Hide the input field and show the <p> tag
+                todoItem.find(".change_todo_form").hide();
+                todoItem.find(".todo_item_text").show();
+            }
+        });
 
         // Hide the <p> tag and show the <textarea> input field
         todoItem.find(".todo_item_text").hide();
         todoItem.find(".change_todo_form").css("display", "block");
+
+        $(document).on("click", function (event) {
+            // Check if the click event target is not within the menu
+            if (!todoItem.is(event.target) && todoItem.has(event.target).length === 0) {
+                todoItem.find(".change_todo_form").hide();
+                todoItem.find(".todo_item_text").show();
+            }
+        });
     });
 
 
-    // cancel changing the todo text
+
+    // handle cancel changing the todo text
     $(".todo_cont").on("click", ".cancel_change_todo_btn", function () {
         var todoItem = $(this).closest(".todo_item");
 
@@ -413,37 +647,49 @@ $(function () {
         todoItem.find(".todo_item_text").show();
     });
 
-    $(".todo_cont").on('click', (e) => {
-        if ($(e.target).hasClass("complete_todo")) {
-            let todoId = $(e.target).data("todoid")
-            markComplete(todoId)
+    // handle check todo
+    $(".todo_cont").on('click', '.complete_todo', function () {
+        let todoId = $(this).data("todoid");
+        todoCheckHandler(todoId);
+    });
+
+    // handle delete todo
+    $(".todo_cont").on('click', '.todo_delete_btn', function () {
+        let todoId = $(this).data("todoid");
+        // console.log("Delete todo: " + todoId)
+        deleteTodo(todoId)
+    });
+
+
+    // handle hide completed tasks button
+    $(hideCompleteTodosBtn).on('click', (e) => {
+        // console.log('hide complete!')
+        let currentList = returnCurrentList()
+        if (currentList.todos.length === 0) {
+            sendNotification("fast", 3000, "There are no completed todo's")
         } else {
-            return null
+            let completedTodos = false
+            currentList.todos.filter(t => {
+                if (t.checked) {
+                    completedTodos = true
+                }
+            })
+            if (!completedTodos) {
+                sendNotification("fast", 3000, "There are no completed todo's")
+            } else {
+                handleDisplayCompletedTasks(true)
+            }
+
         }
+
     })
+    // handle show the completed todos
+    $(showCompleteTodosBtn).on('click', (e) => {
+        // console.log('show complete!')
+        handleDisplayCompletedTasks(true)
+
+    })
+
 
     // end of doc ready
 })
-
-
-
-
-
-/*
-list info for reference
-{
-    "id": "R3RQSM-35G3D1-X6FMNC",
-    "name": "New List one",
-    "todos": [
-        {
-            "id": "OWVK3F-SOESY4-QFIK1P",
-            "createdDate": "10/28/2023",
-            "dueDate": "",
-            "checked": false,
-            "hidden": false
-        }
-    ],
-    "active": true
-}
-
-*/

@@ -38,7 +38,7 @@ const makePassword = (len) => {
 function findAndReplaceLinks(text) {
     // Regular expression to find URLs
     const urlRegex = /https?:\/\/[^\s/$.?#].[^\s]*\b/g;
-    
+
     // Replace URLs with anchor tags
     const textWithLinks = text.replace(urlRegex, (url) => {
         let a = url.split("//")[1]
@@ -101,7 +101,8 @@ $(function () {
         try {
             await loadFromLocalStorage()
             await loadNotesFromLocalStorage()
-       
+            await loadTodosFromLocalStorage()
+
             isSuccess = true
         } catch (error) {
             // console.log(error)
@@ -136,7 +137,7 @@ $(function () {
         } else {
             $(textOutput).val(globalValues.outputValueConversion || "");
         }
-        
+
 
         // Password tab
         $(passwordLength).val(globalValues.passLength || "");
@@ -605,7 +606,7 @@ $(function () {
         if (e && $(copyElm).val() !== "") {
             $(copyElm).select();
             document.execCommand("copy");
-            sendNotification('', 5000 ,'Copied!')
+            sendNotification('', 5000, 'Copied!')
         }
     }
 
@@ -728,9 +729,9 @@ $(function () {
         clearValues()
     });
 
-    // Menu Actions
     menuBtnElm.on('click', () => {
         if (menuIsOpen) {
+            // close menu
             // close menu
             closeMenu()
         } else {
@@ -740,7 +741,17 @@ $(function () {
             $(menuBtnElm).parent().addClass('menu_btn_active')
             menuIsOpen = true
         }
+
+        // close todo list menu
+        $(document).on("click", function (event) {
+            // Check if the click event target is not within the menu
+            if (!$(".menu_sidebar").is(event.target) && menuIsOpen && !menuBtnElm.is(event.target) && $(".menu_sidebar").has(event.target).length === 0) {
+                // close menu
+                closeMenu()
+            }
+        });
     })
+
     const closeMenu = () => {
         if (menuIsOpen) {
             $(".menu_sidebar").removeClass("menu_open")
@@ -749,6 +760,8 @@ $(function () {
             menuIsOpen = false
         }
     }
+    // open the todo list menu
+
 
     // end of Doc Ready
 });
