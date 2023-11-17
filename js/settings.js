@@ -5,6 +5,7 @@ const settingsSingleQuotesCheck = $("#settings_single_quotes")
 const settingsCustomCheck = $("#settings_custom")
 const settingsDecimalCheck = $("#settings_decimal")
 const settingsFractionToDec = $("#settings_frac_to_dec")
+const clearAllSettingsBtn = $("#settings_clear_all_data")
 
 let settings = {
     fractionToDecimal: true,
@@ -19,7 +20,6 @@ $(() => {
     // settings are established when the user changes them
     // need to load in settings on load.
     if (localStorage.getItem(TF_SETTINGS)) {
-        console.log('settings are present')
         // if present then load
         let loadedSettings = JSON.parse(localStorage.getItem(TF_SETTINGS))
         // set current settings
@@ -65,6 +65,17 @@ $(() => {
 
         }
     }
+
+    $(clearAllSettingsBtn).on('click', (e) => {
+        e.preventDefault()
+        localStorage.removeItem("DATA_NAME")
+        localStorage.removeItem("TF_SETTINGS")
+        localStorage.removeItem("TF_NOTES")
+        localStorage.removeItem("TF_N_S")
+        localStorage.removeItem("TF_TODOS")
+        localStorage.removeItem("TF_DATA")
+        location.reload();
+    })
 
 })
 

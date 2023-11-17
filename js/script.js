@@ -20,7 +20,10 @@ const prefixClearBtn = $("#prefix_clear")
 const suffixClearBtn = $("#suffix_clear")
 const settingsBtn = $("#settings_button")
 const closeBtn = $('#close_settings_btn')
-const settingsModalCont = $('.main_modal_container')
+const settingsModalCont = $('#settings_modal_cont')
+const menuBtnElm = $('.menu_btn')
+let menuIsOpen = false;
+
 
 var chars =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!#$)(-_";
@@ -29,10 +32,26 @@ const makePassword = (len) => {
     for (var i = 0; i < len; i++) {
         pass += chars[Math.floor(Math.random() * chars.length)];
     }
-    // // console.log(pass);
     return pass;
 };
 
+
+function findAndReplaceLinks(text) {
+    // Regular expression to find URLs
+    const urlRegex = /https?:\/\/[^\s/$.?#].[^\s]*\b/g;
+    // Replace URLs with anchor tags
+    const textWithLinks = text.replace(urlRegex, (url) => {
+        let a = url.split("//")[1]
+        let name = a.split('/')[0]
+
+        return `<a class="note_text_link" href="${url}" target="_blank">
+        ${name} 
+        
+        </a>`;
+    });
+
+    return textWithLinks;
+}
 
 // Converts an RGB color to CMYK color representation.
 function rgbToCmyk(red, green, blue) {
@@ -81,6 +100,9 @@ $(function () {
     const startApp = async () => {
         try {
             await loadFromLocalStorage()
+            await loadNotesFromLocalStorage()
+            await loadTodosFromLocalStorage()
+
             isSuccess = true
         } catch (error) {
             // console.log(error)
@@ -115,6 +137,7 @@ $(function () {
         } else {
             $(textOutput).val(globalValues.outputValueConversion || "");
         }
+
 
         // Password tab
         $(passwordLength).val(globalValues.passLength || "");
@@ -173,11 +196,14 @@ $(function () {
             // add active from nav Btn
             $(e.target).addClass('nav_tab_active')
             // hide large copy box if tab is on 2
-            if (tabId === "two"||tabId === "four"||tabId === "five") {
+            if (tabId === "two" || tabId === "four" || tabId === "five") {
                 $("#lower_copy_textarea_cont").hide()
             } else {
                 $("#lower_copy_textarea_cont").show()
             }
+
+            // handle menu if open
+            closeMenu()
 
             tabElmArr.forEach(tab => {
                 // remove active from tab
@@ -497,7 +523,6 @@ $(function () {
         saveToLocalStorage(DATA_NAME, globalValues)
     };
     // copy function
-    let timer;
     $(".textarea_cont").on("click", (e) => {
         copyFunction(e, ".textarea_cont", "#text_output")
     });
@@ -581,11 +606,7 @@ $(function () {
         if (e && $(copyElm).val() !== "") {
             $(copyElm).select();
             document.execCommand("copy");
-            $(".notification").slideDown();
-            timer = setTimeout(() => {
-                $(".notification").slideUp();
-                clearTimeout(timer)
-            }, 5000);
+            sendNotification('', 5000, 'Copied!')
         }
     }
 
@@ -642,6 +663,8 @@ $(function () {
             $(settingsModalCont).removeClass('modal_active')
         } else {
             $(settingsModalCont).addClass('modal_active')
+            // handle menu
+            closeMenu()
         }
     })
     $(closeBtn).on('click', () => {
@@ -705,6 +728,39 @@ $(function () {
         // console.log('CLEARING VALUES')
         clearValues()
     });
+
+    menuBtnElm.on('click', () => {
+        if (menuIsOpen) {
+            // close menu
+            // close menu
+            closeMenu()
+        } else {
+            // open menu
+            $(".menu_sidebar").addClass("menu_open")
+            // add class to menu button
+            $(menuBtnElm).parent().addClass('menu_btn_active')
+            menuIsOpen = true
+        }
+
+        // close todo list menu
+        $(document).on("click", function (event) {
+            // Check if the click event target is not within the menu
+            if (!$(".menu_sidebar").is(event.target) && menuIsOpen && !menuBtnElm.is(event.target) && $(".menu_sidebar").has(event.target).length === 0) {
+                // close menu
+                closeMenu()
+            }
+        });
+    })
+
+    const closeMenu = () => {
+        if (menuIsOpen) {
+            $(".menu_sidebar").removeClass("menu_open")
+            // remove class to menu button
+            $(menuBtnElm).parent().removeClass('menu_btn_active')
+            menuIsOpen = false
+        }
+    }
+    // open the todo list menu
 
 
     // end of Doc Ready
