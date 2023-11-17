@@ -52,6 +52,21 @@ const createId = () => {
     }
     return newId;
 };
+// format date from date picker
+function formatDate(inputDate) {
+    // Parse the input date string into a Date object
+    const dateObject = new Date(inputDate);
+
+    // Extract year, month, and day
+    const year = dateObject.getFullYear();
+    const month = (dateObject.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const day = dateObject.getDate().toString().padStart(2, '0');
+
+    // Format the date as "month/day/year"
+    const formattedDate = `${month}/${parseInt(day) + 1}/${year}`;
+
+    return formattedDate;
+}
 
 // create date helper
 const createDate = () => {

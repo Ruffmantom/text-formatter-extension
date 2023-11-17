@@ -30,10 +30,27 @@ const createTodoList = (listInfo) => {
 // create Todo HTML
 const createTodo = (todoInfo) => {
     const todoWithLinks = findAndReplaceLinks(todoInfo.todo);
+
+    const checkDueDateIsPastDue = (dueDate) => {
+        // if the todo has a dueDate, check to see if it is past due
+        if (dueDate) {
+            // Parse the input due date string into a Date object
+            const dueDateObject = new Date(dueDate);
+
+            // Get the current date
+            const currentDate = new Date();
+
+            // Compare the due date with the current date
+            return dueDateObject < currentDate;
+        }
+
+        // If there's no due date, it's not past due
+        return false;
+    }
     return `
             <div class="todo_item ${todoInfo.checked ? "todo_checked" : ""}" data-todoid=${todoInfo.id}>
                 <!-- if there is a due date -->
-                ${todoInfo.dueDate ? `<p class="todo_due_date">Due: ${todoInfo.dueDate}</p>` : ''}
+                ${todoInfo.dueDate ? `<p class="todo_due_date ${!todoInfo.checked && checkDueDateIsPastDue(todoInfo.dueDate) ? "overdue":""} ${todoInfo.checked? "complete":""}">Due: ${formatDate(todoInfo.dueDate)}</p>` : ''}
 
                 <div class="todo_item_cont">
                     <div class="todo_item_col todo_item_left">

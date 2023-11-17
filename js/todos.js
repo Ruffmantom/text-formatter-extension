@@ -1,46 +1,3 @@
-// goal of this file is to render the todo lists
-// create actions and listeners for the todo list
-
-// when user firsts gets on or has no list items they need to create a list
-// once a list has been created, the todo list shows up and can start adding todo's
-
-// think about todo obj
-let todo = {
-    id: createId(),
-    todo: '',
-    createdDate: '',
-    dueDate: null,
-    checked: false,
-    hidden: false
-}
-
-// functionality of a todo
-/* 
-- create todo
-- mark it as complete
-- add due date
-- delete
-- edit by clicking on the text
-
-*/
-// list
-let list = {
-    id: createId(),
-    name: '',
-    todos: [],
-    active: false
-}
-
-// functionality for a list
-/*
-- create list
-- choose list and loads in todos
-- delete list
-- edit list name by clicking on the text
-*/
-
-
-
 // todoMenuListItemCont
 // todoItemCont
 // elements
@@ -72,6 +29,7 @@ const addFirstListBtn = $("#add_first_list_btn")
 const showAddNewTodoListFormBtn = $("#show_add_todo_list_btn")
 const cancelAddNewTodoListBtn = $("#cancel_add_new_todo_list")
 const todoListButton = $(".todo_list_item")
+const saveDueDateBtn = $("#save_due_date_btn")
 // global values
 let todoMenuIsOpen = false;
 // let usersTodos = []
@@ -231,13 +189,15 @@ const updateTodoCheckedStateUI = (todoId, checked) => {
         if ($(t).data("todoid") === todoId) {
             if (checked) {
                 $(t).addClass('todo_checked');
+                $(t).children('.todo_due_date').addClass('complete')
+                $(t).children('.todo_due_date').removeClass('overdue')
             } else {
                 $(t).removeClass('todo_checked');
+                $(t).children('.todo_due_date').removeClass('complete')
             }
         }
     });
 };
-
 
 // this is more for if the show button gets clicked, not a load
 // handle displaying the completed tasks
@@ -643,41 +603,72 @@ $(function () {
     const dueDateModalCont = $("#add_due_date_modal_cont")
     // on load, set up the date picker to only have future dates
     var currentDate = new Date().toISOString().split('T')[0];
-    
+    let dueDateConfig = {
+        currentlySelectedTodo: '',
+        newDueDate: '',
+    }
+    const openDueDateModal = (open) => {
+
+        if (!open && $(dueDateModalCont).hasClass("modal_active")) {
+            $(dueDateModalCont).removeClass('modal_active')
+        } else {
+            $(dueDateModalCont).addClass('modal_active')
+        }
+    }
     // Set the minimum date for the date input
     $(dueDateInputElm).attr('min', currentDate);
 
     $(".todo_cont").on("click", ".todo_set_due_date_btn", function () {
         let todoId = $(this).data("todoid");
         console.log("Need to set due date for: " + todoId)
-        if ($(dueDateModalCont).hasClass("modal_active")) {
-            $(dueDateModalCont).removeClass('modal_active')
-        } else {
-            $(dueDateModalCont).addClass('modal_active')
-        }
+        openDueDateModal(true)
+        // set state
+        dueDateConfig.currentlySelectedTodo = todoId
         // load in current date if has one
         let currentList = returnCurrentList()
-        let currentTodo = currentList.todos.filter(t=>t.id !== todoId)
-        if(currentTodo[0].dueDate !== ""){
-            $('.chosen_due_date').text(`Selected date: ${currentTodo[0].dueDate}`)
+        let currentTodo = currentList.todos.filter(t => t.id === todoId)
+        if (currentTodo[0].dueDate !== "") {
+            $('.chosen_due_date').text(`Current Due date: ${formatDate(currentTodo[0].dueDate)}`)
+            // set value of input
+            $(dueDateInputElm).val(currentTodo[0].dueDate)
         }
     });
 
-    $("#close_due_date_btn").on('click', () => {
-        if ($(dueDateModalCont).hasClass("modal_active")) {
-            $(dueDateModalCont).removeClass('modal_active')
 
-        }
+    $("#close_due_date_btn").on('click', () => {
+        openDueDateModal(false)
     })
 
-    $(dueDateInputElm).on('change',e=>{
+    $(dueDateInputElm).on('change', e => {
         let d = $(e.target).val()
-        $('.chosen_due_date').text(`Selected date: ${d}`)
-
+        $('.chosen_due_date').text(`Selected date: ${formatDate(d)}`)
+        // save to duedate state
+        dueDateConfig.newDueDate = ''
+        dueDateConfig.newDueDate = d
     })
     // save due date for todo
 
+    $(saveDueDateBtn).on("click", e => {
+        e.preventDefault()
+        let currentList = returnCurrentList()
+        console.log(dueDateConfig)
+        currentList.todos.forEach(t => {
+            if (t.id === dueDateConfig.currentlySelectedTodo) {
+                t.dueDate = dueDateConfig.newDueDate
+            }
+        })
+        // update the users todos
+        updateUsersTodos(currentList);
+        console.log(usersTodos)
+        // close modal
+        openDueDateModal(false)
+        // update UI
+        // update UI
+        updateFullTodoUi()
+        // load todos
+        loadUsersTodos()
 
+    })
     // handle cancel changing the todo text
     $(".todo_cont").on("click", ".cancel_change_todo_btn", function () {
         var todoItem = $(this).closest(".todo_item");
