@@ -7,7 +7,7 @@ const todoMenuListItemCont = $(".todo_list_item_cont")
 const addFirstListInputElm = $("#add_first_list_input")
 const startTodoListCont = $(".todo_start_cont")
 const todoAreaCont = $(".main_todo_cont")
-const todoListTitle = $("#todo_menu_title")
+const todoListTitle = $("#todo_list_title")
 const changeListTitleInput = $('#change_list_name_input')
 const todoListCompletionText = $(".todo_completion_percentage")
 const progressBarElm = $('.todo_progress_bar')
@@ -46,13 +46,6 @@ const closeTodoMenu = () => {
 const returnCurrentList = () => {
     return usersTodos.find(l => l.active === true)
 }
-// on load function
-const setTodoListData = () => {
-    let currentList = returnCurrentList()
-    updateListUiInfo(currentList)
-    // update local storage with usersTodos
-    saveToLocalStorage(TF_TODOS, usersTodos)
-}
 
 // get the completion percentage
 const getCompletionPercentage = (currentList) => {
@@ -65,19 +58,6 @@ const getCompletionPercentage = (currentList) => {
         return '0%';
     }
 };
-// update the todo list UI information
-const updateListUiInfo = (currentList) => {
-    // this is for any list actions
-    // completion bar
-    todoListTitle.text(currentList.name)
-    let completion = `${getCompletionPercentage(currentList)}`
-    $(progressBarElm).css('width', completion)
-    $(todoListCompletionText).text(`${completion} Complete`)
-    if (completion === "100%") {
-        $(progressBarElm).css('background-color', "var(--complete)")
-    }
-}
-
 
 // update the usersTodos global value
 const updateGlobalusersTodos = (updatedList) => {
@@ -131,7 +111,10 @@ const createTodoAction = (todoVal) => {
         $(addTodoInputElm).val("")
         //update UI
         updateFullTodoUi()
-
+        // scroll up on the todo container
+        $(todoItemCont).animate({
+            scrollTop: 0
+        }, 500)
     } else {
         sendNotification('fast', 3000, 'Please enter a todo')
     }
@@ -260,12 +243,14 @@ const updateFullTodoUi = () => {
     // set UI
     // set list title
     $(todoListTitle).text(currentList.name)
+    // add attribute
+    $(changeListTitleInput).attr('data-listid', currentList.id);
     // se the number of todos
     $(todoListNumberTextElm).text(currentList.todos.length + " Todo's")
     // set width of progress bar
     $(progressBarElm).css({
         "width": completePercentage,
-        "transition": "width 200ms ease"
+        "transition": "width 150ms ease"
     })
     // update the completion text
     $(todoListCompletionText).text(`${completePercentage} complete`)
@@ -400,6 +385,21 @@ const changeList = (listId) => {
     loadUsersTodos()
 }
 
+// save list name
+const saveListName = (listName, listId) => {
+    // update usersTodos
+    usersTodos.forEach(l => {
+        if (l.id === listId) {
+            l.name = listName
+        }
+
+    })
+    // save to db
+    saveToLocalStorage(TF_TODOS, usersTodos)
+    // update UI
+    updateFullTodoUi()
+}
+
 // delete todo lists
 const deleteTodoList = (listId) => {
     // remove list from usersTodos
@@ -450,7 +450,9 @@ const deleteTodoList = (listId) => {
     }
 }
 
-
+// -----------------------------------------------------------------------------------
+//  ******************************************************************************************
+// -----------------------------------------------------------------------------------
 // document on load
 $(function () {
     // on load see if current list is hiding or showing completed
@@ -468,8 +470,8 @@ $(function () {
             createTodoListAction(true, listValue)
             // eventually add a load function that hides this if theres already a list item
             showTodoListArea(true)
-            // render list data
-            setTodoListData()
+            // save list data
+            saveToLocalStorage(TF_TODOS, usersTodos)
         } else {
             sendNotification('fast', 3000, 'Please enter a list name')
         }
@@ -588,6 +590,7 @@ $(function () {
         // Hide the <p> tag and show the <textarea> input field
         todoItem.find(".todo_item_text").hide();
         todoItem.find(".change_todo_form").css("display", "block");
+        todoItem.find(".todo_change_text_input").focus();
 
         $(document).on("click", function (event) {
             // Check if the click event target is not within the menu
@@ -634,7 +637,7 @@ $(function () {
         }
     });
 
-
+    // close dueDate modal button
     $("#close_due_date_btn").on('click', () => {
         openDueDateModal(false)
     })
@@ -730,5 +733,33 @@ $(function () {
         console.log("delete list: " + listId)
         deleteTodoList(listId)
     });
+
+    // when list title gets clicked
+    $(todoListTitle).on('click', e => {
+        // set input value
+        let currentList = returnCurrentList()
+        $(changeListTitleInput).val(currentList.name)
+        // hide the title and show the input
+        $(todoListTitle).hide()
+        $(changeListTitleInput).show();
+        // focus on the input
+        $(changeListTitleInput).focus();
+    })
+
+
+    $(changeListTitleInput).keydown(function (event) {
+        var keycode = event.keyCode ? event.keyCode : event.which;
+
+        if (keycode == 13 && !event.shiftKey) {
+            // Prevent default behavior if Enter is pressed without Shift
+            event.preventDefault();
+            saveListName($(this).val(), $(this).data("listid"))
+            // hide input and show title
+            $(todoListTitle).show()
+            $(changeListTitleInput).hide();
+        }
+    });
+    // changeListTitleInput
+
     // end of doc ready
 })
