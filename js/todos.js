@@ -59,6 +59,7 @@ const addNewListInputElm = $("#add_new_list")
 const addNewTodoListForm = $(".create_new_todo_list_form")
 const todoListItemCompletionTextElm = $(".todo_list_item_completion")
 const todoListNumberTextElm = $(".todo_list_number")
+const dueDateInputElm = $('#todo_due_date_input')
 
 // btns
 const todoListMenuBtn = $(".todo_list_nav_button")
@@ -128,7 +129,6 @@ const updateGlobalusersTodos = (updatedList) => {
 
     saveToLocalStorage(TF_TODOS, usersTodos)
 }
-
 // create a new todo list
 // create list
 const createTodoListAction = (first, listName) => {
@@ -152,6 +152,31 @@ const createTodoListAction = (first, listName) => {
     $(addNewListInputElm).val("")
     // re render the UI
     updateFullTodoUi()
+}
+// create a new todo
+const createTodoAction = (todoVal) => {
+    if (todoVal !== "") {
+        // create todo
+        let todo = {}
+        todo.todo = todoVal
+        todo.id = createId()
+        todo.createdDate = createDate()
+        todo.dueDate = ''
+        todo.checked = false
+        // save to usersTodos
+        let updateList = returnCurrentList()
+        updateList.todos.unshift(todo)
+        // update usersTodos
+        updateGlobalusersTodos(updateList)
+        $(todoItemCont).prepend(createTodo(todo))
+        // reset
+        $(addTodoInputElm).val("")
+        //update UI
+        updateFullTodoUi()
+
+    } else {
+        sendNotification('fast', 3000, 'Please enter a todo')
+    }
 }
 // show or hide create list form
 const showOrHideAddNewTodoListForm = (show) => {
@@ -515,30 +540,22 @@ $(function () {
         e.preventDefault()
         // create todo
         let todoVal = $(addTodoInputElm).val()
-
-        if (todoVal !== "") {
-            // create todo
-            let todo = {}
-            todo.todo = todoVal
-            todo.id = createId()
-            todo.createdDate = createDate()
-            todo.dueDate = ''
-            todo.checked = false
-            // save to usersTodos
-            let updateList = returnCurrentList()
-            updateList.todos.unshift(todo)
-            // update usersTodos
-            updateGlobalusersTodos(updateList)
-            $(todoItemCont).prepend(createTodo(todo))
-            // reset
-            $(addTodoInputElm).val("")
-            //update UI
-            updateFullTodoUi()
-
-        } else {
-            sendNotification('fast', 3000, 'Please enter a todo')
-        }
+        createTodoAction(todoVal)
     })
+
+    // if typing in todo input and press enter
+    let todoTextInput = $(`#add_new_todo_item_input`);
+    todoTextInput.keydown(function (event) {
+        var keycode = event.keyCode ? event.keyCode : event.which;
+
+        if (keycode == 13 && !event.shiftKey) {
+            // Prevent default behavior if Enter is pressed without Shift
+            event.preventDefault();
+            console.log($(this).val())
+            createTodoAction($(this).val())
+        }
+    });
+
 
     // add new list
     // show form for new todo list
@@ -621,6 +638,44 @@ $(function () {
         });
     });
 
+
+    // handle todo due date click
+    const dueDateModalCont = $("#add_due_date_modal_cont")
+    // on load, set up the date picker to only have future dates
+    var currentDate = new Date().toISOString().split('T')[0];
+    
+    // Set the minimum date for the date input
+    $(dueDateInputElm).attr('min', currentDate);
+
+    $(".todo_cont").on("click", ".todo_set_due_date_btn", function () {
+        let todoId = $(this).data("todoid");
+        console.log("Need to set due date for: " + todoId)
+        if ($(dueDateModalCont).hasClass("modal_active")) {
+            $(dueDateModalCont).removeClass('modal_active')
+        } else {
+            $(dueDateModalCont).addClass('modal_active')
+        }
+        // load in current date if has one
+        let currentList = returnCurrentList()
+        let currentTodo = currentList.todos.filter(t=>t.id !== todoId)
+        if(currentTodo[0].dueDate !== ""){
+            $('.chosen_due_date').text(`Selected date: ${currentTodo[0].dueDate}`)
+        }
+    });
+
+    $("#close_due_date_btn").on('click', () => {
+        if ($(dueDateModalCont).hasClass("modal_active")) {
+            $(dueDateModalCont).removeClass('modal_active')
+
+        }
+    })
+
+    $(dueDateInputElm).on('change',e=>{
+        let d = $(e.target).val()
+        $('.chosen_due_date').text(`Selected date: ${d}`)
+
+    })
+    // save due date for todo
 
 
     // handle cancel changing the todo text

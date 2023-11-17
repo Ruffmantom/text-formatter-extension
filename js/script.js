@@ -20,7 +20,7 @@ const prefixClearBtn = $("#prefix_clear")
 const suffixClearBtn = $("#suffix_clear")
 const settingsBtn = $("#settings_button")
 const closeBtn = $('#close_settings_btn')
-const settingsModalCont = $('.main_modal_container')
+const settingsModalCont = $('#settings_modal_cont')
 const menuBtnElm = $('.menu_btn')
 let menuIsOpen = false;
 
