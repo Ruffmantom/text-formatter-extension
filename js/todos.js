@@ -38,10 +38,15 @@ let list = {
 - delete list
 - edit list name by clicking on the text
 */
+
+
+
+// todoMenuListItemCont
+// todoItemCont
 // elements
 const todoMenu = $(".todo_list_menu");
 const addTodoInputElm = $("#add_new_todo_item_input")
-const todoListContElm = $(".todo_list_item_cont")
+const todoMenuListItemCont = $(".todo_list_item_cont")
 const addFirstListInputElm = $("#add_first_list_input")
 const startTodoListCont = $(".todo_start_cont")
 const todoAreaCont = $(".main_todo_cont")
@@ -49,7 +54,7 @@ const todoListTitle = $("#todo_menu_title")
 const changeListTitleInput = $('#change_list_name_input')
 const todoListCompletionText = $(".todo_completion_percentage")
 const progressBarElm = $('.todo_progress_bar')
-const todosContainer = $('.todo_cont')
+const todoItemCont = $('.todo_cont')
 const addNewListInputElm = $("#add_new_list")
 const addNewTodoListForm = $(".create_new_todo_list_form")
 const todoListItemCompletionTextElm = $(".todo_list_item_completion")
@@ -65,7 +70,7 @@ const deleteTodoListBtn = $(".todo_list_delete_btn")
 const addFirstListBtn = $("#add_first_list_btn")
 const showAddNewTodoListFormBtn = $("#show_add_todo_list_btn")
 const cancelAddNewTodoListBtn = $("#cancel_add_new_todo_list")
-
+const todoListButton = $(".todo_list_item")
 // global values
 let todoMenuIsOpen = false;
 // let usersTodos = []
@@ -78,15 +83,14 @@ const closeTodoMenu = () => {
     }
 }
 
-// returns the current list
+// returns the current list helper
 const returnCurrentList = () => {
     return usersTodos.find(l => l.active === true)
-
 }
 // on load function
 const setTodoListData = () => {
     let currentList = returnCurrentList()
-    updateListData(currentList)
+    updateListUiInfo(currentList)
     // update local storage with usersTodos
     saveToLocalStorage(TF_TODOS, usersTodos)
 }
@@ -102,17 +106,9 @@ const getCompletionPercentage = (currentList) => {
         return '0%';
     }
 };
-
-
-
-const updateListData = (currentList) => {
+// update the todo list UI information
+const updateListUiInfo = (currentList) => {
     // this is for any list actions
-    /*
-    - checking a todo
-    - adding a todo
-    - changing the list name
-    etc..
-    */
     // completion bar
     todoListTitle.text(currentList.name)
     let completion = `${getCompletionPercentage(currentList)}`
@@ -133,112 +129,8 @@ const updateGlobalusersTodos = (updatedList) => {
     saveToLocalStorage(TF_TODOS, usersTodos)
 }
 
-
-const createTodoList = (listInfo) => {
-    return `
-    <div class="todo_list_item ${listInfo.active ? "active_todo_list" : ""}" data-listid=${listInfo.id}>
-        <div class="todo_list_info">
-            <p class="todo_list_item_name">${listInfo.name}</p>
-            <p class="todo_list_item_completion" data-listid=${listInfo.id}>${getCompletionPercentage(listInfo)} Complete</p>
-        </div>
-        <button data-todolistid=${listInfo.id} type="button" class="setting_btn delete_btn todo_list_delete_btn">
-            <svg xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink" width="10.213" height="12"
-                viewBox="0 0 10.213 12">
-                <defs>
-                    <clipPath id="a">
-                        <rect width="10.213" height="12" />
-                    </clipPath>
-                </defs>
-                <g clip-path="url(#a)">
-                    <path
-                        d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
-                        fill-rule="evenodd" />
-                </g>
-            </svg>
-        </button>
-    </div>
-    
-    `
-}
-
-const createTodo = (todoInfo) => {
-    return `
-            <div class="todo_item ${todoInfo.checked ? "todo_checked" : ""}" data-todoid=${todoInfo.id}>
-                <!-- if there is a due date -->
-                ${todoInfo.dueDate ? `<p class="todo_due_date">Due: ${todoInfo.dueDate}</p>` : ''}
-
-                <div class="todo_item_cont">
-                    <div class="todo_item_col todo_item_left">
-                        <input type="checkbox" data-todoid=${todoInfo.id} name="doublequotes" class="checkbox_input complete_todo" ${todoInfo.checked ? "checked" : ''}>
-                        <div class="todo_text_cont">
-                            <p class="todo_item_text" data-todoid=${todoInfo.id}>${todoInfo.todo}</p>
-                            <div class="change_todo_form" type="submit">
-                                <textarea type="text" name="todo" spellcheck="true" data-todoid=${todoInfo.id} class="todo_change_text_input">${todoInfo.todo}</textarea>
-                                <button type="button" class="cancel_change_todo_btn" data-todoid=${todoInfo.id}>
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="12"
-                                        height="12" viewBox="0 0 12 12">
-                                        <defs>
-                                            <clipPath id="a">
-                                                <rect width="12" height="12" />
-                                            </clipPath>
-                                        </defs>
-                                        <g clip-path="url(#a)">
-                                            <path
-                                                d="M11.693,9.572,8.121,6l3.572-3.572a1.051,1.051,0,0,0,0-1.485L11.057.307a1.052,1.052,0,0,0-1.485,0L6,3.879,2.429.307a1.052,1.052,0,0,0-1.485,0L.307.943a1.051,1.051,0,0,0,0,1.485L3.879,6,.307,9.572a1.051,1.051,0,0,0,0,1.485l.636.636a1.051,1.051,0,0,0,1.485,0L6,8.121l3.572,3.571a1.051,1.051,0,0,0,1.485,0l.636-.636a1.051,1.051,0,0,0,0-1.485"
-                                                transform="translate(0 0)" fill-rule="evenodd" />
-                                        </g>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="todo_item_col todo_item_right">
-                        <button data-todoid=${todoInfo.id} type="button"
-                            class=" main_icon_button todo_set_due_date_btn">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink" width="11.182"
-                                height="12" viewBox="0 0 11.182 12">
-                                <defs>
-                                    <clipPath id="a">
-                                        <rect width="11.182" height="12" />
-                                    </clipPath>
-                                </defs>
-                                <g clip-path="url(#a)">
-                                    <path
-                                        d="M1.909.265v.818h.818V.265A.266.266,0,0,0,2.463,0H2.174a.266.266,0,0,0-.265.265m4.364,0v.818h.818V.265A.266.266,0,0,0,6.826,0H6.537a.266.266,0,0,0-.265.265m2.182,0v.818h.818V.265A.266.266,0,0,0,9.008,0H8.719a.266.266,0,0,0-.265.265m-4.364.818.818.008V.265A.266.266,0,0,0,4.645,0H4.355a.266.266,0,0,0-.265.265Zm2.182.008H4.909V2.182a.244.244,0,0,1-.265.273H4.355a.244.244,0,0,1-.265-.273V1.091H2.727V2.182a.244.244,0,0,1-.265.273H2.174a.244.244,0,0,1-.265-.273V1.091H1.677A1.673,1.673,0,0,0,0,2.727v7.636A1.673,1.673,0,0,0,1.677,12H9.5a1.673,1.673,0,0,0,1.677-1.636V2.727A1.673,1.673,0,0,0,9.5,1.091H9.273V2.182a.244.244,0,0,1-.265.273H8.719a.244.244,0,0,1-.265-.273V1.091H7.091v1.1a.238.238,0,0,1-.265.265H6.537a.244.244,0,0,1-.265-.273ZM2.182,8.455H9a.26.26,0,0,1,.273.256v.562A.274.274,0,0,1,9,9.545H2.182a.274.274,0,0,1-.273-.273V8.711a.26.26,0,0,1,.273-.256m0-1.909H9a.252.252,0,0,1,.273.248v.57A.274.274,0,0,1,9,7.636H2.182a.274.274,0,0,1-.273-.273V6.81a.267.267,0,0,1,.273-.265m0-1.909H9a.252.252,0,0,1,.273.248v.57A.274.274,0,0,1,9,5.727H2.182a.274.274,0,0,1-.273-.273V4.892a.26.26,0,0,1,.273-.256"
-                                        transform="translate(0)" fill-rule="evenodd" />
-                                </g>
-                            </svg>
-                        </button>
-                        <button data-todoid=${todoInfo.id} type="button"
-                            class=" main_icon_button todo_delete_btn danger_btn">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink" width="10.213"
-                                height="12" viewBox="0 0 10.213 12">
-                                <defs>
-                                    <clipPath id="a">
-                                        <rect width="10.213" height="12" />
-                                    </clipPath>
-                                </defs>
-                                <g clip-path="url(#a)">
-                                    <path
-                                        d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
-                                        fill-rule="evenodd" />
-                                </g>
-                            </svg>
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-    
-    `
-}
-
-
+// create a new todo list
+// create list
 const createTodoListAction = (first, listName) => {
     let list = {}
     list.id = createId()
@@ -253,7 +145,7 @@ const createTodoListAction = (first, listName) => {
     // push new list into usersTodos
     usersTodos.unshift(list)
     // add list to list menu
-    $(todoListContElm).prepend(createTodoList(list))
+    $(todoMenuListItemCont).prepend(createTodoList(list))
     // clear first input
     $(addFirstListInputElm).val("")
     // Clear menu input
@@ -261,7 +153,7 @@ const createTodoListAction = (first, listName) => {
     // re render the UI
     updateFullTodoUi()
 }
-
+// show or hide create list form
 const showOrHideAddNewTodoListForm = (show) => {
     if (show) {
         $(addNewTodoListForm).css("display", "flex")
@@ -273,39 +165,39 @@ const showOrHideAddNewTodoListForm = (show) => {
 }
 
 
-const setActiveStylesToList = () => {
-    let listItem = $('.todo_list_item')
-    let listItemArr = Array.from(listItem)
-    listItemArr.forEach(i => {
-        let c = returnCurrentList()
-        // console.log('List item id: ', $(i).data("listid"))
-        // console.log('Current List Item: ', c)
-        if (c !== $(i).data("listid")) {
-            // remove active class
-            $(i).removeClass('active_todo_list')
-        }
-    })
+const showTodoListArea = (show) => {
+    if (show) {
+        $(startTodoListCont).css('display', 'none');
+        // show todo area
+        $(todoAreaCont).css('display', "block");
+    } else {
+        $(startTodoListCont).css('display', 'flex');
+        // show todo area
+        $(todoAreaCont).css('display', "none");
+    }
 }
 
-
+// update the 
 const updateUsersTodos = (updatedList) => {
     const index = usersTodos.findIndex(item => item.id === updatedList.id);
 
-    let updated = false;
+    let updatedUI = false;
+
     if (index !== -1) {
         // Update the corresponding item in usersTodos
         usersTodos[index] = updatedList;
         // update local storage with usersTodos
         saveToLocalStorage(TF_TODOS, usersTodos);
-        updated = true
+        updatedUI = true
     } else {
         console.error(`Item with id ${updatedList.id} not found in usersTodos.`);
-        updated = false
+        updatedUI = false
     }
     // console.log("Updated updateUsersTodos: " + updated)
 }
 
-const updateTodoUI = (todoId, checked) => {
+// handle checking the todo on the UI
+const updateTodoCheckedStateUI = (todoId, checked) => {
     // console.log('about to update UI');
     const todoItemArr = Array.from($(".todo_item")); // Re-query todo items
 
@@ -374,7 +266,12 @@ const updateFullTodoUi = () => {
             $(l).text(`${completePercentage} complete`)
         }
     })
-
+    // empty menu first
+    $(todoMenuListItemCont).empty()
+    // Render todo menu lists in the menu
+    usersTodos.forEach(l => {
+        $(todoMenuListItemCont).prepend(createTodoList(l));
+    });
     // set UI
     // set list title
     $(todoListTitle).text(currentList.name)
@@ -409,7 +306,7 @@ const todoCheckHandler = (todoId) => {
         todoToUpdate.checked = !todoToUpdate.checked;
 
         // Update UI
-        updateTodoUI(todoId, todoToUpdate.checked);
+        updateTodoCheckedStateUI(todoId, todoToUpdate.checked);
         //update the list as well if the hide complete is active
         updateFullTodoUi()
         // Save updated current list to usersTodos
@@ -419,16 +316,10 @@ const todoCheckHandler = (todoId) => {
 
 // load in the usersTodos
 const loadUsersTodos = () => {
+
     if (usersTodos.length >= 1) {
         // hide the start of todo list if none
-        $(startTodoListCont).css('display', 'none');
-        // show todo area
-        $(todoAreaCont).css('display', "block");
-        $(todoListContElm).empty()
-        // Render todo lists in the menu
-        usersTodos.forEach(l => {
-            $(todoListContElm).prepend(createTodoList(l));
-        });
+        showTodoListArea(true)
 
         // Load the current list todos and sort them
         let currentList = returnCurrentList();
@@ -442,10 +333,16 @@ const loadUsersTodos = () => {
             return new Date(a.createdDate) - new Date(b.createdDate);
         });
 
+        // empty the todo container before rendering them.
+        $(todoItemCont).empty()
         // Render sorted todos
         sortedList.forEach(todo => {
-            $(todosContainer).prepend(createTodo(todo));
+            $(todoItemCont).prepend(createTodo(todo));
         });
+        // check and hide todos if needed
+        handleDisplayCompletedTasks(false)
+    } else {
+        showTodoListArea(false)
     }
 };
 
@@ -469,24 +366,113 @@ const deleteTodo = (todoId) => {
     });
     updateFullTodoUi()
 };
+// update active list styles
+const setActiveStylesToList = () => {
+    let listItemArr = Array.from($('.todo_list_item'))
+    listItemArr.forEach(i => {
+        let c = returnCurrentList()
+        // console.log('List item id: ', $(i).data("listid"))
+        // console.log('Current List Item: ', c)
+        if (c.id !== $(i).data("listid")) {
+            // remove active class
+            $(i).removeClass('active_todo_list')
+        } else {
+            $(i).addClass('active_todo_list')
+        }
+    })
+}
+const saveLastActiveList = () => {
+    let lastActiveList = ''
+    let currentList = returnCurrentList()
+    lastActiveList = currentList.id
+    // save that to local storage
+    saveToLocalStorage("TF_TODOS_LAL", lastActiveList)
+}
+const getLastActiveList = () => {
+    return JSON.parse(localStorage.getItem("TF_TODOS_LAL"))
+}
 
+// change active list
 const changeList = (listId) => {
     // usersTodos data change the current active list to false
+    saveLastActiveList()
     // assign new todo list active to true
+    usersTodos.forEach(l => {
+        if (l.id === listId) {
+            // set active
+            l.active = true
+        } else {
+            l.active = false
+        }
+    })
+    // save to local storage
+    saveToLocalStorage(TF_TODOS, usersTodos)
     // usersTodos.
+    setActiveStylesToList()
     // update UI
     updateFullTodoUi()
+    // load todos
+    loadUsersTodos()
+}
+
+// delete todo lists
+const deleteTodoList = (listId) => {
+    // remove list from usersTodos
+    // set new active list if deleting current active one
+    console.log("Before delete: ", usersTodos)
+    let deletingActiveList = false;
+    usersTodos.forEach(l => {
+        // console.log(l)
+        if (l.id === listId && l.active) {
+            l.active = false
+            deletingActiveList = true
+        }
+    })
+    console.log('Deleting active list? ' + deletingActiveList)
+
+
+
+    let updatedUserTodos = usersTodos.filter(l => l.id !== listId);
+    usersTodos = updatedUserTodos
+
+    if (deletingActiveList) {
+        let lastActiveList = getLastActiveList()
+        console.log("Deleting currently active so we need to set list to last active: " + lastActiveList)
+        usersTodos.forEach(l => {
+            if (l.id === lastActiveList) {
+                console.log("Yes found last active list")
+                l.active = true
+            }
+        })
+    }
+
+    console.log("After delete: ", usersTodos)
+    // save to local storage
+    saveToLocalStorage(TF_TODOS, updatedUserTodos)
+    if (usersTodos.length >= 1) {
+
+        // // update UI
+        // // usersTodos.
+        setActiveStylesToList()
+        // // update UI
+        updateFullTodoUi()
+        // // load todos
+        loadUsersTodos()
+    } else {
+        // hide container and show start of new list
+        // hide the start of todo list if none
+        showTodoListArea(false)
+    }
 }
 
 
-
-
+// document on load
 $(function () {
-    // load in the todos on load
-    loadUsersTodos()
     // on load see if current list is hiding or showing completed
     let currentList = returnCurrentList()
     if (currentList) {
+        // load in the todos on load
+        loadUsersTodos()
         updateFullTodoUi()
     }
     // first time creating todo list
@@ -496,9 +482,7 @@ $(function () {
             let listValue = $(addFirstListInputElm).val()
             createTodoListAction(true, listValue)
             // eventually add a load function that hides this if theres already a list item
-            $(startTodoListCont).css('display', 'none')
-            // show todo area
-            $(todoAreaCont).css('display', "block")
+            showTodoListArea(true)
             // render list data
             setTodoListData()
         } else {
@@ -545,7 +529,7 @@ $(function () {
             updateList.todos.unshift(todo)
             // update usersTodos
             updateGlobalusersTodos(updateList)
-            $(todosContainer).prepend(createTodo(todo))
+            $(todoItemCont).prepend(createTodo(todo))
             // reset
             $(addTodoInputElm).val("")
             //update UI
@@ -689,7 +673,16 @@ $(function () {
         handleDisplayCompletedTasks(true)
 
     })
-
-
+    // handle list click
+    $(".todo_list_item_cont").on('click', '.todo_list_btn ', function () {
+        let listId = $(this).data("listid");
+        changeList(listId)
+    });
+    // handle delete todo list
+    $(".todo_list_item_cont").on('click', '.todo_list_delete_btn ', function () {
+        let listId = $(this).data("listid");
+        console.log("delete list: " + listId)
+        deleteTodoList(listId)
+    });
     // end of doc ready
 })

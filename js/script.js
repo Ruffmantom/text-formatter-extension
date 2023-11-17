@@ -32,13 +32,13 @@ const makePassword = (len) => {
     for (var i = 0; i < len; i++) {
         pass += chars[Math.floor(Math.random() * chars.length)];
     }
-    // // console.log(pass);
     return pass;
 };
+
+
 function findAndReplaceLinks(text) {
     // Regular expression to find URLs
     const urlRegex = /https?:\/\/[^\s/$.?#].[^\s]*\b/g;
-
     // Replace URLs with anchor tags
     const textWithLinks = text.replace(urlRegex, (url) => {
         let a = url.split("//")[1]

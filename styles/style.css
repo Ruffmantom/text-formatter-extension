@@ -764,6 +764,7 @@ select {
     font-size: 14px;
     width: 90%;
     margin: 0;
+    line-height: 1.5;
 }
 
 .note_date {
@@ -788,6 +789,7 @@ select {
     border-radius: 2px;
     font-style: italic;
     text-decoration: none;
+    margin-right: 3px;
 }
 
 .note_text_link:hover {
@@ -913,6 +915,15 @@ select {
     align-items: start;
     position: relative;
     cursor: pointer;
+}
+
+.todo_list_btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 85%;
+    height: 100%;
+    z-index: 9;
 }
 
 .todo_list_item.active_todo_list::before {
@@ -1063,6 +1074,8 @@ select {
     margin: 0;
     padding-left: 10px;
     margin-top: 3px;
+    line-height: 1.5;
+    font-size: 14px;
 }
 
 .todo_set_due_date_btn,
