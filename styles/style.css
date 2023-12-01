@@ -983,10 +983,11 @@ select {
 }
 
 
-
 #change_list_name_input {
     width: 58%;
     font-size: 20px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .todo_progress_bar_cont {
