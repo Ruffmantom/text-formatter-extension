@@ -1012,25 +1012,30 @@ select {
     background-color: var(--complete);
 
 }
+
 /* Todo list due date modal and form */
-.due_date_form{
+.due_date_form {
     display: flex;
     flex-direction: column;
-   
+
 }
-.due_date_form>*:not(:last-child){
+
+.due_date_form>*:not(:last-child) {
     margin-bottom: 15px;
 }
-.chosen_due_date{
+
+.chosen_due_date {
     font-weight: bold;
 }
-#todo_due_date_input{
+
+#todo_due_date_input {
     font-family: Arial, Helvetica, sans-serif;
     padding: 10px;
     border: none;
     border-radius: 7px;
     color: var(--text-color);
 }
+
 /* .todo_progress_bar {
     width: 50%;
 } */
@@ -1234,3 +1239,165 @@ select {
 }
 
 /* END todo list */
+/* Page Option Tab */
+.tab_inner_tabs_cont {
+    width: 450px;
+}
+
+.inner_tab_header {
+    display: flex;
+    padding-bottom: 15px;
+}
+
+.inner_tab_item>p {
+    padding: 7px 10px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.inner_tab_item {
+    position: relative;
+}
+
+#add_new_page_part_btn:hover {
+    background-color: var(--primary);
+    fill: white;
+}
+#add_new_page_part_btn:hover>svg {
+    fill: white;
+}
+
+.inner_tab_item::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translate(-50%);
+    width: 0%;
+    background-color: var(--primary);
+    height: 3px;
+    border-radius: 3px;
+    z-index: 1;
+    opacity: 0;
+    transition: all 150ms ease-out;
+}
+.inner_tab_item.active::after {
+    opacity: 1;
+    width: 60%;
+    transition: all 150ms ease-in;
+}
+
+.inner_tab_item:hover::after {
+    opacity: 1;
+    width: 80%;
+    transition: all 150ms ease-in;
+}
+
+
+.inner_tab_lower_cont {
+    width: 100%;
+}
+
+.page_options_inner_tab_heading {
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+.page_options_inner_tab_heading {
+    display: flex;
+    gap: 10px;
+}
+
+.page_option_col {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.page_option_col.sml {
+    max-width: 10%;
+    width: 100%;
+}
+
+.page_option_col.med {
+    max-width: 40%;
+    width: 100%;
+}
+
+.page_option_col>p {
+    position: relative;
+    width: max-content;
+    margin: 0;
+}
+
+.inner_tab_header_info {
+    position: absolute;
+    top: -3px;
+    right: -7px;
+}
+
+.rename_info {
+    right: 90px;
+}
+
+.info_icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 12px;
+    height: 12px;
+    border: 1px solid var(--text-color);
+    font-size: 10px;
+    font-style: italic;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    border-radius: 1pc;
+    cursor: pointer;
+}
+
+.inner_tab_header_info_pop {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0;
+    z-index: -1;
+    width: 250px;
+    height: max-content;
+    overflow: hidden;
+    position: absolute;
+    background-color: var(--modal-bg-color);
+    backdrop-filter: var(--blur);
+    left: 50%;
+    top: 25px;
+    transform: translate(-50%);
+    bottom: 0px;
+    border: 1px solid rgba(255, 255, 255, 0);
+}
+
+.rename_info_pop {
+    left: -50px;
+}
+
+.inner_tab_header_info_pop>p {
+    margin: 0;
+}
+
+.inner_tab_header_info_pop {
+    opacity: 0;
+    z-index: -1;
+    transition: all 150ms ease-out;
+}
+
+.inner_tab_header_info:hover>.inner_tab_header_info_pop {
+    opacity: 1;
+    z-index: 9;
+    border: 1px solid var(--primary);
+    transition: all 150ms ease-in;
+}
+
+.inner_tab_header_info:hover>.info_icon {
+    color: var(--primary);
+    border-color: var(--primary);
+    transition: all 150ms ease-in;
+}
+
+/* END Page Option Tab */

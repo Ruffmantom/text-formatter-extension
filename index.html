@@ -38,7 +38,8 @@
             <div class="due_date_form">
                 <p class="chosen_due_date"></p>
                 <input type="date" name="due" id="todo_due_date_input">
-                <button type="button" class="tf_btn main_btn" id="save_due_date_btn" style="display: inline-block;">Save</button>
+                <button type="button" class="tf_btn main_btn" id="save_due_date_btn"
+                    style="display: inline-block;">Save</button>
             </div>
         </div>
     </div>
@@ -131,6 +132,25 @@
                 </div>
 
                 <div class="setting_btn menu_item_cont ">
+                    <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 73.19 73.19"
+                        width="12" height="12">
+                        <g id="Layer_1-2" data-name="Layer 1">
+                            <g>
+                                <path class="cls-1"
+                                    d="M65.04,0H8.15C3.65,0,0,3.65,0,8.15v56.89c0,4.5,3.65,8.15,8.15,8.15h56.89c4.5,0,8.15-3.65,8.15-8.15V8.15c0-4.5-3.65-8.15-8.15-8.15ZM25.87,41.75h-9.34c-1.11,0-2.01.9-2.01,2.01v13.8c0,1.11-.9,2.01-2.01,2.01h-2.42c-1.11,0-2.01-.9-2.01-2.01V15.62c0-1.11.9-2.01,2.01-2.01h15.78c2.78,0,5.2.58,7.27,1.75,2.06,1.17,3.67,2.81,4.82,4.92,1.15,2.11,1.72,4.58,1.72,7.43s-.57,5.29-1.72,7.4c-1.15,2.11-2.76,3.74-4.82,4.9-2.07,1.16-4.49,1.74-7.27,1.74ZM65.11,42.98c0,3.32-.65,6.23-1.97,8.73-1.31,2.5-3.15,4.43-5.52,5.8-2.37,1.37-5.15,2.06-8.33,2.06s-5.96-.68-8.33-2.06c-2.37-1.37-4.22-3.3-5.52-5.8-.49-.92-.88-1.89-1.18-2.93-.28-.94.21-1.93,1.09-2.36.37-.18.73-.37,1.08-.56.32-.18.64-.37.94-.56,1.13-.72,2.63-.07,2.97,1.22.41,1.57,1.13,2.91,2.17,4.04,1.72,1.86,3.98,2.79,6.78,2.79s5.09-.92,6.8-2.79c1.7-1.85,2.55-4.31,2.55-7.37v-13.19c0-3.07-.85-5.53-2.55-7.38-1.71-1.84-3.98-2.78-6.8-2.78-.82,0-1.59.08-2.31.24-.95.21-1.88-.34-2.25-1.24-.26-.61-.54-1.21-.86-1.8,0,0,0-.02-.01-.02-.63-1.17-.04-2.65,1.25-2.95,1.31-.3,2.7-.45,4.18-.45,3.18,0,5.95.68,8.33,2.06,2.37,1.37,4.22,3.3,5.52,5.79,1.32,2.49,1.97,5.4,1.97,8.74v12.76Z" />
+                                <path class="cls-1"
+                                    d="M26.09,19.74h-9.56c-1.11,0-2.01.9-2.01,2.01v11.84c0,1.11.9,2.01,2.01,2.01h9.56c2.11,0,3.8-.73,5.07-2.18,1.27-1.45,1.91-3.36,1.91-5.72s-.64-4.33-1.91-5.78c-1.28-1.45-2.97-2.18-5.07-2.18Z" />
+                            </g>
+                        </g>
+                    </svg>
+
+                    <p class="hover_helper">Page Options</p>
+                    <div class="tab_nav_button" data-tab="six">
+
+                    </div>
+                </div>
+
+                <div class="setting_btn menu_item_cont ">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12"
                         height="12" viewBox="0 0 12 12">
                         <defs>
@@ -150,6 +170,7 @@
 
                     </div>
                 </div>
+
 
                 <div class="setting_btn menu_item_cont ">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12.058"
@@ -466,8 +487,8 @@
                             <div class="todo_side_list_info">
                                 <div class="todo_side_list_info_top">
                                     <p id="todo_list_title" data-listid="" class="todo_menu_title"></p>
-                                    <input type="text" name="listname" hidden id="change_list_name_input"
-                                        value="" class="tf_input">
+                                    <input type="text" name="listname" hidden id="change_list_name_input" value=""
+                                        class="tf_input">
                                     <button type="button" class="tf_btn main_btn" id="hide_complete_todos">Hide
                                         Completed</button>
                                     <button type="button" class="tf_btn main_btn" id="show_complete_todos">Show
@@ -537,6 +558,150 @@
 
         </div>
 
+
+
+
+
+
+
+
+
+        <!-- Tab: Six -->
+        <div class="tab" data-tab="six">
+
+            <div class="tab_inner_tabs_cont">
+                <div class="inner_tab_header">
+                    <div class="inner_tab_item active">
+                        <p id="inner_tab_page_part_btn">Page Parts</p>
+                    </div>
+                    <div class="inner_tab_item">
+                        <p id="inner_tab_product_part_btn">Product</p>
+                    </div>
+                </div>
+
+                <div class="inner_tab_lower_cont" id="page_parts_tab">
+                    <div class="page_options_inner_tab_heading">
+                        <div class="page_option_col sml">
+                            <button type="button" class="main_icon_button" id="add_new_page_part_btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    width="12" height="12" viewBox="0 0 12 12">
+                                    <defs>
+                                        <clipPath id="a">
+                                            <rect width="12" height="12" />
+                                        </clipPath>
+                                    </defs>
+                                    <g clip-path="url(#a)">
+                                        <path
+                                            d="M7.5,10.95V7.5h3.45A1.051,1.051,0,0,0,12,6.45v-.9A1.051,1.051,0,0,0,10.95,4.5H7.5V1.05A1.051,1.051,0,0,0,6.45,0h-.9A1.051,1.051,0,0,0,4.5,1.05V4.5H1.05A1.051,1.051,0,0,0,0,5.55v.9A1.051,1.051,0,0,0,1.05,7.5H4.5v3.45A1.051,1.051,0,0,0,5.55,12h.9A1.051,1.051,0,0,0,7.5,10.95"
+                                            fill-rule="evenodd" />
+                                    </g>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="page_option_col med">
+                            <p>Page Part</p>
+                        </div>
+                        <div class="page_option_col sml">
+                            <div>
+                                <span>Order</span>
+                                <div class="inner_tab_header_info">
+                                    <span class="info_icon">i</span>
+
+                                    <div class="inner_tab_header_info_pop"><p>Assign a sort number to each item, starting
+                                        from 1, to determine their display order.</p></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page_option_col med">
+                            <div><span>Rename</span>
+                                <div class="inner_tab_header_info rename_info">
+                                    <span class="info_icon">i</span>
+
+                                    <div class="inner_tab_header_info_pop rename_info_pop"><p>You can give each option a new name. If left
+                                        blank, it will default to the original name.</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- second tab -->
+                <div class="inner_tab_lower_cont" id="product_parts_tab">
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+            <div class="tf_control_group input_group_mid">
+                <div class="form_item fix_input_group">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" class="x_clear_btn" id="prefix_clear"
+                        viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                        <path
+                            d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+                    </svg>
+
+                    <input class="tf_input top-inputs" name="input" type="text" id="prefix_input" placeholder='Prefix'>
+                </div>
+
+                <div class="form_item fix_input_group">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" class="x_clear_btn" id="suffix_clear"
+                        viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                        <path
+                            d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+                    </svg>
+
+                    <input class="tf_input top-inputs" name="input" type="text" id="suffix_input" placeholder='Suffix'>
+                </div>
+            </div>
+
+            <div class="tf_control_group bottom_input_group">
+                <input class="tf_input" name="input" type="text" id="hex-input" placeholder='Paste HEX Code here'>
+            </div>
+            <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
+                <div class="helper">Click To Copy</div>
+                <input class="tf_input color_input" readonly name="input" type="text" id="rgb-ouput"
+                    placeholder='RGB Output'>
+            </div>
+
+            <div id="color_copy_cmyk" class="textarea_cont tf_control_group bottom_input_group">
+                <div class="helper">Click To Copy</div>
+                <input class="tf_input color_input" readonly name="input" type="text" id="cmyk-output"
+                    placeholder='CMYK Output'>
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <!-- text output area -->
         <div id="lower_copy_textarea_cont" class="tf_control_group out_put_cont">
             <div class="textarea_cont">
@@ -550,6 +715,7 @@
     <script type="text/javascript" src="./js/settings.js"></script>
     <script type="text/javascript" src="./js/script.js"></script>
     <script type="text/javascript" src="./js/createHtml.js"></script>
+    <script type="text/javascript" src="./js/pageOptions.js"></script>
     <script type="text/javascript" src="./js/notes.js"></script>
     <script type="text/javascript" src="./js/todos.js"></script>
     <script type="text/javascript" src="./js/theme.js"></script>

@@ -169,7 +169,7 @@ $(function () {
         tabBtnArr.forEach((btn) => {
             $(btn).data('tab') === globalValues.currentTab ? $(btn).addClass('nav_tab_active') : ''
         })
-        if (globalValues.currentTab === "two" || globalValues.currentTab === "four" || globalValues.currentTab === "five") {
+        if (globalValues.currentTab === "two" || globalValues.currentTab === "four" || globalValues.currentTab === "five" || globalValues.currentTab === "six") {
             $("#lower_copy_textarea_cont").hide()
         } else {
             $("#lower_copy_textarea_cont").show()
