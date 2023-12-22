@@ -9,6 +9,7 @@ const inner_tab_page_part_btn = $("#inner_tab_page_part_btn")
 const inner_tab_product_part_btn = $("#inner_tab_product_part_btn")
 const add_new_page_part_btn = $("#add_new_page_part_btn")
 const add_new_product_option_btn = $("#add_new_product_option_btn")
+const add_page_part_btn = $("#add_page_part_btn")
 
 // global values
 let addPagePartMenuIsOpen = true; // by default
@@ -50,18 +51,39 @@ const switchPageOptionTabs = (value) => {
 
 // These will eventually be loaded by the globalPageOptionData 
 const loadPagePartOptionsHTML = () => {
-    defaultPageOptionData.pageParts.map((pp) => {
-        $("#page_part_options_cont").prepend(createPageOptionRow(pp))
+    $("#page_part_options_cont").empty()
+    globalPageOptionData.pageParts.map((pp) => {
+        $("#page_part_options_cont").append(createPageOptionRow(pp))
     })
 }
 // These will eventually be loaded by the globalPageOptionData 
 const loadProductOptionsHTML = () => {
-    defaultPageOptionData.productOptions.map((po) => {
-        $("#product_options_cont").prepend(createPageOptionRow(po))
+    $("#product_options_cont").empty()
+    globalPageOptionData.productOptions.map((po) => {
+        $("#product_options_cont").append(createPageOptionRow(po))
     })
 }
 // create New page option
 // Left off here
+const addNewPagePartOption = ()=>{
+    let newOptionName = $("#add_page_part_input").val()
+
+    let newOptionObj = {
+        optionName: newOptionName,
+        isDeleteAble: true,
+        rename: "",
+        _id: globalPageOptionData.customPagePartId,
+    }
+    // save new customPagePartId
+    globalPageOptionData.customPagePartId = newOptionObj._id + 1
+    // save to global data
+    globalPageOptionData.pageParts.push(newOptionObj)
+    console.log(globalPageOptionData)
+    // save to local storage
+    saveToLocalStorage(TF_PO_DATA,globalPageOptionData)
+    loadPagePartOptionsHTML()
+}
+
 
 // on ready
 $(() => {
@@ -108,7 +130,13 @@ $(() => {
             closeAddProductOptionMenu()
         }
     });
-
+// create new page part
+$(add_page_part_btn).on('click',(e)=>{
+    e.preventDefault()
+    addNewPagePartOption()
+    // load dom
+    
+})
 
 
 })
