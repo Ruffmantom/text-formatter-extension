@@ -54,7 +54,9 @@ textarea,
 select {
     background-color: var(--input-bkg);
 }
-
+.width_inherit{
+    width: 100% !important;
+}
 
 .text_formatter {
     position: relative;
@@ -148,7 +150,12 @@ select {
     background-color: var(--hover-secondary-bg-color);
 
 }
-
+.main_icon_button.disabled{
+    opacity: 0.5;
+}
+.main_icon_button.disabled:hover{
+    cursor: not-allowed;
+}
 .menu_item_cont {
     background-color: #ffffff00;
 }
@@ -871,7 +878,8 @@ select {
 
 }
 
-.todo_list_menu {
+.todo_list_menu,
+.add_page_option_menu {
     position: absolute;
     top: 0;
     background-color: var(--modal-bg-color);
@@ -886,16 +894,24 @@ select {
 
 }
 
-.todo_list_menu {
+.todo_list_menu,
+.add_page_option_menu {
     opacity: 0;
     transition: all 0ms ease-out;
 }
 
-.todo_list_menu_active {
+.todo_list_menu_active,
+.add_page_option_menu.active {
     left: 40px;
     opacity: 1;
     z-index: 999;
     transition: opacity 150ms ease-in;
+}
+.add_page_option_menu{
+    display: block;
+}
+.add_page_option_menu>input{
+    margin-bottom: 10px;
 }
 
 .todo_list_item_cont {
@@ -1201,7 +1217,9 @@ select {
     background-color: var(--danger);
     color: white;
 }
-
+.danger_btn:hover>svg {
+    fill: white;
+}
 .todo_text_cont {
     width: 90%;
     position: relative;
@@ -1230,9 +1248,7 @@ select {
     height: 12px;
 }
 
-.danger_btn:hover>svg {
-    fill: white;
-}
+
 
 #show_complete_todos {
     display: none;
@@ -1267,6 +1283,14 @@ select {
     fill: white;
 }
 
+#delete_page_option:hover{
+    background-color: var(--danger);
+}
+#delete_page_option:hover>svg{
+    fill: white;
+}
+
+
 .inner_tab_item::after {
     content: '';
     position: absolute;
@@ -1296,8 +1320,16 @@ select {
 
 .inner_tab_lower_cont {
     width: 100%;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
 }
 
+.inner_tab_lower_cont.active{
+    height: fit-content;
+    overflow: visible;
+    opacity: 1;
+}
 .page_options_inner_tab_heading {
     width: 100%;
     padding-bottom: 20px;
@@ -1399,5 +1431,25 @@ select {
     border-color: var(--primary);
     transition: all 150ms ease-in;
 }
-
+.page_options_cont{
+    padding-bottom: 15px;
+}
+.page_option_item_row{
+    display: flex;
+    gap: 10px;
+    padding: 0 0 5px 0;
+}
+.page_option_col>input{
+    width: 100%;
+}
+.page_option_title_col{
+    background-color: var(--form-block-bkg);
+    border-radius: 7px;
+}
+.page_option_title_col>p{
+    padding-left: 10px;
+}
+#page_option_name_output{
+    cursor: pointer;
+}
 /* END Page Option Tab */

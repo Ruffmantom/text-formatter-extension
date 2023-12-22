@@ -150,7 +150,7 @@
                     </div>
                 </div>
 
-                <div class="setting_btn menu_item_cont ">
+                <div class="setting_btn menu_item_cont">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12"
                         height="12" viewBox="0 0 12 12">
                         <defs>
@@ -571,15 +571,15 @@
 
             <div class="tab_inner_tabs_cont">
                 <div class="inner_tab_header">
-                    <div class="inner_tab_item active">
+                    <div class="inner_tab_item active" data-pagetabid="page">
                         <p id="inner_tab_page_part_btn">Page Parts</p>
                     </div>
-                    <div class="inner_tab_item">
+                    <div class="inner_tab_item" data-pagetabid="product">
                         <p id="inner_tab_product_part_btn">Product</p>
                     </div>
                 </div>
 
-                <div class="inner_tab_lower_cont" id="page_parts_tab">
+                <div class="inner_tab_lower_cont active" id="page_parts_tab">
                     <div class="page_options_inner_tab_heading">
                         <div class="page_option_col sml">
                             <button type="button" class="main_icon_button" id="add_new_page_part_btn">
@@ -597,6 +597,16 @@
                                     </g>
                                 </svg>
                             </button>
+                            <div class="add_page_option_menu "  id="add_page_part_menu">
+                                <p>Add New Page Part</p>
+                                <div class="tf_control_group width_inherit bottom_input_group">
+                                    <input class="tf_input" data-poname="Materials" name="input" type="text"
+                                        id="add_page_part_input" placeholder='Name...'>
+
+                                </div>
+                                <button type="button" class="tf_btn main_btn" id="add_page_part_btn">Add Page
+                                    Part</button>
+                            </div>
                         </div>
                         <div class="page_option_col med">
                             <p>Page Part</p>
@@ -607,8 +617,10 @@
                                 <div class="inner_tab_header_info">
                                     <span class="info_icon">i</span>
 
-                                    <div class="inner_tab_header_info_pop"><p>Assign a sort number to each item, starting
-                                        from 1, to determine their display order.</p></div>
+                                    <div class="inner_tab_header_info_pop">
+                                        <p>Assign a sort number to each item, starting
+                                            from 1, to determine their display order.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -617,18 +629,542 @@
                                 <div class="inner_tab_header_info rename_info">
                                     <span class="info_icon">i</span>
 
-                                    <div class="inner_tab_header_info_pop rename_info_pop"><p>You can give each option a new name. If left
-                                        blank, it will default to the original name.</p></div>
+                                    <div class="inner_tab_header_info_pop rename_info_pop">
+                                        <p>You can give each option a new name. If left
+                                            blank, it will default to the original name.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="page_options_cont">
+                        <!-- These will also be dynamically added -->
+
+                        <!-- page option 1 -->
+                        <div class="page_option_item_row">
+
+                            <div class="page_option_col sml">
+                                <button type="button" class="main_icon_button danger_btn disabled">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="10.213" height="12" viewBox="0 0 10.213 12">
+                                        <defs>
+                                            <clipPath id="a">
+                                                <rect width="10.213" height="12"></rect>
+                                            </clipPath>
+                                        </defs>
+                                        <g clip-path="url(#a)">
+                                            <path
+                                                d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
+                                                fill-rule="evenodd"></path>
+                                        </g>
+                                    </svg>
+                                </button>
 
 
+                            </div>
+
+                            <div class="page_option_col med page_option_title_col">
+                                <p class="page_option_title">Materials</p>
+                            </div>
+
+                            <div class="page_option_col sml">
+                                <input class="tf_input top-inputs po_sort_input_materials" name="input" type="number"
+                                    data-poid="1" min="0" max="50" placeholder='0'>
+                            </div>
+
+                            <div class="page_option_col med">
+                                <input class="tf_input top-inputs page_option_rename_input_materials" name="input"
+                                    data-poname="Materials" type="text" placeholder='New Name...'>
+                            </div>
+
+                        </div>
+                        <!-- page option 2 -->
+                        <div class="page_option_item_row">
+
+                            <div class="page_option_col sml">
+                                <button type="button" class="main_icon_button danger_btn disabled">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="10.213" height="12" viewBox="0 0 10.213 12">
+                                        <defs>
+                                            <clipPath id="a">
+                                                <rect width="10.213" height="12"></rect>
+                                            </clipPath>
+                                        </defs>
+                                        <g clip-path="url(#a)">
+                                            <path
+                                                d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
+                                                fill-rule="evenodd"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="page_option_col med page_option_title_col">
+                                <p class="page_option_title">Format</p>
+                            </div>
+
+                            <div class="page_option_col sml">
+                                <input class="tf_input top-inputs po_sort_input_materials" name="input" type="number"
+                                    data-poid="2" min="0" max="50" placeholder='0'>
+                            </div>
+
+                            <div class="page_option_col med">
+                                <input class="tf_input top-inputs page_option_rename_input_materials" name="input"
+                                    data-poname="Format" type="text" placeholder='New Name...'>
+                            </div>
+
+                        </div>
+                        <!-- page option 3 -->
+                        <div class="page_option_item_row">
+
+                            <div class="page_option_col sml">
+                                <button type="button" class="main_icon_button danger_btn disabled">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="10.213" height="12" viewBox="0 0 10.213 12">
+                                        <defs>
+                                            <clipPath id="a">
+                                                <rect width="10.213" height="12"></rect>
+                                            </clipPath>
+                                        </defs>
+                                        <g clip-path="url(#a)">
+                                            <path
+                                                d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
+                                                fill-rule="evenodd"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="page_option_col med page_option_title_col">
+                                <p class="page_option_title">Pages</p>
+                            </div>
+
+                            <div class="page_option_col sml">
+                                <input class="tf_input top-inputs po_sort_input_materials" name="input" type="number"
+                                    data-poid="3" min="0" max="50" placeholder='0'>
+                            </div>
+
+                            <div class="page_option_col med">
+                                <input class="tf_input top-inputs page_option_rename_input_materials" name="input"
+                                    data-poname="Pages" type="text" placeholder='New Name...'>
+                            </div>
+
+                        </div>
+                        <!-- page option 4 -->
+                        <div class="page_option_item_row">
+
+                            <div class="page_option_col sml">
+                                <button type="button" class="main_icon_button danger_btn disabled">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="10.213" height="12" viewBox="0 0 10.213 12">
+                                        <defs>
+                                            <clipPath id="a">
+                                                <rect width="10.213" height="12"></rect>
+                                            </clipPath>
+                                        </defs>
+                                        <g clip-path="url(#a)">
+                                            <path
+                                                d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
+                                                fill-rule="evenodd"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="page_option_col med page_option_title_col">
+                                <p class="page_option_title">Colors</p>
+                            </div>
+
+                            <div class="page_option_col sml">
+                                <input class="tf_input top-inputs po_sort_input_materials" name="input" type="number"
+                                    data-poid="4" min="0" max="50" placeholder='0'>
+                            </div>
+
+                            <div class="page_option_col med">
+                                <input class="tf_input top-inputs page_option_rename_input_materials" name="input"
+                                    data-poname="Colors" type="text" placeholder='New Name...'>
+                            </div>
+
+                        </div>
+                        <!-- page option 5 -->
+                        <div class="page_option_item_row">
+
+                            <div class="page_option_col sml">
+                                <button type="button" class="main_icon_button danger_btn disabled">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="10.213" height="12" viewBox="0 0 10.213 12">
+                                        <defs>
+                                            <clipPath id="a">
+                                                <rect width="10.213" height="12"></rect>
+                                            </clipPath>
+                                        </defs>
+                                        <g clip-path="url(#a)">
+                                            <path
+                                                d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
+                                                fill-rule="evenodd"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="page_option_col med page_option_title_col">
+                                <p class="page_option_title">Book Binding</p>
+                            </div>
+
+                            <div class="page_option_col sml">
+                                <input class="tf_input top-inputs po_sort_input_materials" name="input" type="number"
+                                    data-poid="5" min="0" max="50" placeholder='0'>
+                            </div>
+
+                            <div class="page_option_col med">
+                                <input class="tf_input top-inputs page_option_rename_input_materials" name="input"
+                                    data-poname="Book Binding" type="text" placeholder='New Name...'>
+                            </div>
+
+                        </div>
+                        <!-- page option 6 -->
+                        <div class="page_option_item_row">
+
+                            <div class="page_option_col sml">
+                                <button type="button" class="main_icon_button danger_btn disabled">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="10.213" height="12" viewBox="0 0 10.213 12">
+                                        <defs>
+                                            <clipPath id="a">
+                                                <rect width="10.213" height="12"></rect>
+                                            </clipPath>
+                                        </defs>
+                                        <g clip-path="url(#a)">
+                                            <path
+                                                d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
+                                                fill-rule="evenodd"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="page_option_col med page_option_title_col">
+                                <p class="page_option_title">Refinement</p>
+                            </div>
+
+                            <div class="page_option_col sml">
+                                <input class="tf_input top-inputs po_sort_input_materials" name="input" type="number"
+                                    data-poid="6" min="0" max="50" placeholder='0'>
+                            </div>
+
+                            <div class="page_option_col med">
+                                <input class="tf_input top-inputs page_option_rename_input_materials" name="input"
+                                    data-poname="Refinement" type="text" placeholder='New Name...'>
+                            </div>
+
+                        </div>
+                        <!-- page option 7 -->
+                        <div class="page_option_item_row">
+
+                            <div class="page_option_col sml">
+                                <button type="button" class="main_icon_button danger_btn disabled">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="10.213" height="12" viewBox="0 0 10.213 12">
+                                        <defs>
+                                            <clipPath id="a">
+                                                <rect width="10.213" height="12"></rect>
+                                            </clipPath>
+                                        </defs>
+                                        <g clip-path="url(#a)">
+                                            <path
+                                                d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
+                                                fill-rule="evenodd"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="page_option_col med page_option_title_col">
+                                <p class="page_option_title">Finishing</p>
+                            </div>
+
+                            <div class="page_option_col sml">
+                                <input class="tf_input top-inputs po_sort_input_materials" name="input" type="number"
+                                    data-poid="7" min="0" max="50" placeholder='0'>
+                            </div>
+
+                            <div class="page_option_col med">
+                                <input class="tf_input top-inputs page_option_rename_input_materials" name="input"
+                                    data-poname="Finishing" type="text" placeholder='New Name...'>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- this is where the output will be -->
+                    <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
+                        <div class="helper">Click To Copy</div>
+                        <input class="tf_input color_input" readonly name="input" type="text" id="rgb-ouput"
+                            placeholder='Order Output'>
+                    </div>
+                    <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
+                        <textarea class="tf_input textarea_cont" readonly name="input" cols="30" rows="3"
+                            id="page_option_name_output" placeholder='Name Output'></textarea>
+                        <div class="helper">Click To Copy</div>
+                    </div>
                 </div>
-                <!-- second tab -->
+
+
+                <!-- second tab - Product Option/Parts -->
                 <div class="inner_tab_lower_cont" id="product_parts_tab">
+                    <div class="page_options_inner_tab_heading">
+                        <div class="page_option_col sml">
+                            <button type="button" class="main_icon_button" id="add_new_product_option_btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    width="12" height="12" viewBox="0 0 12 12">
+                                    <defs>
+                                        <clipPath id="a">
+                                            <rect width="12" height="12" />
+                                        </clipPath>
+                                    </defs>
+                                    <g clip-path="url(#a)">
+                                        <path
+                                            d="M7.5,10.95V7.5h3.45A1.051,1.051,0,0,0,12,6.45v-.9A1.051,1.051,0,0,0,10.95,4.5H7.5V1.05A1.051,1.051,0,0,0,6.45,0h-.9A1.051,1.051,0,0,0,4.5,1.05V4.5H1.05A1.051,1.051,0,0,0,0,5.55v.9A1.051,1.051,0,0,0,1.05,7.5H4.5v3.45A1.051,1.051,0,0,0,5.55,12h.9A1.051,1.051,0,0,0,7.5,10.95"
+                                            fill-rule="evenodd" />
+                                    </g>
+                                </svg>
+                            </button>
+                            <div class="add_page_option_menu" id="add_product_option_menu">
+                                <p>Add New Product Option</p>
+                                <div class="tf_control_group width_inherit bottom_input_group">
+                                    <input class="tf_input" data-poname="Materials" name="input" type="text"
+                                        id="add_page_part_input" placeholder='Name...'>
 
+                                </div>
+                                <button type="button" class="tf_btn main_btn" id="add_page_part_btn">Add Product
+                                    Option</button>
+                            </div>
+                        </div>
+                        <div class="page_option_col med">
+                            <p>Product Option</p>
+                        </div>
+                        <div class="page_option_col sml">
+                            <div>
+                                <span>Order</span>
+                                <div class="inner_tab_header_info">
+                                    <span class="info_icon">i</span>
+
+                                    <div class="inner_tab_header_info_pop">
+                                        <p>Assign a sort number to each item, starting
+                                            from 1, to determine their display order.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page_option_col med">
+                            <div><span>Rename</span>
+                                <div class="inner_tab_header_info rename_info">
+                                    <span class="info_icon">i</span>
+
+                                    <div class="inner_tab_header_info_pop rename_info_pop">
+                                        <p>You can give each option a new name. If left
+                                            blank, it will default to the original name.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page_options_cont">
+                        <!-- These will also be dynamically added -->
+
+                        <!-- product option 1 -->
+                        <div class="page_option_item_row">
+
+                            <div class="page_option_col sml">
+                                <button type="button" class="main_icon_button danger_btn disabled">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="10.213" height="12" viewBox="0 0 10.213 12">
+                                        <defs>
+                                            <clipPath id="a">
+                                                <rect width="10.213" height="12"></rect>
+                                            </clipPath>
+                                        </defs>
+                                        <g clip-path="url(#a)">
+                                            <path
+                                                d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
+                                                fill-rule="evenodd"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="page_option_col med page_option_title_col">
+                                <p class="page_option_title">Options</p>
+                            </div>
+
+                            <div class="page_option_col sml">
+                                <input class="tf_input top-inputs po_sort_input_materials" name="input" type="number"
+                                    data-poid="1" min="0" max="50" placeholder='0'>
+                            </div>
+
+                            <div class="page_option_col med">
+                                <input class="tf_input top-inputs page_option_rename_input_materials" name="input"
+                                    data-poname="Options" type="text" placeholder='New Name...'>
+                            </div>
+
+                        </div>
+                        <!-- product option 2 -->
+                        <div class="page_option_item_row">
+
+                            <div class="page_option_col sml">
+                                <button type="button" class="main_icon_button danger_btn disabled">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="10.213" height="12" viewBox="0 0 10.213 12">
+                                        <defs>
+                                            <clipPath id="a">
+                                                <rect width="10.213" height="12"></rect>
+                                            </clipPath>
+                                        </defs>
+                                        <g clip-path="url(#a)">
+                                            <path
+                                                d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
+                                                fill-rule="evenodd"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="page_option_col med page_option_title_col">
+                                <p class="page_option_title">File Type</p>
+                            </div>
+
+                            <div class="page_option_col sml">
+                                <input class="tf_input top-inputs po_sort_input_materials" name="input" type="number"
+                                    data-poid="2" min="0" max="50" placeholder='0'>
+                            </div>
+
+                            <div class="page_option_col med">
+                                <input class="tf_input top-inputs page_option_rename_input_materials" name="input"
+                                    data-poname="File Type" type="text" placeholder='New Name...'>
+                            </div>
+
+                        </div>
+                        <!-- product option 3 -->
+                        <div class="page_option_item_row">
+
+                            <div class="page_option_col sml">
+                                <button type="button" class="main_icon_button danger_btn disabled">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="10.213" height="12" viewBox="0 0 10.213 12">
+                                        <defs>
+                                            <clipPath id="a">
+                                                <rect width="10.213" height="12"></rect>
+                                            </clipPath>
+                                        </defs>
+                                        <g clip-path="url(#a)">
+                                            <path
+                                                d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
+                                                fill-rule="evenodd"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="page_option_col med page_option_title_col">
+                                <p class="page_option_title">Production</p>
+                            </div>
+
+                            <div class="page_option_col sml">
+                                <input class="tf_input top-inputs po_sort_input_materials" name="input" type="number"
+                                    data-poid="3" min="0" max="50" placeholder='0'>
+                            </div>
+
+                            <div class="page_option_col med">
+                                <input class="tf_input top-inputs page_option_rename_input_materials" name="input"
+                                    data-poname="Production" type="text" placeholder='New Name...'>
+                            </div>
+
+                        </div>
+                        <!-- product option 4 -->
+                        <div class="page_option_item_row">
+
+                            <div class="page_option_col sml">
+                                <button type="button" class="main_icon_button danger_btn disabled">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="10.213" height="12" viewBox="0 0 10.213 12">
+                                        <defs>
+                                            <clipPath id="a">
+                                                <rect width="10.213" height="12"></rect>
+                                            </clipPath>
+                                        </defs>
+                                        <g clip-path="url(#a)">
+                                            <path
+                                                d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
+                                                fill-rule="evenodd"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="page_option_col med page_option_title_col">
+                                <p class="page_option_title">Quantity</p>
+                            </div>
+
+                            <div class="page_option_col sml">
+                                <input class="tf_input top-inputs po_sort_input_materials" name="input" type="number"
+                                    data-poid="4" min="0" max="50" placeholder='0'>
+                            </div>
+
+                            <div class="page_option_col med">
+                                <input class="tf_input top-inputs page_option_rename_input_materials" name="input"
+                                    data-poname="Quantity" type="text" placeholder='New Name...'>
+                            </div>
+
+                        </div>
+                        <!-- product option 5 -->
+                        <div class="page_option_item_row">
+
+                            <div class="page_option_col sml">
+                                <button type="button" class="main_icon_button danger_btn disabled">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="10.213" height="12" viewBox="0 0 10.213 12">
+                                        <defs>
+                                            <clipPath id="a">
+                                                <rect width="10.213" height="12"></rect>
+                                            </clipPath>
+                                        </defs>
+                                        <g clip-path="url(#a)">
+                                            <path
+                                                d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
+                                                fill-rule="evenodd"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="page_option_col med page_option_title_col">
+                                <p class="page_option_title">Proof Group</p>
+                            </div>
+
+                            <div class="page_option_col sml">
+                                <input class="tf_input top-inputs po_sort_input_materials" name="input" type="number"
+                                    data-poid="5" min="0" max="50" placeholder='0'>
+                            </div>
+
+                            <div class="page_option_col med">
+                                <input class="tf_input top-inputs page_option_rename_input_materials" name="input"
+                                    data-poname="Proof Group" type="text" placeholder='New Name...'>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- this is where the output will be -->
+                    <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
+                        <div class="helper">Click To Copy</div>
+                        <input class="tf_input color_input" readonly name="input" type="text" id="rgb-ouput"
+                            placeholder='Order Output'>
+                    </div>
+                    <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
+                        <textarea class="tf_input textarea_cont" readonly name="input" cols="30" rows="3"
+                            id="page_option_name_output" placeholder='Name Output'></textarea>
+                        <div class="helper">Click To Copy</div>
+                    </div>
                 </div>
 
 
@@ -639,34 +1175,10 @@
 
 
 
-            <div class="tf_control_group input_group_mid">
-                <div class="form_item fix_input_group">
 
-                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" class="x_clear_btn" id="prefix_clear"
-                        viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                        <path
-                            d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
-                    </svg>
 
-                    <input class="tf_input top-inputs" name="input" type="text" id="prefix_input" placeholder='Prefix'>
-                </div>
 
-                <div class="form_item fix_input_group">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" class="x_clear_btn" id="suffix_clear"
-                        viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                        <path
-                            d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
-                    </svg>
-
-                    <input class="tf_input top-inputs" name="input" type="text" id="suffix_input" placeholder='Suffix'>
-                </div>
-            </div>
-
-            <div class="tf_control_group bottom_input_group">
-                <input class="tf_input" name="input" type="text" id="hex-input" placeholder='Paste HEX Code here'>
-            </div>
-            <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
+            <!-- <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
                 <div class="helper">Click To Copy</div>
                 <input class="tf_input color_input" readonly name="input" type="text" id="rgb-ouput"
                     placeholder='RGB Output'>
@@ -676,7 +1188,7 @@
                 <div class="helper">Click To Copy</div>
                 <input class="tf_input color_input" readonly name="input" type="text" id="cmyk-output"
                     placeholder='CMYK Output'>
-            </div>
+            </div> -->
 
         </div>
 
