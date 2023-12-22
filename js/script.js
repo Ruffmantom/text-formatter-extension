@@ -102,7 +102,7 @@ $(function () {
             await loadFromLocalStorage()
             await loadNotesFromLocalStorage()
             await loadTodosFromLocalStorage()
-
+            await loadPageOptionDataFromLocalStorage()
             isSuccess = true
         } catch (error) {
             // console.log(error)

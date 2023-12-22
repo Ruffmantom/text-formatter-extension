@@ -14,89 +14,6 @@ const add_new_product_option_btn = $("#add_new_product_option_btn")
 let addPagePartMenuIsOpen = true; // by default
 let addProductOptionsMenuIsOpen = false;
 
-// this is the default data that will be saved to local storage
-let defaultPageOptionData = {
-    customPagePartId: 8,
-    pageParts: [
-        {
-            optionName: "Materials",
-            isDeleteAble: false,
-            rename: "",
-            _id: 1,
-        },
-        {
-            optionName: "Format",
-            isDeleteAble: false,
-            rename: "",
-            _id: 2,
-        },
-        {
-            optionName: "Pages",
-            isDeleteAble: false,
-            rename: "",
-            _id: 3,
-        },
-        {
-            optionName: "Colors",
-            isDeleteAble: false,
-            rename: "",
-            _id: 4,
-        },
-        {
-            optionName: "Book Binding",
-            isDeleteAble: false,
-            rename: "",
-            _id: 5,
-        },
-        {
-            optionName: "Refinement",
-            isDeleteAble: false,
-            rename: "",
-            _id: 6,
-        },
-        {
-            optionName: "Finishing",
-            isDeleteAble: false,
-            rename: "",
-            _id: 7,
-        },
-    ],
-    customProductOptionId: 6,
-    productOptions: [
-        {
-            optionName: "Options",
-            isDeleteAble: false,
-            rename: "",
-            _id: 1,
-        },
-        {
-            optionName: "File Type",
-            isDeleteAble: false,
-            rename: "",
-            _id: 2,
-        },
-        {
-            optionName: "Production",
-            isDeleteAble: false,
-            rename: "",
-            _id: 3,
-        },
-        {
-            optionName: "Quantity",
-            isDeleteAble: false,
-            rename: "",
-            _id: 4,
-        },
-        {
-            optionName: "Proof Group",
-            isDeleteAble: false,
-            rename: "",
-            _id: 5,
-        },
-    ]
-}
-
-
 // helpers
 // close add menu
 const closeAddPagePartMenu = () => {
@@ -131,21 +48,27 @@ const switchPageOptionTabs = (value) => {
     }
 };
 
+// These will eventually be loaded by the globalPageOptionData 
 const loadPagePartOptionsHTML = () => {
     defaultPageOptionData.pageParts.map((pp) => {
         $("#page_part_options_cont").prepend(createPageOptionRow(pp))
     })
 }
+// These will eventually be loaded by the globalPageOptionData 
 const loadProductOptionsHTML = () => {
     defaultPageOptionData.productOptions.map((po) => {
         $("#product_options_cont").prepend(createPageOptionRow(po))
     })
 }
+// create New page option
+// Left off here
 
 // on ready
 $(() => {
-    loadPagePartOptionsHTML()
-    loadProductOptionsHTML()
+    if (globalPageOptionData !== null) {
+        loadPagePartOptionsHTML()
+        loadProductOptionsHTML()
+    }
     // Tab nav btn
     $(inner_tab_page_part_btn).on("click", (e) => {
         e.preventDefault()

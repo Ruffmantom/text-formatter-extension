@@ -2,6 +2,8 @@
 let globalValues;
 let usersNotes = [];
 let usersTodos = [];
+let globalPageOptionData = null;
+
 let defaultValues = {
     conversionFrom: 'Millimeters',
     conversionTo: 'Centimeters',
@@ -20,6 +22,86 @@ let defaultValues = {
     rgbOutput: '',
     cmykOutput: '',
 }
+let defaultPageOptionData = {
+    customPagePartId: 8,
+    pageParts: [
+        {
+            optionName: "Materials",
+            isDeleteAble: false,
+            rename: "",
+            _id: 1,
+        },
+        {
+            optionName: "Format",
+            isDeleteAble: false,
+            rename: "",
+            _id: 2,
+        },
+        {
+            optionName: "Pages",
+            isDeleteAble: false,
+            rename: "",
+            _id: 3,
+        },
+        {
+            optionName: "Colors",
+            isDeleteAble: false,
+            rename: "",
+            _id: 4,
+        },
+        {
+            optionName: "Book Binding",
+            isDeleteAble: false,
+            rename: "",
+            _id: 5,
+        },
+        {
+            optionName: "Refinement",
+            isDeleteAble: false,
+            rename: "",
+            _id: 6,
+        },
+        {
+            optionName: "Finishing",
+            isDeleteAble: false,
+            rename: "",
+            _id: 7,
+        },
+    ],
+    customProductOptionId: 6,
+    productOptions: [
+        {
+            optionName: "Options",
+            isDeleteAble: false,
+            rename: "",
+            _id: 1,
+        },
+        {
+            optionName: "File Type",
+            isDeleteAble: false,
+            rename: "",
+            _id: 2,
+        },
+        {
+            optionName: "Production",
+            isDeleteAble: false,
+            rename: "",
+            _id: 3,
+        },
+        {
+            optionName: "Quantity",
+            isDeleteAble: false,
+            rename: "",
+            _id: 4,
+        },
+        {
+            optionName: "Proof Group",
+            isDeleteAble: false,
+            rename: "",
+            _id: 5,
+        },
+    ]
+}
 let globalStaging;
 let stagingDefault = {
     editing: false,
@@ -30,6 +112,7 @@ const TF_SETTINGS = 'TF_SETTINGS';
 const TF_NOTES = 'TF_NOTES';
 const TF_N_S = 'TF_N_S';
 const TF_TODOS = 'TF_TODOS';
+const TF_PO_DATA = 'TF_PO_DATA';
 // loading function for notes
 let isLoading = false;
 
@@ -165,6 +248,28 @@ const loadTodosFromLocalStorage = async () => {
     }
 };
 
+const loadPageOptionDataFromLocalStorage = async () => {
+    isLoading = true;
+    $(loader).addClass('loader_active'); // Show the loader
+    try {
+        let localObj = await localStorage.getItem(TF_PO_DATA);
+
+        if (localObj) {
+            globalPageOptionData = JSON.parse(localObj);
+        } else {
+            globalPageOptionData = defaultPageOptionData;
+            saveToLocalStorage(TF_PO_DATA, defaultPageOptionData)
+        }
+
+    } catch (error) {
+        // Handle errors, e.g., by showing an error message
+        console.error('Error loading Page Option data:', error);
+    } finally {
+        // Regardless of success or failure, hide the loader
+        isLoading = false;
+        $(loader).removeClass('loader_active');
+    }
+};
 
 // Clear data from local storage
 const resetLocalStorage = () => {
