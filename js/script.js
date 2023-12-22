@@ -196,7 +196,7 @@ $(function () {
             // add active from nav Btn
             $(e.target).addClass('nav_tab_active')
             // hide large copy box if tab is on 2
-            if (tabId === "two" || tabId === "four" || tabId === "five") {
+            if (tabId === "two" || tabId === "four" || tabId === "five" || tabId === "six") {
                 $("#lower_copy_textarea_cont").hide()
             } else {
                 $("#lower_copy_textarea_cont").show()

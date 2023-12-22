@@ -50,7 +50,7 @@ const createTodo = (todoInfo) => {
     return `
             <div class="todo_item ${todoInfo.checked ? "todo_checked" : ""}" data-todoid=${todoInfo.id}>
                 <!-- if there is a due date -->
-                ${todoInfo.dueDate ? `<p class="todo_due_date ${!todoInfo.checked && checkDueDateIsPastDue(todoInfo.dueDate) ? "overdue":""} ${todoInfo.checked? "complete":""}">Due: ${formatDate(todoInfo.dueDate)}</p>` : ''}
+                ${todoInfo.dueDate ? `<p class="todo_due_date ${!todoInfo.checked && checkDueDateIsPastDue(todoInfo.dueDate) ? "overdue" : ""} ${todoInfo.checked ? "complete" : ""}">Due: ${formatDate(todoInfo.dueDate)}</p>` : ''}
 
                 <div class="todo_item_cont">
                     <div class="todo_item_col todo_item_left">
@@ -134,4 +134,48 @@ const createNote = (noteData) => {
        <p class="note_date">Noted: ${noteData.dateCreated}</p>
     </div>
     `;
+}
+
+
+// create html for page option page
+const createPageOptionRow = (po) => {
+    return `
+    <div class="page_option_item_row">
+
+    <div class="page_option_col sml">
+        <button type="button" class="main_icon_button danger_btn ${!po.isDeleteAble ? "disabled":""}">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                width="10.213" height="12" viewBox="0 0 10.213 12">
+                <defs>
+                    <clipPath id="a">
+                        <rect width="10.213" height="12"></rect>
+                    </clipPath>
+                </defs>
+                <g clip-path="url(#a)">
+                    <path
+                        d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
+                        fill-rule="evenodd"></path>
+                </g>
+            </svg>
+        </button>
+
+
+    </div>
+
+    <div class="page_option_col med page_option_title_col">
+        <p class="page_option_title">${po.optionName}</p>
+    </div>
+
+    <div class="page_option_col sml">
+        <input class="tf_input top-inputs po_sort_input" name="input" type="number"
+            data-poid="${po._id}" min="0" max="50" placeholder='0'>
+    </div>
+
+    <div class="page_option_col med">
+        <input class="tf_input top-inputs page_option_rename_input" name="input"
+            data-poname="${po.optionName}" type="text" placeholder='New Name...'>
+    </div>
+
+</div>
+    `
 }

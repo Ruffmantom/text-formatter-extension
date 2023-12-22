@@ -19,37 +19,44 @@ let defaultPageOptionData = {
     customPagePartId: 8,
     pageParts: [
         {
-            pagePartName: "Materials",
+            optionName: "Materials",
+            isDeleteAble: false,
             rename: "",
             _id: 1,
         },
         {
-            pagePartName: "Format",
+            optionName: "Format",
+            isDeleteAble: false,
             rename: "",
             _id: 2,
         },
         {
-            pagePartName: "Pages",
+            optionName: "Pages",
+            isDeleteAble: false,
             rename: "",
             _id: 3,
         },
         {
-            pagePartName: "Colors",
+            optionName: "Colors",
+            isDeleteAble: false,
             rename: "",
             _id: 4,
         },
         {
-            pagePartName: "Book Binding",
+            optionName: "Book Binding",
+            isDeleteAble: false,
             rename: "",
             _id: 5,
         },
         {
-            pagePartName: "Refinement",
+            optionName: "Refinement",
+            isDeleteAble: false,
             rename: "",
             _id: 6,
         },
         {
-            pagePartName: "Finishing",
+            optionName: "Finishing",
+            isDeleteAble: false,
             rename: "",
             _id: 7,
         },
@@ -57,27 +64,32 @@ let defaultPageOptionData = {
     customProductOptionId: 6,
     productOptions: [
         {
-            productOptionName: "Options",
+            optionName: "Options",
+            isDeleteAble: false,
             rename: "",
             _id: 1,
         },
         {
-            productOptionName: "File Type",
+            optionName: "File Type",
+            isDeleteAble: false,
             rename: "",
             _id: 2,
         },
         {
-            productOptionName: "Production",
+            optionName: "Production",
+            isDeleteAble: false,
             rename: "",
             _id: 3,
         },
         {
-            productOptionName: "Quantity",
+            optionName: "Quantity",
+            isDeleteAble: false,
             rename: "",
             _id: 4,
         },
         {
-            productOptionName: "Proof Group",
+            optionName: "Proof Group",
+            isDeleteAble: false,
             rename: "",
             _id: 5,
         },
@@ -119,24 +131,39 @@ const switchPageOptionTabs = (value) => {
     }
 };
 
+const loadPagePartOptionsHTML = () => {
+    defaultPageOptionData.pageParts.map((pp) => {
+        $("#page_part_options_cont").prepend(createPageOptionRow(pp))
+    })
+}
+const loadProductOptionsHTML = () => {
+    defaultPageOptionData.productOptions.map((po) => {
+        $("#product_options_cont").prepend(createPageOptionRow(po))
+    })
+}
 
 // on ready
 $(() => {
+    loadPagePartOptionsHTML()
+    loadProductOptionsHTML()
+    // Tab nav btn
     $(inner_tab_page_part_btn).on("click", (e) => {
         e.preventDefault()
         switchPageOptionTabs('page')
     })
+    // Tab nav btn
     $(inner_tab_product_part_btn).on("click", (e) => {
         e.preventDefault()
         switchPageOptionTabs('product')
     })
-
+    // add new page option BTN
     $(add_new_page_part_btn).on("click", (e) => {
         e.preventDefault()
         $(add_page_part_menu).addClass("active")
         addPagePartMenuIsOpen = true
     })
 
+    // add new page option BTN
     $(add_new_product_option_btn).on("click", (e) => {
         e.preventDefault()
         $(add_product_option_menu).addClass("active")
@@ -150,6 +177,7 @@ $(() => {
             closeAddPagePartMenu()
         }
     });
+
     // close product option menu
     $(document).on("click", function (event) {
         // Check if the click event target is not within the menu
@@ -157,4 +185,7 @@ $(() => {
             closeAddProductOptionMenu()
         }
     });
+
+
+
 })
