@@ -16,6 +16,15 @@ const page_part_order_output = $("#page_part_order_output")
 const page_part_name_output = $("#page_part_name_output")
 const product_option_order_output = $("#product_option_order_output")
 const product_option_name_output = $("#product_option_name_output")
+// clear buttons
+const clear_sorting_pp_btn = $("#clear_sorting_pp_btn")
+const clear_renames_pp_btn = $("#clear_renames_pp_btn")
+const clear_all_pp_btn = $("#clear_all_pp_btn")
+
+const clear_sorting_po_btn = $("#clear_sorting_po_btn")
+const clear_renames_po_btn = $("#clear_renames_po_btn")
+const clear_all_po_btn = $("#clear_all_po_btn")
+
 
 // global values
 let addPagePartMenuIsOpen = true; // by default
@@ -30,6 +39,13 @@ const closeAddPagePartMenu = () => {
     }
 }
 
+const copyOutputFunction = (e, copyElm) => {
+    if (e && $(copyElm).val() !== "") {
+        $(copyElm).select();
+        document.execCommand("copy");
+        sendNotification('fast', 5000, 'Copied!')
+    }
+}
 
 // close the Add Product Option Menu
 const closeAddProductOptionMenu = () => {
@@ -37,6 +53,69 @@ const closeAddProductOptionMenu = () => {
         $(add_product_option_menu).removeClass("active");
         addProductOptionsMenuIsOpen = false
     }
+}
+
+const clearSortAndRenameInputs = (inputType, tab) => {
+    console.log("clearing an input")
+    // variables
+    let renameInputsArr = Array.from($(".page_option_rename_input"))
+    let sortInputsArr = Array.from($(".po_sort_input"))
+
+    if (inputType === "sort") {
+        sortInputsArr.forEach(elm => {
+            if ($(elm).data("potype") === tab && $(elm).data("inputtype") === "sort") {
+                $(elm).val("")
+            }
+        })
+
+    }
+    if (inputType === "rename") {
+        renameInputsArr.forEach(elm => {
+            if ($(elm).data("potype") === tab && $(elm).data("inputtype") === "rename") {
+                $(elm).val("")
+            }
+        })
+    }
+    if (inputType === "all") {
+        renameInputsArr.concat(sortInputsArr).forEach(elm => {
+            $(elm).val("")
+        })
+    }
+
+    if (tab === "pp") {
+        globalPageOptionData.pageParts.forEach(item => {
+            if (inputType === "rename") {
+                item.rename = ""
+            }
+            if (inputType === "sort") {
+                item.newSortId = null
+            }
+            if (inputType === "all") {
+                item.rename = ""
+                item.newSortId = null
+            }
+        })
+    } else {
+        globalPageOptionData.productOptions.forEach(item => {
+            if (inputType === "rename") {
+                item.rename = ""
+            }
+            if (inputType === "sort") {
+                item.newSortId = null
+            }
+            if (inputType === "all") {
+                item.rename = ""
+                item.newSortId = null
+            }
+        })
+    }
+
+    console.log(globalPageOptionData)
+    // // save to local
+    // // save to local storage
+    saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
+    // load html
+    loadOutputs()
 }
 
 // switch tabs
@@ -103,7 +182,7 @@ const loadOutputs = () => {
             let nameFormat = `${p.optionName}:${p.rename ? p.rename : p.optionName};`
             ppNameOutput.push(nameFormat)
         })
-    } else{
+    } else {
         // default 
     }
 
@@ -116,7 +195,7 @@ const loadOutputs = () => {
             let nameFormat = `${p.optionName}:${p.rename ? p.rename : p.optionName};`
             poNameOutput.push(nameFormat)
         })
-    } 
+    }
 
     // now join the arrays to strings and save to global
     // save to local storage
@@ -126,10 +205,10 @@ const loadOutputs = () => {
     globalPageOptionData.po_name_output = poNameOutput.join('')
 
     // set to the outputs
-    globalPageOptionData.pp_sort_output !== "" ? $(page_part_order_output).val(globalPageOptionData.pp_sort_output) : ""
-    globalPageOptionData.pp_name_output !== "" ? $(page_part_name_output).val(globalPageOptionData.pp_name_output) : ""
-    globalPageOptionData.po_sort_output !== "" ? $(product_option_order_output).val(globalPageOptionData.po_sort_output) : ""
-    globalPageOptionData.po_name_output !== "" ? $(product_option_name_output).val( globalPageOptionData.po_name_output ) : ""
+    globalPageOptionData.pp_sort_output !== "" ? $(page_part_order_output).val(globalPageOptionData.pp_sort_output) : $(page_part_order_output).val("Order Output...")
+    globalPageOptionData.pp_name_output !== "" ? $(page_part_name_output).val(globalPageOptionData.pp_name_output) : $(page_part_name_output).val("Name Output...")
+    globalPageOptionData.po_sort_output !== "" ? $(product_option_order_output).val(globalPageOptionData.po_sort_output) : $(product_option_order_output).val("Order Output...")
+    globalPageOptionData.po_name_output !== "" ? $(product_option_name_output).val(globalPageOptionData.po_name_output) : $(product_option_name_output).val("Name Output...")
 }
 
 
@@ -259,6 +338,76 @@ $(() => {
         loadOutputs()
     })
 
+    // clear specific rename input
+    $(".po_rename_clear_btn").on("click", (e) => {
+        let poType = $(e.target).data("potype");
+        let poId = $(e.target).data("poid");
+        let renameInputsArr = Array.from($(".page_option_rename_input"))
+        // clear the input
+        renameInputsArr.forEach(i => {
+            if ($(i).data('potype') === poType && $(i).data('poid') === poId) {
+                $(i).val('')
+            }
+        })
+        // clear value in global
+        if (poType === "pp") {
+            globalPageOptionData.pageParts.forEach(p => {
+                if (p._id === poId) {
+                    p.rename = ""
+                }
+            })
+        } else {
+            globalPageOptionData.productOptions.forEach(p => {
+                if (p._id === poId) {
+                    p.rename = ""
+                }
+            })
+        }
+        // save to local storage
+        saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
+        // reload inputs
+        loadOutputs()
+    })
+
+    // clear all page part renames
+    clear_sorting_pp_btn.on('click', (e) => {
+
+        e.preventDefault()
+        let tab = $(e.target).data('potype')
+        clearSortAndRenameInputs('sort', tab)
+    })
+    // clear all page part sorting
+    clear_renames_pp_btn.on('click', (e) => {
+        e.preventDefault()
+        let tab = $(e.target).data('potype')
+        clearSortAndRenameInputs('rename', tab)
+    })
+    // clear all page part values
+    clear_all_pp_btn.on('click', (e) => {
+        e.preventDefault()
+        let tab = $(e.target).data('potype')
+        clearSortAndRenameInputs('all', tab)
+    })
+
+    // clear all product option renames
+    clear_sorting_po_btn.on('click', (e) => {
+        e.preventDefault()
+        let tab = $(e.target).data('potype')
+        clearSortAndRenameInputs('sort', tab)
+    })
+    // clear all product option sorting
+    clear_renames_po_btn.on('click', (e) => {
+        e.preventDefault()
+        let tab = $(e.target).data('potype')
+        clearSortAndRenameInputs('rename', tab)
+    })
+    // clear all product option values
+    clear_all_po_btn.on('click', (e) => {
+        e.preventDefault()
+        let tab = $(e.target).data('potype')
+        clearSortAndRenameInputs('all', tab)
+    })
+
 
     // Event delegation for dynamically generated inputs
     $(document).on('keyup change', '.tf_input[data-inputtype]', function () {
@@ -268,7 +417,7 @@ $(() => {
         var inputValue = $(this).val();
         console.log(poid, poType, inputType, inputValue)
 
-        if (inputType === "sortId") {
+        if (inputType === "sort") {
             // sort id for po has changed from original _id
             // save to global
             if (poType === "pp") {
@@ -308,5 +457,21 @@ $(() => {
         loadOutputs()
     });
 
+
+    $(page_part_order_output).on("click", (e) => {
+        copyOutputFunction(e, page_part_order_output)
+    })
+    $(page_part_name_output).on("click", (e) => {
+        copyOutputFunction(e, page_part_name_output)
+
+    })
+    $(product_option_order_output).on("click", (e) => {
+        copyOutputFunction(e, product_option_order_output)
+
+    })
+    $(product_option_name_output).on("click", (e) => {
+        copyOutputFunction(e, product_option_name_output)
+
+    })
 
 })

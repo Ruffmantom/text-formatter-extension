@@ -544,6 +544,7 @@ select {
     background-color: var(--secondary);
 }
 
+.page_option_col:hover>.x_clear_btn,
 .fix_input_group:hover>.x_clear_btn {
     opacity: 1;
     z-index: 9;
