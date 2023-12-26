@@ -140,10 +140,10 @@ const createNote = (noteData) => {
 // create html for page option page
 const createPageOptionRow = (po) => {
     return `
-    <div class="page_option_item_row">
+    <div class="page_option_item_row" data-optionkey="${po.key}">
 
     <div class="page_option_col sml">
-        <button type="button" class="main_icon_button danger_btn ${!po.isDeleteAble ? "disabled":""}">
+        <button type="button" data-poid="${po._id}" data-optionkey="${po.key}" data-potype="${po.type}" data-poname="${po.optionName}" class="delete_page_option_btn main_icon_button danger_btn ${!po.isDeleteAble ? "disabled" : ""}">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                 width="10.213" height="12" viewBox="0 0 10.213 12">
                 <defs>
@@ -168,12 +168,12 @@ const createPageOptionRow = (po) => {
 
     <div class="page_option_col sml">
         <input class="tf_input top-inputs po_sort_input" name="input" type="number"
-            data-poid="${po._id}" min="0" max="50" placeholder='0'>
+            data-poid="${po._id}" data-inputtype="sortId" data-potype="${po.type}" value="${po.newSortId ? po.newSortId : ""}"  min="0" max="50" placeholder='0'>
     </div>
 
     <div class="page_option_col med">
         <input class="tf_input top-inputs page_option_rename_input" name="input"
-            data-poname="${po.optionName}" type="text" placeholder='New Name...'>
+        data-poid="${po._id}" data-inputtype="newName" data-potype="${po.type}" value="${po.rename ? po.rename : ""}" type="text" placeholder='New Name...'>
     </div>
 
 </div>
