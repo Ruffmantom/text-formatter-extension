@@ -11,6 +11,11 @@ const add_new_page_part_btn = $("#add_new_page_part_btn")
 const add_new_product_option_btn = $("#add_new_product_option_btn")
 const add_page_part_btn = $("#add_page_part_btn")
 const add_product_option_btn = $("#add_product_option_btn")
+// outputs
+const page_part_order_output = $("#page_part_order_output")
+const page_part_name_output = $("#page_part_name_output")
+const product_option_order_output = $("#product_option_order_output")
+const product_option_name_output = $("#product_option_name_output")
 
 // global values
 let addPagePartMenuIsOpen = true; // by default
@@ -65,58 +70,53 @@ const loadProductOptionsHTML = () => {
     })
 }
 
-let pagePartOutput = null
-let productOptionOutput = null
+
 // load sort order Output
 const loadOutputs = () => {
-    console.log('about to load outputs')
+    let pagePartOutputArr = [] // Initialize as an empty array
+    let productOptionOutputArr = [] // Initialize as an empty array
     let ppSortOutput = []
     let ppNameOutput = []
     let poSortOutput = []
     let poNameOutput = []
 
-    console.log("pageParts BEFORE: ", globalPageOptionData.pageParts)
     globalPageOptionData.pageParts.forEach(p => {
         if (parseInt(p.newSortId) > 0) {
-            // move to pagePartOutput
-            pagePartOutput.push(p);
+            // move to pagePartOutputArr
+            pagePartOutputArr.push(p);
         }
     })
-    console.log("pageParts AFTER: ", globalPageOptionData.pageParts)
-    console.log("productOptions BEFORE: ", globalPageOptionData.productOptions)
     globalPageOptionData.productOptions.forEach(p => {
         if (parseInt(p.newSortId) > 0) {
-            // move to pagePartOutput
-            productOptionOutput.push(p);
+            // move to productOptionOutputArr
+            productOptionOutputArr.push(p);
         }
     })
-    console.log("productOptions AFTER: ", globalPageOptionData.productOptions)
-
-    console.log("PP Step One find options needed: ", pagePartOutput)
-    console.log("PO Step One find options needed: ", productOptionOutput)
 
     // now sort the outputs
-    if (pagePartOutput !== null) {
+    if (pagePartOutputArr.length > 0) { // Check if there are elements in the array
         // sort First
-        pagePartOutput.sort((a, b) => a.newSortId - b.newSortId)
+        pagePartOutputArr.sort((a, b) => a.newSortId - b.newSortId)
         // create outputs
-        pagePartOutput.forEach(p => {
-            ppSortOutput.push(p.newSortId)
+        pagePartOutputArr.forEach(p => {
+            ppSortOutput.push(p._id)
             let nameFormat = `${p.optionName}:${p.rename ? p.rename : p.optionName};`
             ppNameOutput.push(nameFormat)
         })
+    } else{
+        // default 
     }
 
-    if (productOptionOutput !== null) {
+    if (productOptionOutputArr.length > 0) { // Check if there are elements in the array
         // sort First
-        productOptionOutput.sort((a, b) => a.newSortId - b.newSortId)
+        productOptionOutputArr.sort((a, b) => a.newSortId - b.newSortId)
         // create outputs
-        productOptionOutput.forEach(p => {
-            poSortOutput.push(p.newSortId)
+        productOptionOutputArr.forEach(p => {
+            poSortOutput.push(p._id)
             let nameFormat = `${p.optionName}:${p.rename ? p.rename : p.optionName};`
             poNameOutput.push(nameFormat)
         })
-    }
+    } 
 
     // now join the arrays to strings and save to global
     // save to local storage
@@ -125,8 +125,13 @@ const loadOutputs = () => {
     globalPageOptionData.po_sort_output = poSortOutput.join(',')
     globalPageOptionData.po_name_output = poNameOutput.join('')
 
-    console.log(globalPageOptionData)
+    // set to the outputs
+    globalPageOptionData.pp_sort_output !== "" ? $(page_part_order_output).val(globalPageOptionData.pp_sort_output) : ""
+    globalPageOptionData.pp_name_output !== "" ? $(page_part_name_output).val(globalPageOptionData.pp_name_output) : ""
+    globalPageOptionData.po_sort_output !== "" ? $(product_option_order_output).val(globalPageOptionData.po_sort_output) : ""
+    globalPageOptionData.po_name_output !== "" ? $(product_option_name_output).val( globalPageOptionData.po_name_output ) : ""
 }
+
 
 // create New page option
 // Left off here
@@ -164,6 +169,7 @@ $(() => {
     if (globalPageOptionData !== null) {
         loadPagePartOptionsHTML()
         loadProductOptionsHTML()
+        loadOutputs()
     }
     // Tab nav btn
     $(inner_tab_page_part_btn).on("click", (e) => {
@@ -249,6 +255,8 @@ $(() => {
         }
         // save to local storage
         saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
+        // load outputs
+        loadOutputs()
     })
 
 
@@ -293,9 +301,11 @@ $(() => {
                 })
             }
         }
-        loadOutputs()
+
         // save to local storage
         saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
+        // load outputs
+        loadOutputs()
     });
 
 
