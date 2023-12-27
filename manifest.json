@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "LabCloud Tool",
     "version": "6.1.0",
-    "description": "This extension provides an easy way to make codes for SKUs, URL keys, code names, and do measurement conversions.",
+    "description": "This extension offers a convenient solution for generating codes for SKUs, URL keys, and code names, as well as performing measurement conversions. It provides a streamlined interface to effortlessly modify page options, maintain notes, and manage tasks through an integrated to-do list—all within a single application.",
     "action": {
       "default_title": "LabCloud Tool",
       "default_popup": "index.html"
@@ -27,6 +27,7 @@
           "./js/theme.js",
           "./js/notes.js",
           "./js/createHtml.js",
+          "./js/pageOptions.js",
           "./js/todos.js"
         ]
       }
