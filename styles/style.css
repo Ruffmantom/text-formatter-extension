@@ -54,7 +54,8 @@ textarea,
 select {
     background-color: var(--input-bkg);
 }
-.width_inherit{
+
+.width_inherit {
     width: 100% !important;
 }
 
@@ -150,12 +151,15 @@ select {
     background-color: var(--hover-secondary-bg-color);
 
 }
-.main_icon_button.disabled{
+
+.main_icon_button.disabled {
     opacity: 0.5;
 }
-.main_icon_button.disabled:hover{
+
+.main_icon_button.disabled:hover {
     cursor: not-allowed;
 }
+
 .menu_item_cont {
     background-color: #ffffff00;
 }
@@ -908,10 +912,12 @@ select {
     z-index: 999;
     transition: opacity 150ms ease-in;
 }
-.add_page_option_menu{
+
+.add_page_option_menu {
     display: block;
 }
-.add_page_option_menu>input{
+
+.add_page_option_menu>input {
     margin-bottom: 10px;
 }
 
@@ -1218,9 +1224,11 @@ select {
     background-color: var(--danger);
     color: white;
 }
+
 .danger_btn:hover>svg {
     fill: white;
 }
+
 .todo_text_cont {
     width: 90%;
     position: relative;
@@ -1257,6 +1265,8 @@ select {
 
 /* END todo list */
 /* Page Option Tab */
+
+
 .tab_inner_tabs_cont {
     width: 450px;
 }
@@ -1280,14 +1290,16 @@ select {
     background-color: var(--primary);
     fill: white;
 }
+
 #add_new_page_part_btn:hover>svg {
     fill: white;
 }
 
-#delete_page_option:hover{
+#delete_page_option:hover {
     background-color: var(--danger);
 }
-#delete_page_option:hover>svg{
+
+#delete_page_option:hover>svg {
     fill: white;
 }
 
@@ -1306,6 +1318,7 @@ select {
     opacity: 0;
     transition: all 150ms ease-out;
 }
+
 .inner_tab_item.active::after {
     opacity: 1;
     width: 60%;
@@ -1326,11 +1339,12 @@ select {
     opacity: 0;
 }
 
-.inner_tab_lower_cont.active{
+.inner_tab_lower_cont.active {
     height: fit-content;
     overflow: visible;
     opacity: 1;
 }
+
 .page_options_inner_tab_heading {
     width: 100%;
     padding-bottom: 20px;
@@ -1432,25 +1446,50 @@ select {
     border-color: var(--primary);
     transition: all 150ms ease-in;
 }
-.page_options_cont{
-    padding-bottom: 15px;
+
+.page_options_cont {
+    max-height: 250px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    border-radius: 7px;
+    margin-bottom: 7px;
+    padding-right: 5px;
 }
-.page_option_item_row{
+
+.page_options_cont::-webkit-scrollbar {
+    width: 5px;
+}
+
+.page_options_cont::-webkit-scrollbar-track {
+    background-color: var(--modal-bg-color);
+}
+
+.page_options_cont::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 10px;
+}
+
+.page_option_item_row {
     display: flex;
     gap: 10px;
     padding: 0 0 5px 0;
 }
-.page_option_col>input{
+
+.page_option_col>input {
     width: 100%;
 }
-.page_option_title_col{
+
+.page_option_title_col {
     background-color: var(--form-block-bkg);
     border-radius: 7px;
 }
-.page_option_title_col>p{
+
+.page_option_title_col>p {
     padding-left: 10px;
 }
-#page_option_name_output{
+
+#page_option_name_output {
     cursor: pointer;
 }
+
 /* END Page Option Tab */

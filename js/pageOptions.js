@@ -3,6 +3,7 @@ const page_parts_tab = $("#page_parts_tab")
 const product_parts_tab = $("#product_parts_tab")
 const add_page_part_menu = $("#add_page_part_menu")
 const add_product_option_menu = $("#add_product_option_menu")
+const page_part_options_cont = $("#page_part_options_cont")
 
 // btn
 const inner_tab_page_part_btn = $("#inner_tab_page_part_btn")
@@ -249,7 +250,10 @@ const addNewPagePartOption = (page, value) => {
         globalPageOptionData.productOptions.push(newOptionObj)
 
     }
-
+    $(page_part_options_cont).animate({
+        scrollTop: $(page_part_options_cont)[0].scrollHeight
+    }, 150);
+    // post a notification
     sendNotification('fast', 3000, `Added ${page ? `Page Part: ${value}` : `Product Option: ${value}`}`)
     // save to local storage
     saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
@@ -327,27 +331,26 @@ $(() => {
         closeAddProductOptionMenu()
     })
 
+    // delete a page option
+    $(".delete_page_option_btn").on("click", (e) => {
+        let optionType = $(e.target).data('potype')
+        let optionId = $(e.target).data('poid')
+        let optionText = $(e.target).data('poname')
+        let optionKey = $(e.target).data('optionkey')
 
-    $(".page_options_cont").on("click", (e) => {
-        if (e.target.className.includes("po_rename_clear_btn") && !e.target.className.includes("disabled")) {
-            let optionType = $(e.target).data('potype')
-            let optionId = $(e.target).data('poid')
-            let optionText = $(e.target).data('poname')
-            let optionKey = $(e.target).data('optionkey')
-
-            if (optionType === "pp") {
-                globalPageOptionData.pageParts = globalPageOptionData.pageParts.filter(p => p._id !== optionId)
-            } else {
-                globalPageOptionData.productOptions = globalPageOptionData.productOptions.filter(p => p._id !== optionId)
-            }
-            sendNotification('fast', 5000, `Deleted ${optionType === "pp" ? `Page Part: ${optionText}` : `Page Option: ${optionText}`}`)
-            let optionRowArr = Array.from($(".page_option_item_row"))
-            optionRowArr.forEach(r => {
-                if ($(r).data("optionkey") === optionKey) {
-                    $(r).fadeOut()
-                }
-            })
+        if (optionType === "pp") {
+            globalPageOptionData.pageParts = globalPageOptionData.pageParts.filter(p => p._id !== optionId)
+        } else {
+            globalPageOptionData.productOptions = globalPageOptionData.productOptions.filter(p => p._id !== optionId)
         }
+        sendNotification('fast', 5000, `Deleted ${optionType === "pp" ? `Page Part: ${optionText}` : `Page Option: ${optionText}`}`)
+        let optionRowArr = Array.from($(".page_option_item_row"))
+        optionRowArr.forEach(r => {
+            if ($(r).data("optionkey") === optionKey) {
+                $(r).fadeOut()
+            }
+        })
+
         // save to local storage
         saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
         // load outputs
