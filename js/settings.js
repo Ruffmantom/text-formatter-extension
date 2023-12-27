@@ -74,6 +74,7 @@ $(() => {
         localStorage.removeItem("TF_N_S")
         localStorage.removeItem("TF_TODOS")
         localStorage.removeItem("TF_DATA")
+        localStorage.removeItem("TF_PO_DATA")
         location.reload();
     })
 
