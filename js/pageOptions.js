@@ -56,7 +56,6 @@ const closeAddProductOptionMenu = () => {
 }
 
 const clearSortAndRenameInputs = (inputType, tab) => {
-    console.log("clearing an input")
     // variables
     let renameInputsArr = Array.from($(".page_option_rename_input"))
     let sortInputsArr = Array.from($(".po_sort_input"))
@@ -110,7 +109,6 @@ const clearSortAndRenameInputs = (inputType, tab) => {
         })
     }
 
-    console.log(globalPageOptionData)
     // // save to local
     // // save to local storage
     saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
@@ -127,12 +125,29 @@ const switchPageOptionTabs = (value) => {
         closeAddProductOptionMenu()
         $(product_parts_tab).removeClass("active");
         $(page_parts_tab).addClass("active");
+        globalPageOptionData.po_tab_open = "pp"
+        saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
     } else {
         closeAddPagePartMenu()
         $(page_parts_tab).removeClass("active");
         $(product_parts_tab).addClass("active");
+        globalPageOptionData.po_tab_open = "po"
+        saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
     }
 };
+// load oaen tab
+const loadTab = () => {
+    $(".inner_tab_item").removeClass("active");
+    if (globalPageOptionData.po_tab_open === "pp") {
+        $(`.inner_tab_item[data-pagetabid='page']`).addClass("active");
+        $(product_parts_tab).removeClass("active");
+        $(page_parts_tab).addClass("active");
+    } else {
+        $(`.inner_tab_item[data-pagetabid='product']`).addClass("active");
+        $(page_parts_tab).removeClass("active");
+        $(product_parts_tab).addClass("active");
+    }
+}
 
 // These will eventually be loaded by the globalPageOptionData 
 const loadPagePartOptionsHTML = () => {
@@ -246,6 +261,7 @@ const addNewPagePartOption = (page, value) => {
 // on ready
 $(() => {
     if (globalPageOptionData !== null) {
+        loadTab()
         loadPagePartOptionsHTML()
         loadProductOptionsHTML()
         loadOutputs()
@@ -313,7 +329,7 @@ $(() => {
 
 
     $(".page_options_cont").on("click", (e) => {
-        if (e.target.className.includes("delete_page_option_btn") && !e.target.className.includes("disabled")) {
+        if (e.target.className.includes("po_rename_clear_btn") && !e.target.className.includes("disabled")) {
             let optionType = $(e.target).data('potype')
             let optionId = $(e.target).data('poid')
             let optionText = $(e.target).data('poname')
@@ -415,7 +431,6 @@ $(() => {
         var poType = $(this).data('potype');
         var inputType = $(this).data('inputtype');
         var inputValue = $(this).val();
-        console.log(poid, poType, inputType, inputValue)
 
         if (inputType === "sort") {
             // sort id for po has changed from original _id

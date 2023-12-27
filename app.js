@@ -26,7 +26,7 @@ let defaultPageOptionData = {
     customPagePartId: 8,
     pageParts: [
         {
-            optionName: "Materials",
+            optionName: "Paper",
             isDeleteAble: false,
             rename: "",
             _id: 1,
@@ -141,6 +141,7 @@ let defaultPageOptionData = {
     po_sort_output:"",
     pp_name_output:"",
     po_name_output:"",
+    po_tab_open:"pp",
 }
 let globalStaging;
 let stagingDefault = {
