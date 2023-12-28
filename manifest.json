@@ -1,35 +1,35 @@
 {
-    "manifest_version": 3,
-    "name": "LabCloud Tool",
-    "version": "6.1.0",
-    "description": "This extension offers a convenient solution for generating codes for SKUs, URL keys, and code names, as well as performing measurement conversions. It provides a streamlined interface to effortlessly modify page options, maintain notes, and manage tasks through an integrated to-do list—all within a single application.",
-    "action": {
-      "default_title": "LabCloud Tool",
-      "default_popup": "index.html"
-    },
-    "icons": {
-      "16": "./images/logo-16px.png",
-      "48": "./images/logo-48px.png",
-      "128": "./images/logo-128px.png"
-    },
-    "content_scripts": [
-      {
-        "matches": ["http://localhost/*"],
-        "css": [
-          "./styles/style.css",
-          "./styles/theme.css"
-        ],
-        "js": [
-          "./js/libraries/jquery.js",
-          "./app.js",
-          "./js/settings.js",
-          "./js/script.js",
-          "./js/theme.js",
-          "./js/notes.js",
-          "./js/createHtml.js",
-          "./js/pageOptions.js",
-          "./js/todos.js"
-        ]
-      }
-    ]
-  }
+  "manifest_version": 3,
+  "name": "LabCloud Tool",
+  "version": "6.1.0",
+  "description": "This extension simplifies your work for working in the CloudLab backend.",
+  "action": {
+    "default_title": "LabCloud Tool",
+    "default_popup": "index.html"
+  },
+  "icons": {
+    "16": "./images/Logo/logo-16px.png",
+    "48": "./images/Logo/logo-48px.png",
+    "128": "./images/Logo/logo-128px.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://localhost/*"],
+      "css": [
+        "./styles/style.css",
+        "./styles/theme.css"
+      ],
+      "js": [
+        "./js/libraries/jquery.js",
+        "./app.js",
+        "./js/settings.js",
+        "./js/script.js",
+        "./js/theme.js",
+        "./js/notes.js",
+        "./js/createHtml.js",
+        "./js/pageOptions.js",
+        "./js/todos.js"
+      ]
+    }
+  ]
+}
