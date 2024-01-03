@@ -198,7 +198,10 @@ input[type=number]::-webkit-outer-spin-button {
 .btn_icon.theme_set {
     opacity: 1;
 }
-
+.example_text{
+color: var(--primary);
+font-style: italic;
+}
 .desc {
     max-width: 450px;
     margin: 15px auto 10px auto;
@@ -211,6 +214,7 @@ input[type=number]::-webkit-outer-spin-button {
     width: fit-content;
     position: relative;
     min-height: 480px;
+    overflow: hidden;
 }
 
 .tf_control_group {
@@ -407,12 +411,10 @@ input[type=number]::-webkit-outer-spin-button {
     bottom: -3px;
     z-index: 9;
     border-radius: 3px;
+    opacity: 0;
+    transition: opacity 130ms ease-out;
 }
 
-.tab_nav_button::after {
-    opacity: 0;
-    transition: all 130ms ease-out;
-}
 
 .tab_nav_button:hover::after {
     width: 90%;
@@ -425,7 +427,7 @@ input[type=number]::-webkit-outer-spin-button {
     transition: all 130ms ease-in;
 }
 
-.nav_tab_active::after {
+.tab_nav_button.nav_tab_active::after {
     opacity: 1;
 }
 
@@ -494,6 +496,10 @@ input[type=number]::-webkit-outer-spin-button {
 .setting_form_row {
     display: flex;
     justify-content: space-between;
+    
+}
+.setting_form_row:not(:last-child) {
+   margin-bottom: 10px;
 }
 
 .setting_form_col {
@@ -514,6 +520,7 @@ input[type=number]::-webkit-outer-spin-button {
 .input_block>p {
     margin: 0;
     margin-top: 6px;
+    max-width: 80%;
 }
 
 .checkbox_input {
@@ -526,9 +533,7 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0 0 5px 0;
 }
 
-#settings_clear_all_data {
-    margin-top: 10px;
-}
+
 
 /* CLEAR BUTTONS FOR SUFFIX AND PREFIX */
 .x_clear_btn {
@@ -1500,9 +1505,11 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .pp_info_tip{
     left: 75px;
+    right: initial;
 }
 .po_info_tip{
     left: 105px;
+    right: initial;
 }
 .change_page_option_name_input{
     display: none;

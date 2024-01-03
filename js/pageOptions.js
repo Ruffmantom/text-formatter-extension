@@ -195,7 +195,7 @@ const loadOutputs = () => {
         // create outputs
         pagePartOutputArr.forEach(p => {
             ppSortOutput.push(p._id)
-            let nameFormat = `${p.optionName}:${p.rename ? p.rename : p.optionName};`
+            let nameFormat = `${p.optionName}:${settings.useSortIdWithNamePp ? `${p.newSortId}. ${p.rename ? p.rename : p.optionName}` : `${p.rename ? p.rename : p.optionName}`};`
             ppNameOutput.push(nameFormat)
         })
     } else {
@@ -208,7 +208,7 @@ const loadOutputs = () => {
         // create outputs
         productOptionOutputArr.forEach(p => {
             poSortOutput.push(p._id)
-            let nameFormat = `${p.optionName}:${p.rename ? p.rename : p.optionName};`
+            let nameFormat = `${p.optionName}:${settings.useSortIdWithNamePo ? `${p.newSortId}. ${p.rename ? p.rename : p.optionName}` : `${p.rename ? p.rename : p.optionName}`};`
             poNameOutput.push(nameFormat)
         })
     }
@@ -553,5 +553,22 @@ $(() => {
         });
     });
 
-
+    // Settings Actions
+    // set use sort ID with name pp
+    $(settingsSortIdWithNamePpCheck).on('change', (e) => {
+        settings.useSortIdWithNamePp = $(e.target).is(':checked')
+        // render the output after adding setting
+        loadOutputs()
+        // save to local
+        saveToLocalStorage(TF_SETTINGS, settings)
+    })
+    
+    // set use sort ID with name po
+    $(settingsSortIdWithNamePoCheck).on('change', (e) => {
+        settings.useSortIdWithNamePo = $(e.target).is(':checked')
+        // render the output after adding setting
+        loadOutputs()
+        // save to local
+        saveToLocalStorage(TF_SETTINGS, settings)
+    })
 })

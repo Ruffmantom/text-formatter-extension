@@ -56,8 +56,8 @@
             </div>
             <h4>Settings</h4>
             <div class="settings_form">
-                <p>Text Formatter Settings</p>
 
+                <p class="settings_form_title">Text Formatter Settings</p>
                 <div class="setting_form_row">
                     <div class="setting_form_col">
                         <div class="input_block">
@@ -89,6 +89,27 @@
                         </div>
                     </div>
                 </div>
+
+                <p class="settings_form_title">Page Options Settings</p>
+                <div class="setting_form_row">
+                    <div class="setting_form_col">
+                        <div class="input_block">
+                            <input type="checkbox" name="settings_sort_id_with_name_pp" class="checkbox_input"
+                            id="settings_sort_id_with_name_pp">
+                            <p>Sort # with Page Parts Name <span class="example_text"><strong>Example: 1. Paper etc...</strong></span></p>
+                        </div>
+                        
+                    </div>
+                    <div class="setting_form_col">
+                        <div class="input_block">
+                            <input type="checkbox" name="settings_sort_id_with_name_po" class="checkbox_input"
+                            id="settings_sort_id_with_name_po">
+                            <p>Sort # with Product Options Name <span class="example_text"><strong>Example: 1. File Type etc...</strong></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- clear all data -->
                 <div class="setting_form_row">
                     <div class="setting_form_col">
                         <button id="settings_clear_all_data" class="tf_btn main_btn">Clear All Data</button>
@@ -346,7 +367,8 @@
 
             </div>
             <div class="upper_format_text_input_cont tf_control_group">
-                <img id="copy_upper_txt_btn" class="tf_btn copy_upper_txt_btn" src="./images/icons/copy-icon_1.svg" alt="">
+                <img id="copy_upper_txt_btn" class="tf_btn copy_upper_txt_btn" src="./images/icons/copy-icon_1.svg"
+                    alt="">
                 <textarea class="tf_input" name="input" id="text_input" cols="30" rows="10"
                     placeholder='Place Text Here (Allows for line breaks)'></textarea>
             </div>
@@ -606,7 +628,8 @@
                                 <span class="info_icon">i</span>
 
                                 <div class="inner_tab_header_info_pop ">
-                                    <p>You can change the name of the Page Part by clicking on the name. Press the enter key when finished.</p>
+                                    <p>You can change the name of the Page Part by clicking on the name. Press the
+                                        enter/return key when finished.</p>
                                 </div>
                             </div>
                         </div>
@@ -618,7 +641,8 @@
 
                                     <div class="inner_tab_header_info_pop">
                                         <p>Assign a sort number to each item, starting
-                                            from 1, to determine their display order. Leave blank if you do not want to include the option.</p>
+                                            from 1, to determine their display order. Leave blank if you do not want to
+                                            include the option.</p>
                                     </div>
                                 </div>
                             </div>
@@ -643,17 +667,20 @@
                     <!-- this is where the output will be -->
                     <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
                         <div class="helper">Click To Copy</div>
-                        <input class="tf_input color_input" readonly name="input" type="text" id="page_part_order_output"
-                            placeholder='Order Output...'>
+                        <input class="tf_input color_input" readonly name="input" type="text"
+                            id="page_part_order_output" placeholder='Order Output...'>
                     </div>
                     <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
                         <textarea class="tf_input textarea_cont" readonly name="input" cols="30" rows="3"
                             id="page_part_name_output" placeholder='Name Output...'></textarea>
                         <div class="helper">Click To Copy</div>
                     </div>
-                    <button type="button" class="tf_btn main_btn" data-potype="pp" id="clear_sorting_pp_btn">Clear Sorting</button>
-                    <button type="button" class="tf_btn main_btn" data-potype="pp" id="clear_renames_pp_btn">Clear Renames</button>
-                    <button type="button" class="tf_btn main_btn" data-potype="pp" id="clear_all_pp_btn">Clear All</button>
+                    <button type="button" class="tf_btn main_btn" data-potype="pp" id="clear_sorting_pp_btn">Clear
+                        Sorting</button>
+                    <button type="button" class="tf_btn main_btn" data-potype="pp" id="clear_renames_pp_btn">Clear
+                        Renames</button>
+                    <button type="button" class="tf_btn main_btn" data-potype="pp" id="clear_all_pp_btn">Clear
+                        All</button>
                 </div>
 
 
@@ -679,8 +706,8 @@
                             <div class="add_page_option_menu" id="add_product_option_menu">
                                 <p>Add New Product Option</p>
                                 <div class="tf_control_group width_inherit bottom_input_group">
-                                    <input class="tf_input" name="input" type="text"
-                                        id="add_product_option_input" placeholder='Name...'>
+                                    <input class="tf_input" name="input" type="text" id="add_product_option_input"
+                                        placeholder='Name...'>
 
                                 </div>
                                 <button type="button" class="tf_btn main_btn" id="add_product_option_btn">Add Product
@@ -693,7 +720,8 @@
                                 <span class="info_icon">i</span>
 
                                 <div class="inner_tab_header_info_pop ">
-                                    <p>You can change the name of the Product Option by clicking on the name. Press the enter key when finished.</p>
+                                    <p>You can change the name of the Product Option by clicking on the name. Press the
+                                        enter/return key when finished.</p>
                                 </div>
                             </div>
                         </div>
@@ -705,7 +733,8 @@
 
                                     <div class="inner_tab_header_info_pop">
                                         <p>Assign a sort number to each item, starting
-                                            from 1, to determine their display order. Leave blank if you do not want to include the option.</p>
+                                            from 1, to determine their display order. Leave blank if you do not want to
+                                            include the option.</p>
                                     </div>
                                 </div>
                             </div>
@@ -731,17 +760,20 @@
                     <!-- this is where the output will be -->
                     <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
                         <div class="helper">Click To Copy</div>
-                        <input class="tf_input color_input" readonly name="input" type="text" id="product_option_order_output"
-                            placeholder='Order Output...'>
+                        <input class="tf_input color_input" readonly name="input" type="text"
+                            id="product_option_order_output" placeholder='Order Output...'>
                     </div>
                     <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
                         <textarea class="tf_input textarea_cont" readonly name="input" cols="30" rows="3"
                             id="product_option_name_output" placeholder='Name Output...'></textarea>
                         <div class="helper">Click To Copy</div>
                     </div>
-                    <button type="button" class="tf_btn main_btn" data-potype="po" id="clear_sorting_po_btn">Clear Sorting</button>
-                    <button type="button" class="tf_btn main_btn" data-potype="po" id="clear_renames_po_btn">Clear Renames</button>
-                    <button type="button" class="tf_btn main_btn" data-potype="po" id="clear_all_po_btn">Clear All</button>
+                    <button type="button" class="tf_btn main_btn" data-potype="po" id="clear_sorting_po_btn">Clear
+                        Sorting</button>
+                    <button type="button" class="tf_btn main_btn" data-potype="po" id="clear_renames_po_btn">Clear
+                        Renames</button>
+                    <button type="button" class="tf_btn main_btn" data-potype="po" id="clear_all_po_btn">Clear
+                        All</button>
                 </div>
 
 
