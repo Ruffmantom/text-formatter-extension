@@ -200,6 +200,11 @@ const loadOutputs = () => {
         })
     } else {
         // default 
+        globalPageOptionData.pageParts.forEach(p => {
+            ppSortOutput.push(p._id)
+            let nameFormat = `${p.optionName}:${settings.useSortIdWithNamePp ? `${p._id}. ${p.rename ? p.rename : p.optionName}` : `${p.rename ? p.rename : p.optionName}`};`
+            ppNameOutput.push(nameFormat)
+        })
     }
 
     if (productOptionOutputArr.length > 0) { // Check if there are elements in the array
@@ -209,6 +214,13 @@ const loadOutputs = () => {
         productOptionOutputArr.forEach(p => {
             poSortOutput.push(p._id)
             let nameFormat = `${p.optionName}:${settings.useSortIdWithNamePo ? `${p.newSortId}. ${p.rename ? p.rename : p.optionName}` : `${p.rename ? p.rename : p.optionName}`};`
+            poNameOutput.push(nameFormat)
+        })
+    }else {
+        // default 
+        globalPageOptionData.productOptions.forEach(p => {
+            poSortOutput.push(p._id)
+            let nameFormat = `${p.optionName}:${settings.useSortIdWithNamePo ? `${p._id}. ${p.rename ? p.rename : p.optionName}` : `${p.rename ? p.rename : p.optionName}`};`
             poNameOutput.push(nameFormat)
         })
     }
@@ -319,6 +331,8 @@ $(() => {
         $("#add_page_part_input").val("")
         // close menu
         closeAddPagePartMenu()
+        // render outputs
+        loadOutputs()
     })
     // create new product option part
     $(add_product_option_btn).on('click', (e) => {
@@ -329,6 +343,8 @@ $(() => {
         $("#add_product_option_input").val("")
         // close menu
         closeAddProductOptionMenu()
+        // render outputs
+        loadOutputs()
     })
 
     // delete a page option
@@ -475,7 +491,7 @@ $(() => {
         loadOutputs()
     });
 
-
+    // copy actions
     $(page_part_order_output).on("click", (e) => {
         copyOutputFunction(e, page_part_order_output)
     })
@@ -537,6 +553,8 @@ $(() => {
                 poRowItem.find(".page_option_title").show();
                 // save to local storage
                 saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
+                // render output
+                loadOutputs()
             }
         });
 
@@ -562,7 +580,7 @@ $(() => {
         // save to local
         saveToLocalStorage(TF_SETTINGS, settings)
     })
-    
+
     // set use sort ID with name po
     $(settingsSortIdWithNamePoCheck).on('change', (e) => {
         settings.useSortIdWithNamePo = $(e.target).is(':checked')
