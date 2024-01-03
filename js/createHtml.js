@@ -140,7 +140,7 @@ const createNote = (noteData) => {
 // create html for page option page
 const createPageOptionRow = (po) => {
     return `
-    <div class="page_option_item_row" data-optionkey="${po.key}">
+    <div class="page_option_item_row" data-potype="${po.type}" data-optionkey="${po.key}" data-poid="${po._id}">
 
     <div class="page_option_col sml">
         <button type="button" data-poid="${po._id}" data-optionkey="${po.key}" data-potype="${po.type}" data-poname="${po.optionName}" class="delete_page_option_btn main_icon_button danger_btn ${!po.isDeleteAble ? "disabled" : ""}">
@@ -163,7 +163,8 @@ const createPageOptionRow = (po) => {
     </div>
 
     <div class="page_option_col med page_option_title_col">
-        <p class="page_option_title">${po.optionName}</p>
+        <p class="page_option_title" data-potype="${po.type}" data-poid="${po._id}">${po.optionName}</p>
+        <input class="change_page_option_name_input tf_input" data-poname="" data-potype="" value="${po.optionName}" type="text">
     </div>
 
     <div class="page_option_col sml">

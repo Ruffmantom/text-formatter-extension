@@ -54,6 +54,12 @@ textarea,
 select {
     background-color: var(--input-bkg);
 }
+/* this hides the number input up and down arrows */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
 
 .width_inherit {
     width: 100% !important;
@@ -1486,10 +1492,20 @@ select {
 
 .page_option_title_col>p {
     padding-left: 10px;
+    width: 100%;
 }
 
 #page_option_name_output {
     cursor: pointer;
+}
+.pp_info_tip{
+    left: 75px;
+}
+.po_info_tip{
+    left: 105px;
+}
+.change_page_option_name_input{
+    display: none;
 }
 
 /* END Page Option Tab */

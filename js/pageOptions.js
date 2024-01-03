@@ -491,5 +491,67 @@ $(() => {
         copyOutputFunction(e, product_option_name_output)
 
     })
+    // change the name of the page options
+    // when list name gets clicked
+    $(".page_options_cont").on("click", ".page_option_title", function () {
+        // Find the parent container of the clicked element
+        var poRowItem = $(this).closest(".page_option_item_row");
+
+        // Get the value of the data-todoid attribute
+        clickedPoTextType = poRowItem.data("potype");
+        clickedPoTextId = poRowItem.data("poid");
+
+        // let poEditTextInput = $(`.change_page_option_name_input[data-todoid="${clickedPoTextId}"][data-poid="${clickedPoTextType}"]`);
+        var poEditTextInput = poRowItem.find(".change_page_option_name_input");
+
+
+        poEditTextInput.keydown(function (event) {
+            var keycode = event.keyCode ? event.keyCode : event.which;
+
+            if (keycode == 13 && !event.shiftKey) {
+                // Prevent default behavior if Enter is pressed without Shift
+                event.preventDefault();
+                let enteredName = $(this).val()
+                console.log(clickedPoTextType)
+                // Now save the value to the current po
+                if (clickedPoTextType === "po") {
+                    globalPageOptionData.productOptions.forEach(p => {
+                        if (p._id === clickedPoTextId) {
+                            p.optionName = enteredName;
+                        }
+                    });
+                } else {
+                    globalPageOptionData.pageParts.forEach(p => {
+                        if (p._id === clickedPoTextId) {
+                            p.optionName = enteredName;
+                        }
+                    });
+                }
+
+                loadPagePartOptionsHTML()
+                loadProductOptionsHTML()
+                console.log(globalPageOptionData)
+
+                // Hide the input field and show the <p> tag
+                poRowItem.find(".change_page_option_name_input").hide();
+                poRowItem.find(".page_option_title").show();
+                // save to local storage
+                saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
+            }
+        });
+
+        // Hide the <p> tag and show the <input> input field
+        poRowItem.find(".page_option_title").hide();
+        poRowItem.find(".change_page_option_name_input").css("display", "block").focus().select();
+
+        $(document).on("click", function (event) {
+            // Check if the click event target is not within the menu
+            if (!poRowItem.is(event.target) && poRowItem.has(event.target).length === 0) {
+                poRowItem.find(".change_page_option_name_input").hide();
+                poRowItem.find(".page_option_title").show();
+            }
+        });
+    });
+
 
 })
