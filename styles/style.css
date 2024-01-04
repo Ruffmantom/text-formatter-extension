@@ -1516,3 +1516,22 @@ font-style: italic;
 }
 
 /* END Page Option Tab */
+/* buy me a coffee section */
+.buy_me_a_coffee_section{
+    font-size: 12px;
+    font-style: italic;
+    display: flex;
+}
+#buy_a_coffee{
+    display: inline;
+    text-decoration: none;
+    color: var(--primary);
+}
+#buy_a_coffee:hover{
+    text-decoration: underline;
+}
+.version_text{
+    font-size: 10px;
+    margin: 0 0 10px 0;
+
+}
