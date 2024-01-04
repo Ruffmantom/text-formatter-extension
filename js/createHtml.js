@@ -143,7 +143,7 @@ const createPageOptionRow = (po) => {
     <div class="page_option_item_row" data-potype="${po.type}" data-optionkey="${po.key}" data-poid="${po._id}">
 
     <div class="page_option_col sml">
-        <button type="button" data-poid="${po._id}" data-optionkey="${po.key}" data-potype="${po.type}" data-poname="${po.optionName}" class="delete_page_option_btn main_icon_button danger_btn ${!po.isDeleteAble ? "disabled" : ""}">
+        <button type="button" data-poid="${po._id}" data-optionkey="${po.key}" data-potype="${po.type}" data-poname="${po.optionName}" class="delete_page_option_btn main_icon_button danger_btn ${!po.isDeleteAble ? "disabled" : ""}"  ${!po.isDeleteAble ? "disabled" : ""}>
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                 width="10.213" height="12" viewBox="0 0 10.213 12">
                 <defs>
