@@ -487,10 +487,13 @@ font-style: italic;
     max-width: 550px;
 }
 
+.modal_header>h3{
+    margin-top: 7px;
+}
+
 .modal_cont>h4 {
     margin-top: 0;
 }
-
 
 
 .setting_form_row {
@@ -529,11 +532,30 @@ font-style: italic;
     margin-right: 10px;
 }
 
-.settings_form>p {
-    margin: 0 0 5px 0;
+.settings_form{
+    max-height: 300px;
+    padding-right: 5px;
+    overflow-y: scroll;
 }
 
 
+.settings_form::-webkit-scrollbar {
+    width: 5px;
+}
+
+.settings_form::-webkit-scrollbar-track {
+    background-color: var(--modal-bg-color);
+}
+
+.settings_form::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 10px;
+}
+
+
+.settings_form>p {
+    margin: 0 0 5px 0;
+}
 
 /* CLEAR BUTTONS FOR SUFFIX AND PREFIX */
 .x_clear_btn {
