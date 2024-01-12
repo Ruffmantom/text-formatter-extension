@@ -124,10 +124,10 @@ const createTodoAction = (todoVal) => {
 const showOrHideAddNewTodoListForm = (show) => {
     if (show) {
         $(addNewTodoListForm).css("display", "flex")
-        $(showAddNewTodoListFormBtn).hide()
+        $(".my_todo_lists_footer").hide()
     } else {
         $(addNewTodoListForm).css("display", "none")
-        $(showAddNewTodoListFormBtn).show()
+        $(".my_todo_lists_footer").show()
     }
 }
 
