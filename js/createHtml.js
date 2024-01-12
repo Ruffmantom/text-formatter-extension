@@ -7,8 +7,19 @@ const createTodoList = (listInfo) => {
             <p class="todo_list_item_name">${listInfo.name}</p>
             <p class="todo_list_item_completion" data-listid=${listInfo.id}>${getCompletionPercentage(listInfo)} Complete</p>
         </div>
+        <button type="button" class="setting_btn">
+        <div data-listid=${listInfo.id} class="download_todo_list_btn btn_overlay"></div>
+        <svg id="download_icon" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32.74">
+        <g id="Layer_1-2" data-name="Layer 1">
+          <g>
+            <path class="cls-1" d="M30,21.33c-1.1,0-2,.9-2,2v5.41H4v-5.41c0-1.1-.9-2-2-2s-2,.9-2,2v7.41c0,1.1.9,2,2,2h28c1.1,0,2-.9,2-2v-7.41c0-1.1-.9-2-2-2Z"/>
+            <path class="cls-1" d="M14.53,24.69s.04.03.06.05c.02.02.04.04.06.06.04.03.08.06.12.09.04.04.09.07.13.1.07.05.14.08.21.12.04.02.09.05.13.06.09.04.17.06.26.08.04,0,.07.02.11.03.13.03.26.04.39.04,0,0,0,0,0,0s0,0,0,0c.13,0,.26-.01.38-.04.05,0,.09-.03.13-.04.07-.02.14-.03.21-.06,0,0,.01,0,.02-.01.16-.07.32-.16.46-.27.04-.03.07-.06.1-.09.05-.05.11-.09.16-.14l7.78-8.44c.75-.81.7-2.08-.12-2.83-.81-.75-2.08-.7-2.83.12l-4.31,4.68V2c0-1.1-.9-2-2-2s-2,.9-2,2v16.21l-4.31-4.68c-.75-.81-2.01-.86-2.83-.12-.81.75-.86,2.01-.12,2.83l7.78,8.44Z"/>
+          </g>
+        </g>
+      </svg>
+        </button>
         <button data-listid=${listInfo.id} type="button" class="setting_btn delete_btn todo_list_delete_btn">
-            <svg xmlns="http://www.w3.org/2000/svg"
+            <svg data-listid=${listInfo.id} xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" width="10.213" height="12"
                 viewBox="0 0 10.213 12">
                 <defs>
@@ -23,6 +34,7 @@ const createTodoList = (listInfo) => {
                 </g>
             </svg>
         </button>
+        
     </div>
     
     `

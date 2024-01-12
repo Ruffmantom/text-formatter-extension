@@ -30,6 +30,7 @@ const showAddNewTodoListFormBtn = $("#show_add_todo_list_btn")
 const cancelAddNewTodoListBtn = $("#cancel_add_new_todo_list")
 const todoListButton = $(".todo_list_item")
 const saveDueDateBtn = $("#save_due_date_btn")
+const download_todo_list_btn = $(".download_todo_list_btn")
 // global values
 let todoMenuIsOpen = false;
 // let usersTodos = []
@@ -450,6 +451,59 @@ const deleteTodoList = (listId) => {
     }
 }
 
+// create json export
+const createJsonExport = (listData) => {
+    console.log(listData)
+    // Convert JSON to a string
+    const jsonString = JSON.stringify(listData, null, 2);
+    // Create a Blob containing the JSON data
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    // Create a link element
+    const a = document.createElement('a');
+    // Create a URL for the Blob and set it as the link's href
+    a.href = URL.createObjectURL(blob);
+    // create name for file
+    let listName = listData.name.replace(/[^a-zA-Z0-9_]/g, '-');
+    // Set the filename for the downloadable file
+    a.download = `${listName}.json`;
+    // Append the link to the document
+    document.body.appendChild(a);
+    // simulate click
+    a.click();
+
+    // Remove the link from the document
+    document.body.removeChild(a);
+
+    sendNotification('fast', 3000, 'List has been downloaded')
+}
+
+const importJsonListData = (data) => {
+    // take file contents
+    // add json object to todolist array
+    console.log(data)
+    let foundList = usersTodos.some(l => {
+        return l.id === data.id
+    })
+
+    console.log(foundList)
+    if (foundList) { // if found list === 0 then it is false
+        sendNotification('fast', 3000, 'This list has already been added')
+        return
+    } else {
+        data.active = false
+        usersTodos.unshift(data)
+        sendNotification('fast', 3000, `${data.name} list has been added!`)
+    }
+    console.log(usersTodos)
+    // save to local
+    saveToLocalStorage(TF_TODOS, usersTodos)
+    // rerender list
+    updateFullTodoUi()
+    // clear file input
+    $("#todo_list_import").val('');
+
+}
+
 // -----------------------------------------------------------------------------------
 //  ******************************************************************************************
 // -----------------------------------------------------------------------------------
@@ -759,7 +813,53 @@ $(function () {
             $(changeListTitleInput).hide();
         }
     });
-    // changeListTitleInput
+
+
+    // export todo list
+    // on click export btn
+    $(".download_todo_list_btn").on('click', e => {
+        console.log($(e.target))
+        let listId = $(e.target).data('listid')
+        let foundList = usersTodos.find(l => l.id === listId)
+        createJsonExport(foundList)
+
+    })
+    // import functionality
+    $("#import_todo_list_btn").click(function () {
+        // Trigger a click on the hidden file input
+        $("#todo_list_import").click();
+    });
+
+    // When a file is selected using the file input
+    $("#todo_list_import").change(function () {
+        // Handle the file import logic here
+        // console.log("File selected:", $(this).val());
+        const fileInput = event.target;
+        const file = fileInput.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                try {
+                    // Parse the JSON data from the file
+                    const jsonData = JSON.parse(e.target.result);
+
+                    // Handle the JSON data as needed
+                    importJsonListData(jsonData)
+                } catch (error) {
+                    console.error("Error parsing JSON:", error);
+                }
+            };
+
+            // Read the file as text
+            reader.readAsText(file);
+        }
+
+    });
+
+
+
 
     // end of doc ready
 })
