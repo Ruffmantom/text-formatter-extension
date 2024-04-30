@@ -175,7 +175,7 @@ const createPageOptionRow = (po) => {
     </div>
 
     <div class="page_option_col med page_option_title_col">
-        <p class="page_option_title" data-potype="${po.type}" data-poid="${po._id}">${po.optionName}</p>
+        <p class="page_option_title" data-potype="${po.type}" data-poid="${po._id}"><span class="option_name_id">${po._id}</span>${po.optionName}</p>
         <input class="change_page_option_name_input tf_input" data-poname="" data-potype="" value="${po.optionName}" type="text">
     </div>
 

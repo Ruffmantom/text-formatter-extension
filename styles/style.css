@@ -54,11 +54,12 @@ textarea,
 select {
     background-color: var(--input-bkg);
 }
+
 /* this hides the number input up and down arrows */
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .width_inherit {
@@ -140,10 +141,12 @@ input[type=number]::-webkit-outer-spin-button {
     border: none;
     /* margin-right: 10px; */
 }
-#download_icon{
+
+#download_icon {
     max-width: 12px;
 }
-.btn_overlay{
+
+.btn_overlay {
     position: absolute;
     z-index: 2;
     width: 100%;
@@ -151,6 +154,7 @@ input[type=number]::-webkit-outer-spin-button {
     top: 0;
     left: 0;
 }
+
 .main_icon_button {
     border-radius: 5px;
     height: 35px;
@@ -209,10 +213,12 @@ input[type=number]::-webkit-outer-spin-button {
 .btn_icon.theme_set {
     opacity: 1;
 }
-.example_text{
-color: var(--primary);
-font-style: italic;
+
+.example_text {
+    color: var(--primary);
+    font-style: italic;
 }
+
 .desc {
     max-width: 450px;
     margin: 15px auto 10px auto;
@@ -498,7 +504,7 @@ font-style: italic;
     max-width: 550px;
 }
 
-.modal_header>h3{
+.modal_header>h3 {
     margin-top: 7px;
 }
 
@@ -510,10 +516,11 @@ font-style: italic;
 .setting_form_row {
     display: flex;
     justify-content: space-between;
-    
+
 }
+
 .setting_form_row:not(:last-child) {
-   margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .setting_form_col {
@@ -543,7 +550,7 @@ font-style: italic;
     margin-right: 10px;
 }
 
-.settings_form{
+.settings_form {
     max-height: 300px;
     padding-right: 5px;
     overflow-y: scroll;
@@ -874,19 +881,23 @@ font-style: italic;
     display: none;
     flex-direction: column;
 }
-#import_todo_list_btn{
+
+#import_todo_list_btn {
     margin-left: 10px;
 }
-#todo_list_import{
+
+#todo_list_import {
     position: absolute;
     width: 0;
     height: 0;
     z-index: -1;
     opacity: 0;
 }
-.my_todo_lists_footer{
+
+.my_todo_lists_footer {
     display: flex;
 }
+
 .form_btn_group {
     padding-top: 10px;
     display: flex;
@@ -1512,6 +1523,11 @@ font-style: italic;
     padding-right: 5px;
 }
 
+.option_name_id {
+    opacity: .5;
+    padding-right: 5px;
+}
+
 .page_options_cont::-webkit-scrollbar {
     width: 5px;
 }
@@ -1548,34 +1564,40 @@ font-style: italic;
 #page_option_name_output {
     cursor: pointer;
 }
-.pp_info_tip{
+
+.pp_info_tip {
     left: 75px;
     right: initial;
 }
-.po_info_tip{
+
+.po_info_tip {
     left: 105px;
     right: initial;
 }
-.change_page_option_name_input{
+
+.change_page_option_name_input {
     display: none;
 }
 
 /* END Page Option Tab */
 /* buy me a coffee section */
-.buy_me_a_coffee_section{
+.buy_me_a_coffee_section {
     font-size: 12px;
     font-style: italic;
     display: flex;
 }
-#buy_a_coffee{
+
+#buy_a_coffee {
     display: inline;
     text-decoration: none;
     color: var(--primary);
 }
-#buy_a_coffee:hover{
+
+#buy_a_coffee:hover {
     text-decoration: underline;
 }
-.version_text{
+
+.version_text {
     font-size: 10px;
     margin: 0 0 10px 0;
 
