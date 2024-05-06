@@ -154,45 +154,44 @@ const createPageOptionRow = (po) => {
     return `
     <div class="page_option_item_row" data-potype="${po.type}" data-optionkey="${po.key}" data-poid="${po._id}">
 
-    <div class="page_option_col sml">
-        <button type="button" data-poid="${po._id}" data-optionkey="${po.key}" data-potype="${po.type}" data-poname="${po.optionName}" class="delete_page_option_btn main_icon_button danger_btn ${!po.isDeleteAble ? "disabled" : ""}"  ${!po.isDeleteAble ? "disabled" : ""}>
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                width="10.213" height="12" viewBox="0 0 10.213 12">
-                <defs>
-                    <clipPath id="a">
-                        <rect width="10.213" height="12"></rect>
-                    </clipPath>
-                </defs>
-                <g clip-path="url(#a)">
-                    <path
-                        d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
-                        fill-rule="evenodd"></path>
-                </g>
+        <div class="page_option_col sml">
+            <button type="button" data-poid="${po._id}" data-optionkey="${po.key}" data-potype="${po.type}" data-poname="${po.optionName}" class="delete_page_option_btn main_icon_button danger_btn ${!po.isDeleteAble ? "disabled" : ""}"  ${!po.isDeleteAble ? "disabled" : ""}>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    width="10.213" height="12" viewBox="0 0 10.213 12">
+                    <defs>
+                        <clipPath id="a">
+                            <rect width="10.213" height="12"></rect>
+                        </clipPath>
+                    </defs>
+                    <g clip-path="url(#a)">
+                        <path
+                            d="M.511,10.851A1.293,1.293,0,0,0,1.889,12H8.323A1.293,1.293,0,0,0,9.7,10.851V4.34H.511ZM2.247,5.617H2.86a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H2.247a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H4.8a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46m2.553,0h.613a.461.461,0,0,1,.46.46v4.187a.461.461,0,0,1-.46.46H7.353a.461.461,0,0,1-.46-.46V6.077a.461.461,0,0,1,.46-.46M1.021,2.043A1.021,1.021,0,0,0,0,3.064V3.83H10.213V3.064A1.021,1.021,0,0,0,9.191,2.043H7.66V.919A.918.918,0,0,0,6.74,0H3.472a.918.918,0,0,0-.919.919V2.043Zm5.617,0H3.574V1.481a.461.461,0,0,1,.46-.46H6.179a.461.461,0,0,1,.46.46Z"
+                            fill-rule="evenodd"></path>
+                    </g>
+                </svg>
+            </button>
+        </div>
+
+        <div class="page_option_col med page_option_title_col">
+            <p class="page_option_title" data-potype="${po.type}" data-poid="${po._id}"><span class="option_name_id">${po._id}</span>${po.optionName}</p>
+            <input class="change_page_option_name_input tf_input" data-poname="" data-potype="" value="${po.optionName}" type="text">
+        </div>
+
+        <div class="page_option_col sml">
+            <input class="tf_input top-inputs po_sort_input" name="input" type="number"
+                data-poid="${po._id}" data-inputtype="sort" data-potype="${po.type}" value="${po.newSortId ? po.newSortId : ""}"  min="0" max="50" placeholder='0'>
+        </div>
+
+        <div class="page_option_col med">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" class="x_clear_btn po_rename_clear_btn" data-poid="${po._id}"
+            data-potype="${po.type}" 
+                viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                <path
+                d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
             </svg>
-        </button>
-
-
-    </div>
-
-    <div class="page_option_col med page_option_title_col">
-        <p class="page_option_title" data-potype="${po.type}" data-poid="${po._id}"><span class="option_name_id">${po._id}</span>${po.optionName}</p>
-        <input class="change_page_option_name_input tf_input" data-poname="" data-potype="" value="${po.optionName}" type="text">
-    </div>
-
-    <div class="page_option_col sml">
-        <input class="tf_input top-inputs po_sort_input" name="input" type="number"
-            data-poid="${po._id}" data-inputtype="sort" data-potype="${po.type}" value="${po.newSortId ? po.newSortId : ""}"  min="0" max="50" placeholder='0'>
-    </div>
-
-    <div class="page_option_col med">
-        <svg xmlns="http://www.w3.org/2000/svg" height="1em" class="x_clear_btn po_rename_clear_btn" data-poid="${po._id}"
-        data-potype="${po.type}" 
-            viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-            <path
-             d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
-        </svg>
-        <input class="tf_input top-inputs page_option_rename_input" name="input"
-        data-poid="${po._id}" data-inputtype="rename" data-potype="${po.type}" value="${po.rename ? po.rename : ""}" type="text" placeholder='New Name...'>
+            <input class="tf_input top-inputs page_option_rename_input" name="input"
+            data-poid="${po._id}" data-inputtype="rename" data-potype="${po.type}" value="${po.rename ? po.rename : ""}" type="text" placeholder='New Name...'>
+        </div>
     </div>
     `
 }
