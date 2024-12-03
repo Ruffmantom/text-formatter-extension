@@ -1,6 +1,7 @@
 // elements and containers
 const page_parts_tab = $("#page_parts_tab")
 const product_parts_tab = $("#product_parts_tab")
+const custom_parts_tab = $("#custom_parts_tab")
 const add_page_part_menu = $("#add_page_part_menu")
 const add_product_option_menu = $("#add_product_option_menu")
 const page_part_options_cont = $("#page_part_options_cont")
@@ -8,6 +9,7 @@ const page_part_options_cont = $("#page_part_options_cont")
 // btn
 const inner_tab_page_part_btn = $("#inner_tab_page_part_btn")
 const inner_tab_product_part_btn = $("#inner_tab_product_part_btn")
+const inner_tab_custom_part_btn = $("#inner_tab_custom_part_btn")
 const add_new_page_part_btn = $("#add_new_page_part_btn")
 const add_new_product_option_btn = $("#add_new_product_option_btn")
 const add_page_part_btn = $("#add_page_part_btn")
@@ -125,12 +127,21 @@ const switchPageOptionTabs = (value) => {
     if (value === "page") {
         closeAddProductOptionMenu()
         $(product_parts_tab).removeClass("active");
+        $(custom_parts_tab).removeClass("active");
         $(page_parts_tab).addClass("active");
         globalPageOptionData.po_tab_open = "pp"
         saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
-    } else {
+    } else if(value === "custom") {
         closeAddPagePartMenu()
         $(page_parts_tab).removeClass("active");
+        $(product_parts_tab).removeClass("active");
+        $(custom_parts_tab).addClass("active");
+        globalPageOptionData.po_tab_open = "cu"
+        saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
+    }else {
+        closeAddPagePartMenu()
+        $(page_parts_tab).removeClass("active");
+        $(custom_parts_tab).removeClass("active");
         $(product_parts_tab).addClass("active");
         globalPageOptionData.po_tab_open = "po"
         saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
@@ -162,6 +173,13 @@ const loadProductOptionsHTML = () => {
     $("#product_options_cont").empty()
     globalPageOptionData.productOptions.map((po) => {
         $("#product_options_cont").append(createPageOptionRow(po))
+    })
+}
+// These will eventually be loaded by the globalPageOptionData 
+const loadCustomOptionsHTML = () => {
+    $("#custom_options_cont").empty()
+    globalPageOptionData.customOptions.map((cu) => {
+        $("#custom_options_cont").append(createPageOptionRow(cu))
     })
 }
 
@@ -291,6 +309,11 @@ $(() => {
     $(inner_tab_product_part_btn).on("click", (e) => {
         e.preventDefault()
         switchPageOptionTabs('product')
+    })
+    // Tab nav btn
+    $(inner_tab_custom_part_btn).on("click", (e) => {
+        e.preventDefault()
+        switchPageOptionTabs('custom')
     })
     // add new page option BTN
     $(add_new_page_part_btn).on("click", (e) => {

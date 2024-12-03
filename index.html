@@ -612,6 +612,9 @@
                     <div class="inner_tab_item" data-pagetabid="product">
                         <p id="inner_tab_product_part_btn">Product</p>
                     </div>
+                    <div class="inner_tab_item" data-pagetabid="custom">
+                        <p id="inner_tab_custom_part_btn">Custom</p>
+                    </div>
                 </div>
 
                 <div class="inner_tab_lower_cont active" id="page_parts_tab">
@@ -774,6 +777,98 @@
                         </div>
                     </div>
                     <div class="page_options_cont" id="product_options_cont">
+                        <!-- These will also be dynamically added -->
+
+
+                    </div>
+                    <!-- this is where the output will be -->
+                    <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
+                        <div class="helper">Click To Copy</div>
+                        <input class="tf_input color_input" readonly name="input" type="text"
+                            id="product_option_order_output" placeholder='Order Output...'>
+                    </div>
+                    <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
+                        <textarea class="tf_input textarea_cont" readonly name="input" cols="30" rows="3"
+                            id="product_option_name_output" placeholder='Name Output...'></textarea>
+                        <div class="helper">Click To Copy</div>
+                    </div>
+                    <button type="button" class="tf_btn main_btn" data-potype="po" id="clear_sorting_po_btn">Clear
+                        Sorting</button>
+                    <button type="button" class="tf_btn main_btn" data-potype="po" id="clear_renames_po_btn">Clear
+                        Renames</button>
+                    <button type="button" class="tf_btn main_btn" data-potype="po" id="clear_all_po_btn">Clear
+                        All</button>
+                </div>
+
+                <!-- Third Tab Custom -->
+                <div class="inner_tab_lower_cont" id="custom_parts_tab">
+                    <div class="page_options_inner_tab_heading">
+                        <div class="page_option_col sml">
+                            <button type="button" class="main_icon_button" id="add_new_product_option_btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    width="12" height="12" viewBox="0 0 12 12">
+                                    <defs>
+                                        <clipPath id="a">
+                                            <rect width="12" height="12" />
+                                        </clipPath>
+                                    </defs>
+                                    <g clip-path="url(#a)">
+                                        <path
+                                            d="M7.5,10.95V7.5h3.45A1.051,1.051,0,0,0,12,6.45v-.9A1.051,1.051,0,0,0,10.95,4.5H7.5V1.05A1.051,1.051,0,0,0,6.45,0h-.9A1.051,1.051,0,0,0,4.5,1.05V4.5H1.05A1.051,1.051,0,0,0,0,5.55v.9A1.051,1.051,0,0,0,1.05,7.5H4.5v3.45A1.051,1.051,0,0,0,5.55,12h.9A1.051,1.051,0,0,0,7.5,10.95"
+                                            fill-rule="evenodd" />
+                                    </g>
+                                </svg>
+                            </button>
+                            <div class="add_page_option_menu" id="add_product_option_menu">
+                                <p>Add New Custom Option</p>
+                                <div class="tf_control_group width_inherit bottom_input_group">
+                                    <input class="tf_input" name="input" type="text" id="add_product_option_input"
+                                        placeholder='Name...'>
+
+                                </div>
+                                <button type="button" class="tf_btn main_btn" id="add_product_option_btn">Add Custom
+                                    Option</button>
+                            </div>
+                        </div>
+                        <div class="page_option_col med">
+                            <p>Custom Option</p>
+                            <div class="inner_tab_header_info po_info_tip">
+                                <span class="info_icon">i</span>
+
+                                <div class="inner_tab_header_info_pop ">
+                                    <p>You can change the name of the Custom Option by clicking on the name. Press the
+                                        enter/return key when finished.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page_option_col sml">
+                            <div>
+                                <span>Order</span>
+                                <div class="inner_tab_header_info">
+                                    <span class="info_icon">i</span>
+
+                                    <div class="inner_tab_header_info_pop">
+                                        <p>Assign a sort number to each item, starting
+                                            from 1, to determine their display order. Leave blank if you do not want to
+                                            include the option.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page_option_col med">
+                            <div><span>Rename</span>
+                                <div class="inner_tab_header_info rename_info">
+                                    <span class="info_icon">i</span>
+
+                                    <div class="inner_tab_header_info_pop rename_info_pop">
+                                        <p>You can give each option a new name. If left
+                                            blank, it will default to the original name.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page_options_cont" id="custom_options_cont">
                         <!-- These will also be dynamically added -->
 
 
