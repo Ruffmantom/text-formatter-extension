@@ -366,7 +366,8 @@
                             d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
                     </svg>
 
-                    <input class="tf_input top-inputs" name="input" type="text" id="prefix_input" placeholder='Prefix'>
+                    <input class="tf_input top-inputs" name="input" type="text" autocomplete="off" id="prefix_input"
+                        placeholder='Prefix'>
                 </div>
 
                 <div class="form_item fix_input_group">
@@ -377,7 +378,8 @@
                             d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
                     </svg>
 
-                    <input class="tf_input top-inputs" name="input" type="text" id="suffix_input" placeholder='Suffix'>
+                    <input class="tf_input top-inputs" name="input" type="text" autocomplete="off" id="suffix_input"
+                        placeholder='Suffix'>
                 </div>
 
 
@@ -393,18 +395,19 @@
         <!-- Tab: Two -->
         <div class="tab" data-tab="two">
             <div class="tf_control_group bottom_input_group">
-                <input class="tf_input" name="input" type="text" id="hex-input" placeholder='Paste HEX Code here'>
+                <input class="tf_input" name="input" type="text" autocomplete="off" id="hex-input"
+                    placeholder='Paste HEX Code here'>
             </div>
             <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
                 <div class="helper">Click To Copy</div>
-                <input class="tf_input color_input" readonly name="input" type="text" id="rgb-ouput"
+                <input class="tf_input color_input" readonly name="input" type="text" autocomplete="off" id="rgb-ouput"
                     placeholder='RGB Output'>
             </div>
 
             <div id="color_copy_cmyk" class="textarea_cont tf_control_group bottom_input_group">
                 <div class="helper">Click To Copy</div>
-                <input class="tf_input color_input" readonly name="input" type="text" id="cmyk-output"
-                    placeholder='CMYK Output'>
+                <input class="tf_input color_input" readonly name="input" type="text" autocomplete="off"
+                    id="cmyk-output" placeholder='CMYK Output'>
             </div>
 
         </div>
@@ -639,7 +642,7 @@
                                 <p>Add New Page Part</p>
                                 <div class="tf_control_group width_inherit bottom_input_group">
                                     <input class="tf_input" data-poname="Materials" name="input" type="text"
-                                        id="add_page_part_input" placeholder='Name...'>
+                                        autocomplete="off" id="add_page_part_input" placeholder='Name...'>
 
                                 </div>
                                 <button type="button" class="tf_btn main_btn" id="add_page_part_btn">Add Page
@@ -691,7 +694,7 @@
                     <!-- this is where the output will be -->
                     <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
                         <div class="helper">Click To Copy</div>
-                        <input class="tf_input color_input" readonly name="input" type="text"
+                        <input class="tf_input color_input" readonly name="input" type="text" autocomplete="off"
                             id="page_part_order_output" placeholder='Order Output...'>
                     </div>
                     <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
@@ -706,7 +709,6 @@
                     <button type="button" class="tf_btn main_btn" data-potype="pp" id="clear_all_pp_btn">Clear
                         All</button>
                 </div>
-
 
                 <!-- second tab - Product Option/Parts -->
                 <div class="inner_tab_lower_cont" id="product_parts_tab">
@@ -730,8 +732,8 @@
                             <div class="add_page_option_menu" id="add_product_option_menu">
                                 <p>Add New Product Option</p>
                                 <div class="tf_control_group width_inherit bottom_input_group">
-                                    <input class="tf_input" name="input" type="text" id="add_product_option_input"
-                                        placeholder='Name...'>
+                                    <input class="tf_input" name="input" type="text" autocomplete="off"
+                                        id="add_product_option_input" placeholder='Name...'>
 
                                 </div>
                                 <button type="button" class="tf_btn main_btn" id="add_product_option_btn">Add Product
@@ -784,7 +786,7 @@
                     <!-- this is where the output will be -->
                     <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
                         <div class="helper">Click To Copy</div>
-                        <input class="tf_input color_input" readonly name="input" type="text"
+                        <input class="tf_input color_input" readonly name="input" type="text" autocomplete="off"
                             id="product_option_order_output" placeholder='Order Output...'>
                     </div>
                     <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
@@ -804,7 +806,7 @@
                 <div class="inner_tab_lower_cont" id="custom_parts_tab">
                     <div class="page_options_inner_tab_heading">
                         <div class="page_option_col sml">
-                            <button type="button" class="main_icon_button" id="add_new_product_option_btn">
+                            <button type="button" class="main_icon_button" id="add_new_custom_option_btn">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                     width="12" height="12" viewBox="0 0 12 12">
                                     <defs>
@@ -819,14 +821,14 @@
                                     </g>
                                 </svg>
                             </button>
-                            <div class="add_page_option_menu" id="add_product_option_menu">
+                            <div class="add_page_option_menu" id="add_custom_option_menu">
                                 <p>Add New Custom Option</p>
                                 <div class="tf_control_group width_inherit bottom_input_group">
-                                    <input class="tf_input" name="input" type="text" id="add_product_option_input"
-                                        placeholder='Name...'>
+                                    <input class="tf_input" name="input" type="text" autocomplete="off"
+                                        id="add_custom_option_input" placeholder='Name...'>
 
                                 </div>
-                                <button type="button" class="tf_btn main_btn" id="add_product_option_btn">Add Custom
+                                <button type="button" class="tf_btn main_btn" id="add_custom_option_btn">Add Custom
                                     Option</button>
                             </div>
                         </div>
@@ -870,25 +872,25 @@
                     </div>
                     <div class="page_options_cont" id="custom_options_cont">
                         <!-- These will also be dynamically added -->
-
+                        
 
                     </div>
                     <!-- this is where the output will be -->
                     <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
                         <div class="helper">Click To Copy</div>
-                        <input class="tf_input color_input" readonly name="input" type="text"
-                            id="product_option_order_output" placeholder='Order Output...'>
+                        <input class="tf_input color_input" readonly name="input" type="text" autocomplete="off"
+                            id="custom_option_order_output" placeholder='Order Output...'>
                     </div>
                     <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
                         <textarea class="tf_input textarea_cont" readonly name="input" cols="30" rows="3"
-                            id="product_option_name_output" placeholder='Name Output...'></textarea>
+                            id="custom_option_name_output" placeholder='Name Output...'></textarea>
                         <div class="helper">Click To Copy</div>
                     </div>
-                    <button type="button" class="tf_btn main_btn" data-potype="po" id="clear_sorting_po_btn">Clear
+                    <button type="button" class="tf_btn main_btn" data-potype="cu" id="clear_sorting_cu_btn">Clear
                         Sorting</button>
-                    <button type="button" class="tf_btn main_btn" data-potype="po" id="clear_renames_po_btn">Clear
+                    <button type="button" class="tf_btn main_btn" data-potype="cu" id="clear_renames_cu_btn">Clear
                         Renames</button>
-                    <button type="button" class="tf_btn main_btn" data-potype="po" id="clear_all_po_btn">Clear
+                    <button type="button" class="tf_btn main_btn" data-potype="cu" id="clear_all_cu_btn">Clear
                         All</button>
                 </div>
 

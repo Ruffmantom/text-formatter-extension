@@ -4,6 +4,7 @@ const product_parts_tab = $("#product_parts_tab")
 const custom_parts_tab = $("#custom_parts_tab")
 const add_page_part_menu = $("#add_page_part_menu")
 const add_product_option_menu = $("#add_product_option_menu")
+const add_custom_option_menu = $("#add_custom_option_menu")
 const page_part_options_cont = $("#page_part_options_cont")
 
 // btn
@@ -11,14 +12,18 @@ const inner_tab_page_part_btn = $("#inner_tab_page_part_btn")
 const inner_tab_product_part_btn = $("#inner_tab_product_part_btn")
 const inner_tab_custom_part_btn = $("#inner_tab_custom_part_btn")
 const add_new_page_part_btn = $("#add_new_page_part_btn")
+const add_new_custom_option_btn = $("#add_new_custom_option_btn")
 const add_new_product_option_btn = $("#add_new_product_option_btn")
 const add_page_part_btn = $("#add_page_part_btn")
 const add_product_option_btn = $("#add_product_option_btn")
+const add_custom_option_btn = $("#add_custom_option_btn")
 // outputs
 const page_part_order_output = $("#page_part_order_output")
 const page_part_name_output = $("#page_part_name_output")
 const product_option_order_output = $("#product_option_order_output")
 const product_option_name_output = $("#product_option_name_output")
+const custom_option_order_output = $("#custom_option_order_output")
+const custom_option_name_output = $("#custom_option_name_output")
 // clear buttons
 const clear_sorting_pp_btn = $("#clear_sorting_pp_btn")
 const clear_renames_pp_btn = $("#clear_renames_pp_btn")
@@ -28,10 +33,15 @@ const clear_sorting_po_btn = $("#clear_sorting_po_btn")
 const clear_renames_po_btn = $("#clear_renames_po_btn")
 const clear_all_po_btn = $("#clear_all_po_btn")
 
+const clear_sorting_cu_btn = $("#clear_sorting_cu_btn")
+const clear_renames_cu_btn = $("#clear_renames_cu_btn")
+const clear_all_cu_btn = $("#clear_all_cu_btn")
+
 
 // global values
 let addPagePartMenuIsOpen = true; // by default
 let addProductOptionsMenuIsOpen = false;
+let addCustomOptionsMenuIsOpen = false;
 
 // helpers
 // close add menu
@@ -55,6 +65,14 @@ const closeAddProductOptionMenu = () => {
     if (addProductOptionsMenuIsOpen) {
         $(add_product_option_menu).removeClass("active");
         addProductOptionsMenuIsOpen = false
+    }
+}
+
+// close the Add Product Option Menu
+const closeAddCustomOptionMenu = () => {
+    if (addCustomOptionsMenuIsOpen) {
+        $(add_custom_option_menu).removeClass("active");
+        addCustomOptionsMenuIsOpen = false
     }
 }
 
@@ -83,9 +101,22 @@ const clearSortAndRenameInputs = (inputType, tab) => {
             $(elm).val("")
         })
     }
-
+    // clearing from state
     if (tab === "pp") {
         globalPageOptionData.pageParts.forEach(item => {
+            if (inputType === "rename") {
+                item.rename = ""
+            }
+            if (inputType === "sort") {
+                item.newSortId = null
+            }
+            if (inputType === "all") {
+                item.rename = ""
+                item.newSortId = null
+            }
+        })
+    } else if (tab === 'cu') {
+        globalPageOptionData.customOptions.forEach(item => {
             if (inputType === "rename") {
                 item.rename = ""
             }
@@ -131,14 +162,14 @@ const switchPageOptionTabs = (value) => {
         $(page_parts_tab).addClass("active");
         globalPageOptionData.po_tab_open = "pp"
         saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
-    } else if(value === "custom") {
+    } else if (value === "custom") {
         closeAddPagePartMenu()
         $(page_parts_tab).removeClass("active");
         $(product_parts_tab).removeClass("active");
         $(custom_parts_tab).addClass("active");
         globalPageOptionData.po_tab_open = "cu"
         saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
-    }else {
+    } else {
         closeAddPagePartMenu()
         $(page_parts_tab).removeClass("active");
         $(custom_parts_tab).removeClass("active");
@@ -147,16 +178,23 @@ const switchPageOptionTabs = (value) => {
         saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
     }
 };
-// load oaen tab
+// load active navigation tab
 const loadTab = () => {
     $(".inner_tab_item").removeClass("active");
     if (globalPageOptionData.po_tab_open === "pp") {
         $(`.inner_tab_item[data-pagetabid='page']`).addClass("active");
         $(product_parts_tab).removeClass("active");
+        $(custom_parts_tab).removeClass("active");
         $(page_parts_tab).addClass("active");
+    } else if (globalPageOptionData.po_tab_open === "cu") {
+        $(`.inner_tab_item[data-pagetabid='custom']`).addClass("active");
+        $(page_parts_tab).removeClass("active");
+        $(product_parts_tab).removeClass("active");
+        $(custom_parts_tab).addClass("active");
     } else {
         $(`.inner_tab_item[data-pagetabid='product']`).addClass("active");
         $(page_parts_tab).removeClass("active");
+        $(custom_parts_tab).removeClass("active");
         $(product_parts_tab).addClass("active");
     }
 }
@@ -178,9 +216,14 @@ const loadProductOptionsHTML = () => {
 // These will eventually be loaded by the globalPageOptionData 
 const loadCustomOptionsHTML = () => {
     $("#custom_options_cont").empty()
-    globalPageOptionData.customOptions.map((cu) => {
-        $("#custom_options_cont").append(createPageOptionRow(cu))
-    })
+    if (globalPageOptionData.customOptions.length <= 0) {
+        $("#custom_options_cont").append(`<p>Use the <strong>Add</strong> button to create a new custom option</p>`)
+
+    } else {
+        globalPageOptionData.customOptions.map((cu) => {
+            $("#custom_options_cont").append(createPageOptionRow(cu))
+        })
+    }
 }
 
 
@@ -188,10 +231,13 @@ const loadCustomOptionsHTML = () => {
 const loadOutputs = () => {
     let pagePartOutputArr = [] // Initialize as an empty array
     let productOptionOutputArr = [] // Initialize as an empty array
+    let customOptionOutputArr = [] // Initialize as an empty array
     let ppSortOutput = []
     let ppNameOutput = []
     let poSortOutput = []
     let poNameOutput = []
+    let cuSortOutput = []
+    let cuNameOutput = []
 
     globalPageOptionData.pageParts.forEach(p => {
         if (parseInt(p.newSortId) > 0) {
@@ -203,6 +249,12 @@ const loadOutputs = () => {
         if (parseInt(p.newSortId) > 0) {
             // move to productOptionOutputArr
             productOptionOutputArr.push(p);
+        }
+    })
+    globalPageOptionData.customOptions.forEach(p => {
+        if (parseInt(p.newSortId) > 0) {
+            // move to customOptionOutputArr
+            customOptionOutputArr.push(p);
         }
     })
 
@@ -234,12 +286,31 @@ const loadOutputs = () => {
             let nameFormat = `${p.optionName}:${settings.useSortIdWithNamePo ? `${p.newSortId}. ${p.rename ? p.rename : p.optionName}` : `${p.rename ? p.rename : p.optionName}`};`
             poNameOutput.push(nameFormat)
         })
-    }else {
+    } else {
         // default 
         globalPageOptionData.productOptions.forEach(p => {
             poSortOutput.push(p._id)
             let nameFormat = `${p.optionName}:${settings.useSortIdWithNamePo ? `${p._id}. ${p.rename ? p.rename : p.optionName}` : `${p.rename ? p.rename : p.optionName}`};`
             poNameOutput.push(nameFormat)
+        })
+    }
+
+
+    if (customOptionOutputArr.length > 0) { // Check if there are elements in the array
+        // sort First
+        customOptionOutputArr.sort((a, b) => a.newSortId - b.newSortId)
+        // create outputs
+        customOptionOutputArr.forEach(p => {
+            cuSortOutput.push(p._id)
+            let nameFormat = `${p.optionName}:${settings.useSortIdWithNamePo ? `${p.newSortId}. ${p.rename ? p.rename : p.optionName}` : `${p.rename ? p.rename : p.optionName}`};`
+            cuNameOutput.push(nameFormat)
+        })
+    } else {
+        // default 
+        globalPageOptionData.customOptions.forEach(p => {
+            cuSortOutput.push(p._id)
+            let nameFormat = `${p.optionName}:${settings.useSortIdWithNamePo ? `${p._id}. ${p.rename ? p.rename : p.optionName}` : `${p.rename ? p.rename : p.optionName}`};`
+            cuNameOutput.push(nameFormat)
         })
     }
 
@@ -249,31 +320,39 @@ const loadOutputs = () => {
     globalPageOptionData.pp_name_output = ppNameOutput.join('')
     globalPageOptionData.po_sort_output = poSortOutput.join(',')
     globalPageOptionData.po_name_output = poNameOutput.join('')
+    globalPageOptionData.cu_sort_output = cuSortOutput.join(',')
+    globalPageOptionData.cu_name_output = cuNameOutput.join('')
 
     // set to the outputs
     globalPageOptionData.pp_sort_output !== "" ? $(page_part_order_output).val(globalPageOptionData.pp_sort_output) : $(page_part_order_output).val("Order Output...")
     globalPageOptionData.pp_name_output !== "" ? $(page_part_name_output).val(globalPageOptionData.pp_name_output) : $(page_part_name_output).val("Name Output...")
     globalPageOptionData.po_sort_output !== "" ? $(product_option_order_output).val(globalPageOptionData.po_sort_output) : $(product_option_order_output).val("Order Output...")
     globalPageOptionData.po_name_output !== "" ? $(product_option_name_output).val(globalPageOptionData.po_name_output) : $(product_option_name_output).val("Name Output...")
+    globalPageOptionData.cu_sort_output !== "" ? $(custom_option_order_output).val(globalPageOptionData.cu_sort_output) : $(custom_option_order_output).val("Order Output...")
+    globalPageOptionData.cu_name_output !== "" ? $(custom_option_name_output).val(globalPageOptionData.cu_name_output) : $(custom_option_name_output).val("Name Output...")
 }
 
 
 // create New page option
 // Left off here
-const addNewPagePartOption = (page, value) => {
+const addNewPagePartOption = (pageType, value) => {
     let newOptionObj = {
         optionName: value,
         isDeleteAble: true,
         rename: "",
-        type: page ? "pp" : "po",
+        type: pageType, // cu,po,pp
         key: createId(),
-        _id: page ? globalPageOptionData.customPagePartId : globalPageOptionData.customProductOptionId,
+        _id: pageType === 'pp' ? globalPageOptionData.customPagePartId : pageType === 'po' ? globalPageOptionData.customProductOptionId : globalPageOptionData.customOptionId,
         newSortId: null,
     }
-    if (page) {
+    if (pageType === 'pp') {
         globalPageOptionData.customPagePartId = newOptionObj._id + 1
         // save to global data
         globalPageOptionData.pageParts.push(newOptionObj)
+    } else if (pageType === 'cu') {
+        globalPageOptionData.customOptionId = newOptionObj._id + 1
+        // save to global data
+        globalPageOptionData.customOptions.push(newOptionObj)
     } else {
         globalPageOptionData.customProductOptionId = newOptionObj._id + 1
         // save to global data
@@ -284,11 +363,12 @@ const addNewPagePartOption = (page, value) => {
         scrollTop: $(page_part_options_cont)[0].scrollHeight
     }, 150);
     // post a notification
-    sendNotification('fast', 3000, `Added ${page ? `Page Part: ${value}` : `Product Option: ${value}`}`)
+    sendNotification('fast', 3000, `Added ${pageType === 'pp' ? `Page Part: ${value}` : pageType === 'po' ? `Product Option: ${value}` : `Custom Option: ${value}`}`)
     // save to local storage
     saveToLocalStorage(TF_PO_DATA, globalPageOptionData)
     loadPagePartOptionsHTML()
     loadProductOptionsHTML()
+    loadCustomOptionsHTML()
 }
 
 
@@ -298,6 +378,7 @@ $(() => {
         loadTab()
         loadPagePartOptionsHTML()
         loadProductOptionsHTML()
+        loadCustomOptionsHTML()
         loadOutputs()
     }
     // Tab nav btn
@@ -329,6 +410,13 @@ $(() => {
         addProductOptionsMenuIsOpen = true
     })
 
+    // add new custom option BTN
+    $(add_new_custom_option_btn).on("click", (e) => {
+        e.preventDefault()
+        $(add_custom_option_menu).addClass("active")
+        addCustomOptionsMenuIsOpen = true
+    })
+
     // close add page part menu
     $(document).on("click", function (event) {
         // Check if the click event target is not within the menu
@@ -349,7 +437,7 @@ $(() => {
     $(add_page_part_btn).on('click', (e) => {
         e.preventDefault()
         let newOptionName = $("#add_page_part_input").val()
-        addNewPagePartOption(true, newOptionName)
+        addNewPagePartOption('pp', newOptionName)
         //clear value
         $("#add_page_part_input").val("")
         // close menu
@@ -361,11 +449,24 @@ $(() => {
     $(add_product_option_btn).on('click', (e) => {
         e.preventDefault()
         let newOptionName = $("#add_product_option_input").val()
-        addNewPagePartOption(false, newOptionName)
+        addNewPagePartOption('po', newOptionName)
         //clear value
         $("#add_product_option_input").val("")
         // close menu
         closeAddProductOptionMenu()
+        // render outputs
+        loadOutputs()
+    })
+
+    // create new product option part
+    $(add_custom_option_btn).on('click', (e) => {
+        e.preventDefault()
+        let newOptionName = $("#add_custom_option_input").val()
+        addNewPagePartOption('cu', newOptionName)
+        //clear value
+        $("#add_custom_option_input").val("")
+        // close menu
+        closeAddCustomOptionMenu()
         // render outputs
         loadOutputs()
     })
@@ -379,10 +480,22 @@ $(() => {
 
         if (optionType === "pp") {
             globalPageOptionData.pageParts = globalPageOptionData.pageParts.filter(p => p._id !== optionId)
+            // update the id state
+            let newId = globalPageOptionData.customPagePartId - 1
+            globalPageOptionData.customPagePartId = newId
+        } else if (optionType === "cu") {
+            globalPageOptionData.customOptions = globalPageOptionData.customOptions.filter(p => p._id !== optionId)
+            // update the id state
+            let newId = globalPageOptionData.customOptionId - 1
+            globalPageOptionData.customOptionId = newId
         } else {
             globalPageOptionData.productOptions = globalPageOptionData.productOptions.filter(p => p._id !== optionId)
+            // update the id state
+            let newId = globalPageOptionData.customProductOptionId - 1
+            globalPageOptionData.customProductOptionId = newId
         }
-        sendNotification('fast', 5000, `Deleted ${optionType === "pp" ? `Page Part: ${optionText}` : `Page Option: ${optionText}`}`)
+
+        sendNotification('fast', 5000, `Deleted ${optionType === "pp" ? `Page Part: ${optionText}` : optionType === "po" ? `Page Option: ${optionText}` : `Custom Option: ${optionText}`}`)
         let optionRowArr = Array.from($(".page_option_item_row"))
         optionRowArr.forEach(r => {
             if ($(r).data("optionkey") === optionKey) {
@@ -414,7 +527,13 @@ $(() => {
                     p.rename = ""
                 }
             })
-        } else {
+        } else if(poType === 'cu') {
+            globalPageOptionData.customOptions.forEach(p => {
+                if (p._id === poId) {
+                    p.rename = ""
+                }
+            })
+        }else {
             globalPageOptionData.productOptions.forEach(p => {
                 if (p._id === poId) {
                     p.rename = ""
@@ -465,6 +584,24 @@ $(() => {
         let tab = $(e.target).data('potype')
         clearSortAndRenameInputs('all', tab)
     })
+    // clear all custom option renames
+    clear_sorting_cu_btn.on('click', (e) => {
+        e.preventDefault()
+        let tab = $(e.target).data('potype')
+        clearSortAndRenameInputs('sort', tab)
+    })
+    // clear all product option sorting
+    clear_renames_cu_btn.on('click', (e) => {
+        e.preventDefault()
+        let tab = $(e.target).data('potype')
+        clearSortAndRenameInputs('rename', tab)
+    })
+    // clear all product option values
+    clear_all_cu_btn.on('click', (e) => {
+        e.preventDefault()
+        let tab = $(e.target).data('potype')
+        clearSortAndRenameInputs('all', tab)
+    })
 
 
     // Event delegation for dynamically generated inputs
@@ -483,6 +620,12 @@ $(() => {
                         p.newSortId = inputValue
                     }
                 })
+            }  else if(poType === 'cu') {
+                globalPageOptionData.customOptions.forEach(p => {
+                    if (p._id === poid) {
+                        p.newSortId = inputValue
+                    }
+                })
             } else {
                 globalPageOptionData.productOptions.forEach(p => {
                     if (p._id === poid) {
@@ -495,6 +638,12 @@ $(() => {
             // save to global
             if (poType === "pp") {
                 globalPageOptionData.pageParts.forEach(p => {
+                    if (p._id === poid) {
+                        p.rename = inputValue
+                    }
+                })
+            } else if(poType === 'cu') {
+                globalPageOptionData.customOptions.forEach(p => {
                     if (p._id === poid) {
                         p.rename = inputValue
                     }
@@ -528,6 +677,14 @@ $(() => {
     })
     $(product_option_name_output).on("click", (e) => {
         copyOutputFunction(e, product_option_name_output)
+
+    })
+    $(custom_option_order_output).on("click", (e) => {
+        copyOutputFunction(e, custom_option_order_output)
+
+    })
+    $(custom_option_name_output).on("click", (e) => {
+        copyOutputFunction(e, custom_option_name_output)
 
     })
     // change the name of the page options

@@ -137,21 +137,15 @@ let defaultPageOptionData = {
             newSortId: null,
         },
     ],
+    customOptionId: 1,
     customOptions:[
-        {
-            optionName: "Rename Me",
-            isDeleteAble: false,
-            rename: "",
-            _id: 1,
-            type: "cu",
-            key: null,
-            newSortId: null,
-        },
     ],
     pp_sort_output:"",
-    po_sort_output:"",
     pp_name_output:"",
+    po_sort_output:"",
     po_name_output:"",
+    cu_sort_output:"",
+    cu_name_output:"",
     po_tab_open:"pp",
 }
 let globalStaging;
