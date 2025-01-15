@@ -498,20 +498,34 @@ $(function () {
             )
             .join(''); // Join the words without spaces
     }
-
+    const testWordIsAcronym = (word) => {
+        // Check if the word is entirely uppercase (common characteristic of acronyms)
+        if (/^[^aeiouAEIOU]*$/.test(word) && /^[A-Z]+$/.test(word)) {
+            return true;
+        }
+    
+        // If it starts with a vowel or contains a sequence of vowels, it's unlikely to be an acronym
+        if (/^[aeiouAEIOU]/.test(word) && /[aeiouAEIOU]{2,}/.test(word)) {
+            return false;
+        }
+    
+        return false; // Default to false if none of the above conditions are met
+    };
 
     function capitalizeWordsWithAcronyms(str) {
         return str
-            .split(' ') // Split the string into words by spaces
-            .map(word => {
-                // Check if the word is an acronym (all uppercase)
-                if (word === word.toUpperCase() && word.length > 1) {
-                    return word; // Keep acronyms unchanged
-                }
-                // Otherwise, capitalize the first letter and lowercase the rest
-                return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+            .split('\n') // Split into lines
+            .map(line => {
+                return line.replace(/\b[A-Z]{2,4}\b|(\b[A-Za-z0-9]+)/g, match => {
+                    // Check if the word is an acronym
+                    if (/^[A-Z]{2,4}$/.test(match) && testWordIsAcronym(match)) {
+                        return match; // Keep acronyms as is
+                    }
+                    // Capitalize the first letter of regular words
+                    return match.charAt(0).toUpperCase() + match.slice(1).toLowerCase();
+                });
             })
-            .join(' '); // Join the words back with spaces
+            .join('\n'); // Join the lines back with line breaks
     }
 
     // generate text formatter function
