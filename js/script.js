@@ -118,7 +118,7 @@ $(function () {
     let cmyk = globalValues.cmykOutput || "";
     let passLength = globalValues.passLength || 10;
     let separator = globalValues.separator || "_";
-    let outputCase = globalValues.outputCase || "Lower Case";
+    let outputCase = globalValues.outputCase || "Lowercase";
     // Load data into the DOM
     const loadDataIntoElements = () => {
         $(textInput).val(globalValues.textVal || textVal);
@@ -487,6 +487,32 @@ $(function () {
         resetLocalStorage()
     };
 
+    function toCamelCase(str) {
+        return str
+            .toLowerCase() // Convert the entire string to lowercase
+            .split(/[\s_-]+/) // Split by spaces, underscores, or hyphens
+            .map((word, index) =>
+                index === 0
+                    ? word // Keep the first word as is
+                    : word.charAt(0).toUpperCase() + word.slice(1) // Capitalize the first letter of the rest
+            )
+            .join(''); // Join the words without spaces
+    }
+
+
+    function capitalizeWordsWithAcronyms(str) {
+        return str
+            .split(' ') // Split the string into words by spaces
+            .map(word => {
+                // Check if the word is an acronym (all uppercase)
+                if (word === word.toUpperCase() && word.length > 1) {
+                    return word; // Keep acronyms unchanged
+                }
+                // Otherwise, capitalize the first letter and lowercase the rest
+                return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+            })
+            .join(' '); // Join the words back with spaces
+    }
 
     // generate text formatter function
     const generateTextOutput = () => {
@@ -495,15 +521,27 @@ $(function () {
         let outputVal = formatText(textVal ? textVal : "", separator, false)
         // console.log("generateTextOutput: " + outputVal)
         // case type output and save to local storage
-        if (outputCase === "Lower Case") {
+        if (outputCase === "Lowercase") {
             $(textOutput).val(outputVal.toLowerCase())
             // save to local storage
             globalValues.outputValueText = outputVal.toLowerCase()
             saveToLocalStorage(DATA_NAME, globalValues)
-        } else if (outputCase === 'Upper Case') {
+        } else if (outputCase === 'Uppercase') {
             $(textOutput).val(outputVal.toUpperCase())
             // save to local storage
             globalValues.outputValueText = outputVal.toUpperCase()
+            saveToLocalStorage(DATA_NAME, globalValues)
+        } else if (outputCase === 'CamelCase') {
+            // new case type
+            $(textOutput).val(toCamelCase(outputVal))
+            // save to local storage
+            globalValues.outputValueText = toCamelCase(outputVal)
+            saveToLocalStorage(DATA_NAME, globalValues)
+        } else if (outputCase === 'Capitalize') {
+            // new case type
+            $(textOutput).val(capitalizeWordsWithAcronyms(outputVal))
+            // save to local storage
+            globalValues.outputValueText = capitalizeWordsWithAcronyms(outputVal)
             saveToLocalStorage(DATA_NAME, globalValues)
         } else {
             // else if selected no format then output text normal

@@ -334,6 +334,15 @@ input[type=number]::-webkit-outer-spin-button {
     border-radius: 0 0 5px 5px;
 }
 
+.upper_format_text_input_cont:hover>.helper {
+    opacity: 0.3;
+}
+
+#copy_upper_txt_btn:hover{
+    opacity: 1;
+}
+
+/* .upper_format_text_input_cont:hover>.helper, */
 .textarea_cont:hover>.helper {
     opacity: 1;
 }
