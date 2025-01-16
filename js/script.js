@@ -487,28 +487,49 @@ $(function () {
         resetLocalStorage()
     };
 
+    const standardizeDimensions = (input) => {
+        // Regular expression to match dimensions with optional spaces and units
+        const dimensionRegex = /(\d+\.?\d*)\s*(in|ft|["']|[′″])?\s*[xX]\s*(\d+\.?\d*)\s*(in|ft|["']|[′″])?/gi;
+
+        // Replace matched dimensions with the standardized format
+        return input.replace(dimensionRegex, (_, width, unit1, height, unit2) => {
+            // Standardize the dimensions, removing units if present
+            return `${width}${unit1 ? unit1 + " " : ""}x${unit2 ? " " : ""}${height}${unit2 ? unit2 : " "}`;
+        });
+    };
+
     function toCamelCase(str) {
         return str
-            .toLowerCase() // Convert the entire string to lowercase
-            .split(/[\s_-]+/) // Split by spaces, underscores, or hyphens
-            .map((word, index) =>
-                index === 0
-                    ? word // Keep the first word as is
-                    : word.charAt(0).toUpperCase() + word.slice(1) // Capitalize the first letter of the rest
-            )
-            .join(''); // Join the words without spaces
+            .split('\n') // Split into lines
+            .map(line => {
+                let camelCasedLine = line
+                    .toLowerCase() // Convert the entire string to lowercase
+                    .split(/[\s_-]+/) // Split by spaces, underscores, or hyphens
+                    .map((line, index) =>
+                        index === 0
+                            ? line // Keep the first word as is
+                            : line.charAt(0).toUpperCase() + line.slice(1) // Capitalize the first letter of the rest
+                    )
+                    .join(''); // Join the words without spaces
+
+
+                return standardizeDimensions(camelCasedLine)
+
+            })
+            .join('\n'); // Join the lines back with line breaks
     }
+
     const testWordIsAcronym = (word) => {
         // Check if the word is entirely uppercase (common characteristic of acronyms)
         if (/^[^aeiouAEIOU]*$/.test(word) && /^[A-Z]+$/.test(word)) {
             return true;
         }
-    
+
         // If it starts with a vowel or contains a sequence of vowels, it's unlikely to be an acronym
         if (/^[aeiouAEIOU]/.test(word) && /[aeiouAEIOU]{2,}/.test(word)) {
             return false;
         }
-    
+
         return false; // Default to false if none of the above conditions are met
     };
 
@@ -516,7 +537,7 @@ $(function () {
         return str
             .split('\n') // Split into lines
             .map(line => {
-                return line.replace(/\b[A-Z]{2,4}\b|(\b[A-Za-z0-9]+)/g, match => {
+                let capitalizedLine = line.replace(/\b[A-Z]{2,4}\b|(\b[A-Za-z0-9]+)/g, match => {
                     // Check if the word is an acronym
                     if (/^[A-Z]{2,4}$/.test(match) && testWordIsAcronym(match)) {
                         return match; // Keep acronyms as is
@@ -524,6 +545,7 @@ $(function () {
                     // Capitalize the first letter of regular words
                     return match.charAt(0).toUpperCase() + match.slice(1).toLowerCase();
                 });
+                return standardizeDimensions(capitalizedLine)
             })
             .join('\n'); // Join the lines back with line breaks
     }
@@ -536,6 +558,7 @@ $(function () {
         // console.log("generateTextOutput: " + outputVal)
         // case type output and save to local storage
         if (outputCase === "Lowercase") {
+
             $(textOutput).val(outputVal.toLowerCase())
             // save to local storage
             globalValues.outputValueText = outputVal.toLowerCase()

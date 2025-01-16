@@ -15,34 +15,7 @@
     <span class="notification">
 
     </span>
-    <div class="loader_container">
-        <div class="new_loader_cont">
-            <div class="new_loader_dot">
 
-            </div>
-        </div>
-    </div>
-    <!-- todo due date modal -->
-    <div id="add_due_date_modal_cont" class="main_modal_container">
-        <div class="modal_cont">
-            <div class="setting_btn close_btn" id="close_due_date_btn">
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em"
-                    viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                    <path
-                        d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
-                </svg>
-
-            </div>
-
-            <h4>Set Due Date</h4>
-            <div class="due_date_form">
-                <p class="chosen_due_date"></p>
-                <input type="date" name="due" id="todo_due_date_input">
-                <button type="button" class="tf_btn main_btn" id="save_due_date_btn"
-                    style="display: inline-block;">Save</button>
-            </div>
-        </div>
-    </div>
     <!-- settings modal -->
     <div id="settings_modal_cont" class="main_modal_container">
         <div class="modal_cont">
@@ -190,9 +163,9 @@
                     </div>
                 </div>
 
-               
 
-              
+
+
             </div>
 
             <div class="lower_menu">
@@ -229,8 +202,6 @@
         </div>
         <!-- new navigation sidebar -->
 
-
-
         <!-- theme settings -->
         <div class="settings_cont">
 
@@ -252,7 +223,6 @@
             <input type="radio" checked name="light" id="light_mode" hidden>
             <input type="radio" name="dark" id="dark_mode" hidden>
         </div>
-
 
         <!-- Tab: One -->
         <div class="tab tab_active" data-tab="one">
@@ -291,7 +261,7 @@
                     </svg>
 
                     <input class="tf_input top-inputs" name="input" type="text" autocomplete="off" id="prefix_input"
-                        placeholder='Prefix'>
+                        placeholder='Prefix...'>
                 </div>
 
                 <div class="form_item fix_input_group">
@@ -303,7 +273,7 @@
                     </svg>
 
                     <input class="tf_input top-inputs" name="input" type="text" autocomplete="off" id="suffix_input"
-                        placeholder='Suffix'>
+                        placeholder='Suffix...'>
                 </div>
 
 
@@ -311,9 +281,9 @@
             <div class="upper_format_text_input_cont tf_control_group">
                 <!-- <img id="copy_upper_txt_btn" class="tf_btn copy_upper_txt_btn" src="./images/icons/copy-icon_1.svg"
                     alt=""> -->
-                    <div class="helper" id="copy_upper_txt_btn">Click Here To Copy</div>
+                <div class="helper" id="copy_upper_txt_btn">Click Here To Copy</div>
                 <textarea class="tf_input" name="input" id="text_input" cols="30" rows="10"
-                    placeholder='Place Text Here (Allows for line breaks)'></textarea>
+                    placeholder='Place Text Here (Allows for line breaks)...'></textarea>
             </div>
         </div>
 
@@ -321,18 +291,18 @@
         <div class="tab" data-tab="two">
             <div class="tf_control_group bottom_input_group">
                 <input class="tf_input" name="input" type="text" autocomplete="off" id="hex-input"
-                    placeholder='Paste HEX Code here'>
+                    placeholder='Paste HEX Code here...'>
             </div>
             <div id="color_copy_rgb" class="textarea_cont tf_control_group bottom_input_group">
-                <div class="helper">Click Input To Copy</div>
+                <div class="helper">Click Output To Copy</div>
                 <input class="tf_input color_input" readonly name="input" type="text" autocomplete="off" id="rgb-ouput"
-                    placeholder='RGB Output'>
+                    placeholder='RGB Output...'>
             </div>
 
             <div id="color_copy_cmyk" class="textarea_cont tf_control_group bottom_input_group">
-                <div class="helper">Click Input To Copy</div>
+                <div class="helper">Click Output To Copy</div>
                 <input class="tf_input color_input" readonly name="input" type="text" autocomplete="off"
-                    id="cmyk-output" placeholder='CMYK Output'>
+                    id="cmyk-output" placeholder='CMYK Output...'>
             </div>
 
         </div>
@@ -369,12 +339,16 @@
         <!-- text output area -->
         <div id="lower_copy_textarea_cont" class="tf_control_group out_put_cont">
             <div class="textarea_cont">
-                <div class="helper">Click Input To Copy</div>
-                <textarea class="tf_input" name="output" id="text_output" readonly cols="30" rows="10"></textarea>
+                <div class="helper">Click Below To Copy</div>
+                <textarea class="tf_input" name="output" id="text_output" placeholder='Output, Click to copy...'readonly></textarea>
             </div>
             <button id="clear_output" class="tf_btn main_btn">Reset</button>
         </div>
+        <p id="version_number">Version: 6.4.0</p>
+        
     </div>
+
+
     <script type="text/javascript" src="./app.js"></script>
     <script type="text/javascript" src="./js/settings.js"></script>
     <script type="text/javascript" src="./js/script.js"></script>
