@@ -627,7 +627,7 @@ input[type=number]::-webkit-outer-spin-button {
     border-radius: 7px;
     height: 90%;
     position: absolute;
-    top: 0px;
+    top: 10px;
     box-shadow: var(--shadow);
     background-color: var(--modal-bg-color);
     backdrop-filter: var(--blur);
